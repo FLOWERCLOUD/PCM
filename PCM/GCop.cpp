@@ -69,16 +69,16 @@ void GCop::run()
 	//在初始分割之后, 分别进行split,coseg以及merge过程. 20151009
 
 	//horse data
-	char* in_label_file = "F:\\EG2015\\compar\\diffusionOrder\\totLabels(1_9).txt";//j-linkage后每帧的分割结果
+	char* in_label_file = "D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\panther\\CoSeg\\update7TotLabels(2_10)_edit.txt";//j-linkage后每帧的分割结果
 
-	char* in_corr_file = "D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\horse_multiview0804\\refine(8_18)\\totCorr(1_9).txt";//horse的对应数据一致没有改变 0904
+	char* in_corr_file = "D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\panther\\CoSeg\\0904TotCorr(2_10).txt";//horse的对应数据一致没有改变 0904
 	
 
 	DualwayPropagation dp_solver;
 
 	dp_solver.read_data(in_label_file,in_corr_file);
 
-	dp_solver.init_labeles_graph_hier(); //构建分块对应的Graph;
+	dp_solver.init_labeles_graph_hier(m_nTradeOff); //构建分块对应的Graph;
 
 	dp_solver.constructPCloudGraph();    //构建点云对应的Graph;
 
@@ -86,13 +86,13 @@ void GCop::run()
 
 	Logger<<"End Split Process!\n";
 
- 	cosegProcessing(dp_solver);
+	cosegProcessing(dp_solver);
 
 	Logger<<"End  Coseg Process!\n";
 
-	mergeProcess(dp_solver);
-
-	Logger<<"End Merge Process!\n";
+// 	mergeProcess(dp_solver);
+// 
+// 	Logger<<"End Merge Process!\n";
 }
 
 
@@ -3209,20 +3209,20 @@ void GCop::coSegmentation()
 //--------------------------
 void GCop::splitProcess(DualwayPropagation& dp_solver)
 {
- 	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1010splitResults.txt";
+ 	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1014splitResults.txt";
 
  	dp_solver.splitAllSquenceGraph(m_centerF);//读取j-linkagelabel文件之后进行前后的分裂操作,参数表示序列分裂的帧数;
  
  	dp_solver.smoothAfterSplit(); //k =30,分裂之后进行smooth操作
  
-//  dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
-// 
-// 	visualCosegmentation(out_label_file);
+//      dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
+//   
+//   	visualCosegmentation(out_label_file);
 }
 //--------------------------
 void GCop::cosegProcessing(DualwayPropagation& dp_solver)
 {
-	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1010cosegResults.txt";
+	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1014cosegResults.txt";
 
 	CoSegmentation coseg_solver(SampleSet::get_instance(),dp_solver.getCompents());
 
@@ -3234,22 +3234,31 @@ void GCop::cosegProcessing(DualwayPropagation& dp_solver)
 
 	coseg_solver.components2HierComponets();
 
-	dp_solver.init_labeles_graph_hier();
+	dp_solver.init_labeles_graph_hier(m_nTradeOff);
 
- 	//coseg_solver.write_label_file(out_label_file);
-// 
-// 	visualCosegmentation(out_label_file);
+	//coseg_solver.write_label_file(out_label_file);
+	dp_solver.wirteSplitGraphLables(out_label_file);
+
+	visualCosegmentation(out_label_file);
 }
 //---------------------------
 void GCop::mergeProcess(DualwayPropagation& dp_solver)
 {
 	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1010mergeResults.txt";
 
-	dp_solver.mergePatchesAfterCoSeg(); // 读取共分割的label文件之后,建立图结构, 然后进行图的merge操作 0831
+	//dp_solver.mergePatchesAfterCoSeg(); // 读取共分割的label文件之后,建立图结构, 然后进行图的merge操作 0831
 	
+
+	//merge squences by Graph cuts
+
+    dp_solver.mergePatchTraj();
+
 	dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
 
 	visualCosegmentation(out_label_file);
+
+
+	//
 }
 //---------------------------
 void GCop::visualCosegmentation(char *labels_file)

@@ -295,6 +295,13 @@ struct EdgeUnmarkError_greater_than
 	}
 };
 
+struct PatchTraj
+{
+	IndexType label_id;
+	IndexType startFrame;
+	IndexType endFrame;
+};
+
 typedef priority_queue< EdgeSplitOrder, vector<EdgeSplitOrder>, EdgeUnmarkError_greater_than> OrderEdgeQueue;
 
 #endif // !_BOOSTGRAPH_H

@@ -514,12 +514,26 @@ void CoSegmentation::write_label_file(char *filename)
 		{
 			IndexType frame = components_[*jj].frame;
 			Logger<<frame<<"  "<<components_[*jj].label<<endl;
-			for ( auto viter=components_[*jj].vtx_corr_next_frame.begin();
-				viter!=components_[*jj].vtx_corr_next_frame.end();viter++)
+
+			if (!components_[*jj].vtx_corr_next_frame.empty() )
 			{
-				IndexType vtx_idx = viter->first;
-				fprintf(outfile,"%d %d %d\n", frame, cluster_count, vtx_idx);
+				for ( auto viter=components_[*jj].vtx_corr_next_frame.begin();
+					viter!=components_[*jj].vtx_corr_next_frame.end();viter++)
+				{
+					IndexType vtx_idx = viter->first;
+					fprintf(outfile,"%d %d %d\n", frame, cluster_count, vtx_idx);
+				}
+			}else
+			{
+				for ( auto viter=components_[*jj].vtx_corr_prev_frame.begin();
+					viter!=components_[*jj].vtx_corr_prev_frame.end();viter++)
+				{
+					IndexType vtx_idx = viter->first;
+					fprintf(outfile,"%d %d %d\n", frame, cluster_count, vtx_idx);
+				}
 			}
+
+
 		}
 	}
 	fclose(outfile);
@@ -625,7 +639,7 @@ void CoSegmentation::hierComponets2Components()
 
 				}else
 				{
-					components_[compo_idx].vtx_corr_prev_frame.insert(make_pair(vtx_id, -1) );
+					components_[compo_idx].vtx_corr_next_frame.insert(make_pair(vtx_id, -1) );
 				}
 
 			}
@@ -658,28 +672,57 @@ void CoSegmentation::components2HierComponets()
 
 			new_label->frame_parent = &((*hier_componets)[frame]);
 
-			for ( auto viter=components_[*jj].vtx_corr_next_frame.begin(); viter!=components_[*jj].vtx_corr_next_frame.end();viter++)
+			if (!components_[*jj].vtx_corr_next_frame.empty())
 			{
-				IndexType vtx_idx = viter->first;
-				if (v_Label_of_vtx.find(frame) == v_Label_of_vtx.end() )
+				for ( auto viter=components_[*jj].vtx_corr_next_frame.begin(); viter!=components_[*jj].vtx_corr_next_frame.end();viter++)
 				{
-					v_Label_of_vtx.insert( make_pair(frame,map<IndexType,IndexType>() ) );
+					IndexType vtx_idx = viter->first;
+					if (v_Label_of_vtx.find(frame) == v_Label_of_vtx.end() )
+					{
+						v_Label_of_vtx.insert( make_pair(frame,map<IndexType,IndexType>() ) );
 
-					v_Label_of_vtx[frame].insert(make_pair(vtx_idx,cluster_count) );
-				}else
-				{
-					v_Label_of_vtx[frame].insert(make_pair(vtx_idx,cluster_count) );
+						v_Label_of_vtx[frame].insert(make_pair(vtx_idx,cluster_count) );
+					}else
+					{
+						v_Label_of_vtx[frame].insert(make_pair(vtx_idx,cluster_count) );
+					}
+
+					IndexType hg = (*hier_componets)[frame].hier_label_bucket.size();
+					--hg;
+
+					HVertex* getVtx = (*hier_componets)[frame].hier_label_bucket[hg][old_label]->vertex_bucket[vtx_idx];
+
+					getVtx->label_parent.push_back(new_label);
+
+					new_label->vertex_bucket.insert(make_pair(vtx_idx, getVtx) );
 				}
+			}else
+			{
+				for ( auto viter=components_[*jj].vtx_corr_prev_frame.begin(); viter!=components_[*jj].vtx_corr_prev_frame.end();viter++)
+				{
+					IndexType vtx_idx = viter->first;
+					if (v_Label_of_vtx.find(frame) == v_Label_of_vtx.end() )
+					{
+						v_Label_of_vtx.insert( make_pair(frame,map<IndexType,IndexType>() ) );
 
-				IndexType hg = (*hier_componets)[frame].hier_label_bucket.size();
-				--hg;
+						v_Label_of_vtx[frame].insert(make_pair(vtx_idx,cluster_count) );
+					}else
+					{
+						v_Label_of_vtx[frame].insert(make_pair(vtx_idx,cluster_count) );
+					}
 
-				HVertex* getVtx = (*hier_componets)[frame].hier_label_bucket[hg][old_label]->vertex_bucket[vtx_idx];
+					IndexType hg = (*hier_componets)[frame].hier_label_bucket.size();
+					--hg;
 
-				getVtx->label_parent.push_back(new_label);
+					HVertex* getVtx = (*hier_componets)[frame].hier_label_bucket[hg][old_label]->vertex_bucket[vtx_idx];
 
-				new_label->vertex_bucket.insert(make_pair(vtx_idx, getVtx) );
+					getVtx->label_parent.push_back(new_label);
+
+					new_label->vertex_bucket.insert(make_pair(vtx_idx, getVtx) );
+				}
 			}
+
+
 
 			if (v_label_bucket.find(frame) == v_label_bucket.end() ) 
 			{

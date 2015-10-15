@@ -265,7 +265,7 @@ public:
 
 	void getEdgeVertexs( IndexType _CFrameId ,IndexType lLabelId ,IndexType rLabelId , map<IndexType, map<IndexType ,HVertex*> >& _edgepoints );
 	void getEdgeVertexs2( IndexType _CFrameId , distanPriQueue& _PriQuemap, map<IndexType, map<IndexType ,HVertex*> >& _edgepoints );
-	void init_labeles_graph_hier();
+	void init_labeles_graph_hier(ScalarType distThr);
 
 
 	void read_label_file(char *filename)
@@ -550,6 +550,15 @@ public:
 
 	void show_corresponding(IndexType f);
 
+	void mergePatchTraj();
+
+	void generTrajNodes(vector<PatchTraj>& pNodes);// 生成轨迹节点
+
+	void graphCuts(vector<PatchTraj>& pNodes, vector<IndexType>& labels);
+
+	void mergeSquences(vector<IndexType>& labes);
+
+
 public:
 
 	Sample* downSample;
@@ -557,7 +566,7 @@ public:
 private:
 	map<IndexType, CFrame> components_;
 	map<IndexType,IndexType> frame_index_map_label_; 
-	PoolAllocator allocator_;
+	static  PoolAllocator allocator_;
 
 	map<IndexType, HFrame> hier_componets_;
 

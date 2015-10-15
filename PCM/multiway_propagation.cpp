@@ -11,6 +11,7 @@
 
 
 
+PoolAllocator DualwayPropagation::allocator_;
 
 void DualwayPropagation::read_label_file_hier(char *filename)
 {
@@ -298,10 +299,15 @@ void DualwayPropagation::buildKdTree( IndexType _cframeId)
 }
 
 
-void DualwayPropagation:: init_labeles_graph_hier()
+void DualwayPropagation:: init_labeles_graph_hier(ScalarType distThr)
 {
 
 	Logger<<"  Begin initialize graphs.\n";
+
+	if (distThr >= 1.0 || distThr < 0.0)
+	{
+		distThr = 0.1;
+	}
 
 	for (auto citer = hier_componets_.begin(); citer!=hier_componets_.end(); citer++)
 	{
@@ -374,7 +380,7 @@ void DualwayPropagation:: init_labeles_graph_hier()
 						if(distance < minDis)minDis = distance;
 						IndexType label1 = hier_componets_[citer->first].label_of_vtx[ index1];
 						IndexType label2 = hier_componets_[citer->first].label_of_vtx[ index2];
-						if( distance < dia*0.1){
+						if( distance < dia*distThr){
 							pointdistance tpd( index1 ,  label1 , index2 ,label2 ,distance );
 							PriQue.push( tpd);
 						}
@@ -383,7 +389,7 @@ void DualwayPropagation:: init_labeles_graph_hier()
 
 				}
 
-				if (minDis <  dia * 0.1 )//0.0588
+				if (minDis <  dia * distThr )//0.0588
 				{
 					getEdgeVertexs2( citer->first ,PriQue ,gep.edgePoints);
 
@@ -725,7 +731,7 @@ void DualwayPropagation::split_twoAjacent_graph_next(IndexType srFrame, IndexTyp
 
 	hier_componets_[tgFrame].hier_label_vtxBucket_index.push_back(labelIndex);
 
-	Logger<<"  Start next split.\n";
+	Logger<<"  End next split.\n";
 	Logger<<" .......\n";
 }
 
@@ -1313,11 +1319,11 @@ void DualwayPropagation::splitAllSquenceGraph(IndexType iterN)
 	map<IndexType,HFrame>::iterator  cEnd = hier_componets_.end();
 
 	//++cIter;
-//  	IndexType startF = 6;
-//  	while (startF -- > 0)
-//  	{
-//  		++cIter;
-//  	}
+// 	IndexType startF = 6;
+// 	while (startF -- > 0)
+// 	{
+// 		++cIter;
+// 	}
 	//cIter;
 	--cEnd;
 
@@ -1333,11 +1339,11 @@ void DualwayPropagation::splitAllSquenceGraph(IndexType iterN)
 		IndexType srFrame = cIter->first;
 		IndexType tgFrame = srFrame + 1;
 
-		split_twoAjacent_graph_next(srFrame,tgFrame );
+		//split_twoAjacent_graph_next(srFrame,tgFrame );
 
 		//show_corresponding(srFrame);
 
-		//split_twoAjacent_graph_next_order(srFrame,tgFrame );
+		split_twoAjacent_graph_next_order(srFrame,tgFrame );
 
 		split_nest_graph_prev(startFrameId,srFrame,tgFrame);
 
@@ -3128,7 +3134,6 @@ void DualwayPropagation::addGraphEdge(PCloudGraph& pcGraph, IndexType frameId)
 void DualwayPropagation::show_corresponding(int f)
 {
 
-
 	for ( IndexType l = 0; l<hier_componets_[f].hier_label_bucket[0].size(); l++ )
 	{
 		HLabel& label = *hier_componets_[f].hier_label_bucket[0][l];
@@ -3173,3 +3178,84 @@ void DualwayPropagation::show_corresponding(int f)
 // 	}
 }
 
+void DualwayPropagation::mergePatchTraj()
+{
+	vector<PatchTraj> ptnodes;
+
+	generTrajNodes(ptnodes);
+
+	vector<IndexType> Labels;
+
+	Labels.resize(ptnodes.size(),0);
+
+	graphCuts(ptnodes,Labels);
+
+	mergeSquences(Labels);
+}
+
+
+void DualwayPropagation::generTrajNodes(vector<PatchTraj>& pNodes)
+{
+
+	map<IndexType,bool>  isPatchTrav;//记录块是否访问过--key = frameId  & labelId
+
+	for (auto fIter = hier_componets_.begin(); fIter != hier_componets_.end(); fIter ++)
+	{
+	    IndexType gLevel = fIter->second.hier_label_bucket.size();//访问最高层的
+
+		IndexType fId = fIter->first;
+		vector<HLabel*>& label_buctet = fIter->second.hier_label_bucket[gLevel - 1];
+
+		IndexType lId = 0;
+
+		for (auto lIter = label_buctet.begin(); lIter != label_buctet.end(); lIter ++)
+		{
+			lId = (*lIter)->label_id;
+
+			IndexType flKey = frame_label_to_key(fId,lId);
+
+			if (isPatchTrav[flKey])
+			{
+				continue;
+			}
+
+			isPatchTrav[flKey] = true;
+
+			PatchTraj tempNode;
+
+			tempNode.label_id = lId;
+
+			tempNode.startFrame = fId;
+
+			tempNode.endFrame = fId;
+
+			HLabel* nextPatchPtr = label_buctet[lId]->next_corr;
+
+			while (nextPatchPtr != NULL)
+			{
+			   IndexType nFId = nextPatchPtr->frame_parent->frame_id;
+
+			   IndexType nextflKey = frame_label_to_key(nFId,lId);
+
+			   isPatchTrav[nextflKey] = true;
+
+			   tempNode.endFrame = nFId;
+
+			   nextPatchPtr = nextPatchPtr->next_corr;
+			}
+
+			pNodes.push_back(tempNode);
+		}
+
+	}
+}
+
+void DualwayPropagation::graphCuts(vector<PatchTraj>& pNodes, vector<IndexType>& labels)
+{
+
+}
+
+void DualwayPropagation::mergeSquences(vector<IndexType>& labes)
+{
+
+}
