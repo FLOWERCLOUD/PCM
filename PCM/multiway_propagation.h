@@ -13,6 +13,8 @@
 
 #include "GraphMatching.h"
 
+#include <gco-v3.0/GCoptimization.h>
+
 #define  COUT_DEBUG 0
 
 using namespace std;
@@ -528,7 +530,7 @@ public:
 
 	void findBestPatches(IndexType srFrame, IndexType tgFrame, set<IndexType>& srBestSet, set<IndexType>& tgBestSet); 
 
-	void mergeSingleTinyPatches();
+	void mergeSingleTinyPatches(IndexType vSize);
 
 	//split by ordered edges 0903
 	void split_twoAjacent_graph_next_order(IndexType srFrame, IndexType tgFrame);
@@ -558,7 +560,13 @@ public:
 
 	void mergeSquences(vector<IndexType>& labes);
 
+	void setSegNeihbor(vector<PatchTraj>& pNodes, GCoptimizationGeneralGraph& segGraphC);
 
+	void setSegDataItem(GCoptimizationGeneralGraph& segGraphC);
+
+	void setSegSmoothItem(GCoptimizationGeneralGraph& segGraphC);
+
+	bool isAdjInSeq(PatchTraj& nodeA, PatchTraj& nodeB);
 public:
 
 	Sample* downSample;

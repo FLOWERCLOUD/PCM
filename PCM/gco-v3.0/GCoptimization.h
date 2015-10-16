@@ -112,6 +112,8 @@
 
 #include "graph_cut_node.h"//default current folder
 
+#include "BoostGraph.h"
+
 /////////////////////////////////////////////////////////////////////
 // Utility functions, classes, and macros
 /////////////////////////////////////////////////////////////////////
@@ -180,6 +182,7 @@ public:
 	typedef EnergyTermType (*SmoothCostFnExtra)(SiteID s1, SiteID s2, LabelID l1, LabelID l2,void *);
 	typedef EnergyTermType (*DataCostFnExtra)(SiteID s, LabelID l,void *);
 
+	//GCoptimization(){}
 	GCoptimization(SiteID num_sites, LabelID num_labels);
 	virtual ~GCoptimization();
 
@@ -570,8 +573,20 @@ class GCoptimizationGeneralGraph:public GCoptimization
 public:
 	// This is the constructor for non-grid graphs. Neighborhood structure must  be specified by 
 	// setNeighbors()  function
+	//GCoptimizationGeneralGraph(){}
 	GCoptimizationGeneralGraph(SiteID num_sites,LabelID num_labels);
 	GCoptimizationGeneralGraph(SiteID num_sites,LabelID num_labels,GraphNodeCtr* gcNode);
+
+	//20151016
+	GCoptimizationGeneralGraph(SiteID num_sites,LabelID num_labels,map<IndexType,HFrame>* hier_comp);
+// 	{
+// 		if (hier_components != NULL)
+// 		{
+// 			hier_components = NULL;
+// 		}
+// 		hier_components = hier_comp;
+// 	}
+
 	virtual ~GCoptimizationGeneralGraph();
 
 	// Makes site1 and site2 neighbors of each other. Can be called only 1 time for each      
@@ -691,6 +706,9 @@ private:
 
 public:
 	GraphNodeCtr* m_gcnode;
+
+public:
+	map<IndexType,HFrame>* hier_components;
 
 };
 

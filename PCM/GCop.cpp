@@ -90,9 +90,9 @@ void GCop::run()
 
 	Logger<<"End  Coseg Process!\n";
 
-// 	mergeProcess(dp_solver);
-// 
-// 	Logger<<"End Merge Process!\n";
+	mergeProcess(dp_solver);
+
+	Logger<<"End Merge Process!\n";
 }
 
 
@@ -3236,7 +3236,6 @@ void GCop::cosegProcessing(DualwayPropagation& dp_solver)
 
 	dp_solver.init_labeles_graph_hier(m_nTradeOff);
 
-	//coseg_solver.write_label_file(out_label_file);
 	dp_solver.wirteSplitGraphLables(out_label_file);
 
 	visualCosegmentation(out_label_file);
@@ -3249,13 +3248,16 @@ void GCop::mergeProcess(DualwayPropagation& dp_solver)
 	//dp_solver.mergePatchesAfterCoSeg(); // 读取共分割的label文件之后,建立图结构, 然后进行图的merge操作 0831
 	
 
-	//merge squences by Graph cuts
+	////merge squences by Graph cuts
+	//需要先合并细小的块
+
+	//dp_solver.mergeSingleTinyPatches(20);
 
     dp_solver.mergePatchTraj();
 
-	dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
-
-	visualCosegmentation(out_label_file);
+// 	dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
+// 
+// 	visualCosegmentation(out_label_file);
 
 
 	//

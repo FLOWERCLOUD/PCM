@@ -1669,8 +1669,10 @@ void GraphMatch::findBestPatches(IndexType srLevel, IndexType tgLevel,set<IndexT
 
 void GraphMatch::mergePatchesAfterCoSeg(IndexType srLevel, IndexType tgLevel,set<IndexType>& srBestSet, set<IndexType>& tgBestSet)
 {
-	IndexType fpId = 16;
-	IndexType spid = 18;
+	IndexType fpId = 1;
+	IndexType spid = 6;
+
+	printf("Start to merge patch %d and %d.\n",fpId,spid);
 
 	//点集为一个元素则不合并,两个点不相连也不合并..
 	auto  isExistF_sr = components_[srFrame].hier_label_vtxBucket_index[srLevel].find(fpId);
@@ -1729,6 +1731,8 @@ void GraphMatch::mergePatchesAfterCoSeg(IndexType srLevel, IndexType tgLevel,set
 		Logger<<" End Merge target Graph.\n";
 	}
 
+
+	printf("End to merge patch %d and %d.\n",fpId,spid);
 }
 
 ScalarType GraphMatch::distBetween2Setpatches(const set<IndexType>& sPatches, const set<IndexType>& tPatches,IndexType srLevel, IndexType tgLevel)

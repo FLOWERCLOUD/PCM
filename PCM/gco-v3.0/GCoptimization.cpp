@@ -1566,6 +1566,27 @@ GCoptimizationGeneralGraph::GCoptimizationGeneralGraph(SiteID num_sites,LabelID 
 }
 //------------------------------------------------------------------
 
+GCoptimizationGeneralGraph::GCoptimizationGeneralGraph(SiteID num_sites,LabelID num_labels,map<IndexType,HFrame>* hier_comp):GCoptimization(num_sites,num_labels)
+{
+	assert( num_sites > 1 && num_labels > 1 );
+
+	m_neighborsIndexes = 0;
+	m_neighborsWeights = 0;
+	m_numNeighbors     = 0;
+	m_neighbors        = 0;
+
+	m_needTodeleteNeighbors        = true;
+	m_needToFinishSettingNeighbors = true;
+	
+	if (hier_components != NULL)
+	{
+		hier_components = NULL;
+	}
+
+	hier_components = hier_comp;	
+}
+
+//
 GCoptimizationGeneralGraph::~GCoptimizationGeneralGraph()
 {
 		

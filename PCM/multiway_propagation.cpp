@@ -2191,7 +2191,9 @@ void DualwayPropagation::buildPatchCorrespondenceByLabel()
 	}
 }
 
-void DualwayPropagation::mergeSingleTinyPatches()
+// 没有迭代操作
+
+void DualwayPropagation::mergeSingleTinyPatches(IndexType vSize)
 {
 
 	GraphMatch pairFrameSimilar(SampleSet::get_instance(), hier_componets_, 8, 9);
@@ -2201,7 +2203,11 @@ void DualwayPropagation::mergeSingleTinyPatches()
 		IndexType fId = fiter->first;
 		if (hier_componets_.find(fId + 1) != hier_componets_.end())
 		{
-	             pairFrameSimilar.mergeTinyPatches(fId,0,20);
+			IndexType gLevel = fiter->second.hier_graph.size();//合并最高层中的小块
+			--gLevel;
+
+	        pairFrameSimilar.mergeTinyPatches(fId,gLevel,vSize);
+
 		}
 	}
 
@@ -3182,6 +3188,9 @@ void DualwayPropagation::mergePatchTraj()
 {
 	vector<PatchTraj> ptnodes;
 
+
+	buildPatchCorrespondenceByLabel();
+
 	generTrajNodes(ptnodes);
 
 	vector<IndexType> Labels;
@@ -3201,10 +3210,12 @@ void DualwayPropagation::generTrajNodes(vector<PatchTraj>& pNodes)
 
 	for (auto fIter = hier_componets_.begin(); fIter != hier_componets_.end(); fIter ++)
 	{
-	    IndexType gLevel = fIter->second.hier_label_bucket.size();//访问最高层的
+	    IndexType gLevel = fIter->second.hier_label_bucket.size();//访问最高层 图结构
 
 		IndexType fId = fIter->first;
 		vector<HLabel*>& label_buctet = fIter->second.hier_label_bucket[gLevel - 1];
+
+		map<IndexType,IndexType> labelIdx = fIter->second.hier_label_vtxBucket_index[gLevel - 1];
 
 		IndexType lId = 0;
 
@@ -3229,7 +3240,9 @@ void DualwayPropagation::generTrajNodes(vector<PatchTraj>& pNodes)
 
 			tempNode.endFrame = fId;
 
-			HLabel* nextPatchPtr = label_buctet[lId]->next_corr;
+			IndexType labId = labelIdx[lId];
+
+			HLabel* nextPatchPtr = label_buctet[labId]->next_corr;
 
 			while (nextPatchPtr != NULL)
 			{
@@ -3252,10 +3265,100 @@ void DualwayPropagation::generTrajNodes(vector<PatchTraj>& pNodes)
 
 void DualwayPropagation::graphCuts(vector<PatchTraj>& pNodes, vector<IndexType>& labels)
 {
+   IndexType nodeSize = pNodes.size();
+
+   GCoptimizationGeneralGraph* segGraphC = new GCoptimizationGeneralGraph(nodeSize,nodeSize,&hier_componets_);
+
+   setSegNeihbor(pNodes,*segGraphC);
+
+   setSegDataItem(*segGraphC);
+
+   setSegSmoothItem(*segGraphC);
+
+   segGraphC->expansion(2);
+
+   segGraphC->whatLabel(1);
 
 }
 
 void DualwayPropagation::mergeSquences(vector<IndexType>& labes)
 {
 
+}
+
+void DualwayPropagation::setSegNeihbor(vector<PatchTraj>& pNodes, GCoptimizationGeneralGraph& segGraphC)
+{
+	IndexType i = 0;
+	IndexType j = 0;
+	for (auto vIter = pNodes.begin(); vIter != (pNodes.end() - 1); ++ vIter, ++ i)
+	{
+		auto vvIter = (vIter + 1);
+
+		segGraphC.setLabel(i,0);
+
+		j = i + 1;
+        for (; vvIter != pNodes.end(); ++ vvIter,++j )
+        {
+			if (isAdjInSeq(pNodes[i],pNodes[j]) )
+			{
+				segGraphC.setNeighbors(i,j);
+			}
+        }
+	}
+}
+
+void DualwayPropagation::setSegDataItem(GCoptimizationGeneralGraph& segGraphC)
+{
+
+}
+
+void DualwayPropagation::setSegSmoothItem(GCoptimizationGeneralGraph& segGraphC)
+{
+
+}
+
+bool DualwayPropagation::isAdjInSeq(PatchTraj& nodeA, PatchTraj& nodeB)
+{
+    //只要在共同帧上存在相邻关系,则认为这两条轨迹相邻.
+
+	IndexType lab_A = nodeA.label_id;
+	IndexType lab_B = nodeB.label_id;
+
+	IndexType com_str = max(nodeA.startFrame, nodeB.startFrame);
+	IndexType com_end = min(nodeA.endFrame, nodeB.endFrame);
+
+	if (com_str > com_end)
+	{
+		return  false;
+	}
+
+	for (IndexType i = com_str; i < com_end; ++ i)
+	{
+		IndexType gLevel = hier_componets_[i].hier_graph.size();
+		--gLevel;
+
+		LabelsGraph& curGraph = *hier_componets_[i].hier_graph[gLevel];
+
+		IndexType aIdx = hier_componets_[i].hier_label_vtxBucket_index[gLevel][lab_A];
+		IndexType bIdx = hier_componets_[i].hier_label_vtxBucket_index[gLevel][lab_B];
+
+		pair<VertexIterator, VertexIterator> vi = boost::vertices(curGraph);
+
+		VertexIterator nodeIterA = (vi.first + aIdx);
+		VertexIterator nodeIterB = (vi.first + bIdx);
+
+		VertexDescriptor nodeDescA = *nodeIterA;
+		VertexDescriptor nodeDescB = *nodeIterB;
+
+		pair<EdgeDescriptor,bool> isAdj = edge(nodeDescA,nodeDescB,curGraph);
+
+		if (isAdj.second) 
+		{
+			return true;
+		}
+
+	}
+	
+
+	return false;
 }
