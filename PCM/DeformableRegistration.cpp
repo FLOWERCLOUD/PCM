@@ -1721,6 +1721,19 @@ void DeformableRegistration::alignTargetCoor(Matrix3X & tgCloud,MatrixXXi & vert
 		tgCloud.col(i) = temp.col(vertexMap(0,i));
 	}
 }
+
+//
+void DeformableRegistration::alignTargetCoorChangeSize(Matrix3X & tgCloud,MatrixXXi & vertexMap)
+{
+	MatrixXX temp = tgCloud;
+	int verN = vertexMap.cols();
+
+	tgCloud.resize(3,verN);
+	for (int i = 0; i < verN; i++)
+	{
+		tgCloud.col(i) = temp.col(vertexMap(0,i));
+	}
+}
 //
 void DeformableRegistration::non_rigidRegister(Sample& srGraph,Sample& tgGraph,MatrixXXi & vtxMap,
 											   MatrixXX &isDeformable,std::set<IndexType> & distLrgIndex)

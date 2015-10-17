@@ -244,7 +244,7 @@ public:
 
 	//
     void setNeigNum(IndexType _neigN);
-
+	void alignTargetCoorChangeSize(Matrix3X & tgCloud,MatrixXXi & vertexMap);
 private:
 	SampleSet & m_smpSet;
 	IndexType m_neigNum;

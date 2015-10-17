@@ -573,19 +573,11 @@ class GCoptimizationGeneralGraph:public GCoptimization
 public:
 	// This is the constructor for non-grid graphs. Neighborhood structure must  be specified by 
 	// setNeighbors()  function
-	//GCoptimizationGeneralGraph(){}
 	GCoptimizationGeneralGraph(SiteID num_sites,LabelID num_labels);
 	GCoptimizationGeneralGraph(SiteID num_sites,LabelID num_labels,GraphNodeCtr* gcNode);
 
 	//20151016
 	GCoptimizationGeneralGraph(SiteID num_sites,LabelID num_labels,map<IndexType,HFrame>* hier_comp);
-// 	{
-// 		if (hier_components != NULL)
-// 		{
-// 			hier_components = NULL;
-// 		}
-// 		hier_components = hier_comp;
-// 	}
 
 	virtual ~GCoptimizationGeneralGraph();
 
@@ -604,24 +596,9 @@ public:
 	void setAllNeighbors(SiteID *numNeighbors,SiteID **neighborsIndexes,EnergyTermType **neighborsWeights);
 
 public:
-	//void setDataCost(EnergyTermType *dataArray);
-	//void setDataCostFunctor(DataCostFunctor* f);
-	struct dataCostFn : public  DataCostFunctor {
+	struct dataCostFn : public  DataCostFunctor 
+	{
 		 EnergyTermType compute(SiteID s, LabelID l);
-// 		 dataCostFn(GCoptimizationGeneralGraph*_node,IndexType _nCurNeig,MatrixXX* mean,MatrixXX* sigma,MatrixXX sample)
-// 		 {
-// 			 m_chnode = _node;
-// 			 m_nCurNeig = _nCurNeig;
-// 			 m_mean = mean;
-// 			 m_sigma = sigma;
-// 			m_sample = sample;
-// 		 }
-// 		 dataCostFn(GCoptimizationGeneralGraph*_node,MatrixXX* mean,MatrixXX* sigma)
-// 		 {
-// 			 m_chnode = _node;
-// 			 m_mean = mean;
-// 			 m_sigma = sigma;
-// 		 }
 		 dataCostFn(GCoptimizationGeneralGraph*_node,MatrixXX** mean,MatrixXX** sigma)
 		 {
 			 m_chnode = _node;
@@ -653,7 +630,8 @@ public:
 
 public:
 
-	struct smoothCostFn : public  SmoothCostFunctor {
+	struct smoothCostFn : public  SmoothCostFunctor
+	{
 		smoothCostFn(GCoptimizationGeneralGraph*_cnode,IndexType _nCurNeig,ScalarType _nSmoothWeight,ScalarType _cSigma,ScalarType _dSigma)
 		{
 			m_smnode = _cnode;

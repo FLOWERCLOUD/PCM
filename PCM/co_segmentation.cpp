@@ -609,11 +609,16 @@ void CoSegmentation::hierComponets2Components()
 
 			IndexType pId = (*lIter)->label_id;
 
+			map<IndexType,HVertex*>& vtx_bucket = (*lIter)->vertex_bucket;
+
+			if (vtx_bucket.size() < 5)
+			{
+				continue;
+			}
+
 			compo_idx = components_.size();
 
 			components_.push_back( Component(fId, pId) );
-
-			map<IndexType,HVertex*>& vtx_bucket = (*lIter)->vertex_bucket;
 
 			for (auto vIt = vtx_bucket.begin(); vIt != vtx_bucket.end(); ++vIt)
 			{

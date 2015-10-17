@@ -15,6 +15,8 @@
 
 #include <gco-v3.0/GCoptimization.h>
 
+#include "DeformaleRegistration.h"
+
 #define  COUT_DEBUG 0
 
 using namespace std;
@@ -567,6 +569,16 @@ public:
 	void setSegSmoothItem(GCoptimizationGeneralGraph& segGraphC);
 
 	bool isAdjInSeq(PatchTraj& nodeA, PatchTraj& nodeB);
+
+	void getSegLabels(GCoptimizationGeneralGraph& segGraphC, vector<IndexType>& labels);
+
+	ScalarType motionSimilarityBetw2Nodes(IndexType i, IndexType j, vector<PatchTraj>& oriTraj);// i connect j
+
+	void calculateTrans(IndexType lab,IndexType sFrame, IndexType tFrame, Matrix34& toTrans, Matrix34& backTrans);
+
+	void getCoorByVtxBucket(IndexType lab, IndexType frameId, Matrix3X& vtxCoor);
+
+
 public:
 
 	Sample* downSample;

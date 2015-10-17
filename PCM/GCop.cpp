@@ -3215,6 +3215,8 @@ void GCop::splitProcess(DualwayPropagation& dp_solver)
  
  	dp_solver.smoothAfterSplit(); //k =30,分裂之后进行smooth操作
  
+    //平滑处理之后,有些块点个数变为零,或者个数很小,需要进行合并操作!
+
 //      dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
 //   
 //   	visualCosegmentation(out_label_file);

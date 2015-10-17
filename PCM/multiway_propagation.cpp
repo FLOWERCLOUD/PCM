@@ -3191,7 +3191,7 @@ void DualwayPropagation::mergePatchTraj()
 
 	buildPatchCorrespondenceByLabel();
 
-	generTrajNodes(ptnodes);
+	generTrajNodes(ptnodes);//
 
 	vector<IndexType> Labels;
 
@@ -3212,12 +3212,16 @@ void DualwayPropagation::generTrajNodes(vector<PatchTraj>& pNodes)
 	{
 	    IndexType gLevel = fIter->second.hier_label_bucket.size();//访问最高层 图结构
 
-		IndexType fId = fIter->first;
-		vector<HLabel*>& label_buctet = fIter->second.hier_label_bucket[gLevel - 1];
+		--gLevel;
 
-		map<IndexType,IndexType> labelIdx = fIter->second.hier_label_vtxBucket_index[gLevel - 1];
+		IndexType fId = fIter->first;
+		vector<HLabel*>& label_buctet = fIter->second.hier_label_bucket[gLevel];
+
+		map<IndexType,IndexType> labelIdx = fIter->second.hier_label_vtxBucket_index[gLevel];
 
 		IndexType lId = 0;
+
+		IndexType beforFrame = fId;
 
 		for (auto lIter = label_buctet.begin(); lIter != label_buctet.end(); lIter ++)
 		{
@@ -3244,6 +3248,7 @@ void DualwayPropagation::generTrajNodes(vector<PatchTraj>& pNodes)
 
 			HLabel* nextPatchPtr = label_buctet[labId]->next_corr;
 
+
 			while (nextPatchPtr != NULL)
 			{
 			   IndexType nFId = nextPatchPtr->frame_parent->frame_id;
@@ -3253,6 +3258,18 @@ void DualwayPropagation::generTrajNodes(vector<PatchTraj>& pNodes)
 			   isPatchTrav[nextflKey] = true;
 
 			   tempNode.endFrame = nFId;
+
+			   Matrix34 toTrans;
+			   Matrix34 backTrans;
+			   //计算块的仿射变换矩阵---连续的计算变换矩阵
+			   calculateTrans(labId, beforFrame,nFId,toTrans,backTrans);
+			   //计算块的仿射变换矩阵
+
+			   tempNode.fNode.push_back(toTrans);
+
+			   tempNode.bNode.push_back(backTrans);
+
+			   beforFrame = nFId;
 
 			   nextPatchPtr = nextPatchPtr->next_corr;
 			}
@@ -3269,15 +3286,14 @@ void DualwayPropagation::graphCuts(vector<PatchTraj>& pNodes, vector<IndexType>&
 
    GCoptimizationGeneralGraph* segGraphC = new GCoptimizationGeneralGraph(nodeSize,nodeSize,&hier_componets_);
 
-   setSegNeihbor(pNodes,*segGraphC);
+   setSegNeihbor(pNodes,*segGraphC);//设置边界,同时设置数据项  //setSegDataItem(*segGraphC);
 
-   setSegDataItem(*segGraphC);
-
-   setSegSmoothItem(*segGraphC);
+   //setSegSmoothItem(*segGraphC);//用形状统计图
 
    segGraphC->expansion(2);
 
-   segGraphC->whatLabel(1);
+   //segGraphC->whatLabel(1);
+   getSegLabels(*segGraphC,labels);
 
 }
 
@@ -3296,12 +3312,20 @@ void DualwayPropagation::setSegNeihbor(vector<PatchTraj>& pNodes, GCoptimization
 
 		segGraphC.setLabel(i,0);
 
+		ScalarType dValue = 0.0;
+		segGraphC.setDataCost(i,i,dValue);
+
 		j = i + 1;
         for (; vvIter != pNodes.end(); ++ vvIter,++j )
         {
 			if (isAdjInSeq(pNodes[i],pNodes[j]) )
 			{
 				segGraphC.setNeighbors(i,j);
+
+				segGraphC.setDataCost(i,j,dValue);
+			}else
+			{
+				segGraphC.setDataCost(i,j,1e5);
 			}
         }
 	}
@@ -3309,7 +3333,8 @@ void DualwayPropagation::setSegNeihbor(vector<PatchTraj>& pNodes, GCoptimization
 
 void DualwayPropagation::setSegDataItem(GCoptimizationGeneralGraph& segGraphC)
 {
-
+	segGraphC.setDataCost(0,1,0.5);
+	
 }
 
 void DualwayPropagation::setSegSmoothItem(GCoptimizationGeneralGraph& segGraphC)
@@ -3361,4 +3386,91 @@ bool DualwayPropagation::isAdjInSeq(PatchTraj& nodeA, PatchTraj& nodeB)
 	
 
 	return false;
+}
+
+void DualwayPropagation::getSegLabels(GCoptimizationGeneralGraph& segGraphC, vector<IndexType>& labels)
+{
+	IndexType vSize = labels.size();
+	for (IndexType i = 0; i < vSize; ++ i)
+	{
+		labels[i] = segGraphC.whatLabel(i);
+	}
+}
+
+ScalarType DualwayPropagation::motionSimilarityBetw2Nodes(IndexType i, IndexType j, vector<PatchTraj>& oriTraj)
+{
+	return 0.;
+}
+
+void DualwayPropagation::calculateTrans(IndexType lab,IndexType sFrame, IndexType tFrame, Matrix34& toTrans, Matrix34& backTrans)
+{
+	Matrix3X srCoor;
+	Matrix3X tgCoor;
+
+
+    getCoorByVtxBucket(lab,sFrame,srCoor);
+	getCoorByVtxBucket(lab,tFrame,tgCoor);
+
+	IndexType oriSize = srCoor.cols();
+	IndexType trgSize = tgCoor.cols();
+
+
+	DeformableRegistration nonrigid;
+
+	MatrixXXi vtxMap;
+	Matrix3X oriCopyCoor = srCoor;
+	Matrix3X tgCopyCoor = tgCoor;
+
+	vtxMap.resize(1,oriSize );
+	SICP::Parameters pa(false,2.0,10,1.2,1e5,20,20,1,1e-5); 
+
+	SICP::point_to_point(oriCopyCoor,tgCoor,vtxMap,pa);
+
+	nonrigid.alignTargetCoorChangeSize(tgCoor,vtxMap);
+
+	nonrigid.calculateAffineTrans(srCoor,tgCoor,toTrans);
+
+	//需要经过配准才可以计算仿射变换
+	vtxMap.resize(1,trgSize);
+
+	tgCoor.resize(3,trgSize);
+
+	tgCoor = tgCopyCoor;
+
+	SICP::point_to_point(tgCopyCoor,srCoor,vtxMap,pa);
+
+	nonrigid.alignTargetCoorChangeSize(srCoor,vtxMap);
+
+	nonrigid.calculateAffineTrans(tgCoor,srCoor,backTrans);
+
+
+}
+
+void DualwayPropagation::getCoorByVtxBucket(IndexType lab, IndexType frameId, Matrix3X& vtxCoor)
+{
+	IndexType gLev = hier_componets_[frameId].hier_graph.size();
+	--gLev;
+
+	map<IndexType,IndexType> labMap = hier_componets_[frameId].hier_label_vtxBucket_index[gLev];
+
+	HLabel* label_buctet = hier_componets_[frameId].hier_label_bucket[gLev][labMap[lab]];
+
+	Sample& smp = SampleSet::get_instance()[frameId];
+
+	auto vIter = label_buctet->vertex_bucket.begin();
+
+	auto vEnd = label_buctet->vertex_bucket.end();
+
+	IndexType vSize = label_buctet->vertex_bucket.size();
+
+	vtxCoor.resize(3,vSize);
+
+	IndexType i = 0;
+	for (; vIter != vEnd; ++ vIter, ++ i)
+	{
+		IndexType vId = vIter->first;
+
+		vtxCoor.col(i) = smp.vertices_matrix().col(vId);
+	}
+
 }

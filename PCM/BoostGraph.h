@@ -297,9 +297,12 @@ struct EdgeUnmarkError_greater_than
 
 struct PatchTraj
 {
+	PatchTraj(){}
 	IndexType label_id;
 	IndexType startFrame;
 	IndexType endFrame;
+	vector<Matrix34> fNode;
+	vector<Matrix34> bNode;
 };
 
 typedef priority_queue< EdgeSplitOrder, vector<EdgeSplitOrder>, EdgeUnmarkError_greater_than> OrderEdgeQueue;
