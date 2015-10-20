@@ -611,11 +611,6 @@ void CoSegmentation::hierComponets2Components()
 
 			map<IndexType,HVertex*>& vtx_bucket = (*lIter)->vertex_bucket;
 
-			if (vtx_bucket.size() < 5)
-			{
-				continue;
-			}
-
 			compo_idx = components_.size();
 
 			components_.push_back( Component(fId, pId) );
@@ -695,7 +690,9 @@ void CoSegmentation::components2HierComponets()
 					IndexType hg = (*hier_componets)[frame].hier_label_bucket.size();
 					--hg;
 
-					HVertex* getVtx = (*hier_componets)[frame].hier_label_bucket[hg][old_label]->vertex_bucket[vtx_idx];
+					IndexType idMap = (*hier_componets)[frame].hier_label_vtxBucket_index[hg][old_label];
+
+					HVertex* getVtx = (*hier_componets)[frame].hier_label_bucket[hg][idMap]->vertex_bucket[vtx_idx];
 
 					getVtx->label_parent.push_back(new_label);
 

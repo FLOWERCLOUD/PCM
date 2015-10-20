@@ -322,7 +322,7 @@ void DualwayPropagation:: init_labeles_graph_hier(ScalarType distThr)
 
 		GraphVertexProperty gvp;
 
-		map<IndexType,IndexType> labelLevel = citer->second.hier_label_vtxBucket_index[0];
+		map<IndexType,IndexType> labelLevel = citer->second.hier_label_vtxBucket_index[lbsize - 1];
 
 		auto labIndex = labelLevel.begin();
 
@@ -2190,8 +2190,7 @@ void DualwayPropagation::buildPatchCorrespondenceByLabel()
 		}
 	}
 }
-
-// 没有迭代操作
+ //---------------------------------------
 
 void DualwayPropagation::mergeSingleTinyPatches(IndexType vSize)
 {
@@ -2203,15 +2202,18 @@ void DualwayPropagation::mergeSingleTinyPatches(IndexType vSize)
 		IndexType fId = fiter->first;
 		if (hier_componets_.find(fId + 1) != hier_componets_.end())
 		{
-			IndexType gLevel = fiter->second.hier_graph.size();//合并最高层中的小块
-			--gLevel;
-
-	        pairFrameSimilar.mergeTinyPatches(fId,gLevel,vSize);
-
+	        pairFrameSimilar.mergeTinyPatches(fId,vSize);
 		}
 	}
 
+	Logger<<"After merge tiny patches.\n";
 
+	for (auto fIter = hier_componets_.begin(); fIter != hier_componets_.end(); ++ fIter)
+	{
+		IndexType gLevel = fIter->second.hier_label_bucket.size();
+		IndexType labeSize = fIter->second.hier_label_bucket[gLevel - 1].size();
+		Logger<<"  第"<<fIter->first<<"帧共分割出"<<labeSize<<"个块.\n";
+	}
 
 }
 
@@ -3221,8 +3223,6 @@ void DualwayPropagation::generTrajNodes(vector<PatchTraj>& pNodes)
 
 		IndexType lId = 0;
 
-		IndexType beforFrame = fId;
-
 		for (auto lIter = label_buctet.begin(); lIter != label_buctet.end(); lIter ++)
 		{
 			lId = (*lIter)->label_id;
@@ -3236,6 +3236,8 @@ void DualwayPropagation::generTrajNodes(vector<PatchTraj>& pNodes)
 
 			isPatchTrav[flKey] = true;
 
+			IndexType beforFrame = fId;
+
 			PatchTraj tempNode;
 
 			tempNode.label_id = lId;
@@ -3247,7 +3249,6 @@ void DualwayPropagation::generTrajNodes(vector<PatchTraj>& pNodes)
 			IndexType labId = labelIdx[lId];
 
 			HLabel* nextPatchPtr = label_buctet[labId]->next_corr;
-
 
 			while (nextPatchPtr != NULL)
 			{
@@ -3261,9 +3262,11 @@ void DualwayPropagation::generTrajNodes(vector<PatchTraj>& pNodes)
 
 			   Matrix34 toTrans;
 			   Matrix34 backTrans;
-			   //计算块的仿射变换矩阵---连续的计算变换矩阵
-			   calculateTrans(labId, beforFrame,nFId,toTrans,backTrans);
-			   //计算块的仿射变换矩阵
+
+			   toTrans.setZero();
+			   backTrans.setZero();
+
+			   calculateTrans(lId, beforFrame,nFId,toTrans,backTrans);
 
 			   tempNode.fNode.push_back(toTrans);
 
@@ -3310,10 +3313,10 @@ void DualwayPropagation::setSegNeihbor(vector<PatchTraj>& pNodes, GCoptimization
 	{
 		auto vvIter = (vIter + 1);
 
-		segGraphC.setLabel(i,0);
+		segGraphC.setLabel(i,i);
 
 		ScalarType dValue = 0.0;
-		segGraphC.setDataCost(i,i,dValue);
+		segGraphC.setDataCost(i,i,0.);
 
 		j = i + 1;
         for (; vvIter != pNodes.end(); ++ vvIter,++j )
@@ -3322,13 +3325,19 @@ void DualwayPropagation::setSegNeihbor(vector<PatchTraj>& pNodes, GCoptimization
 			{
 				segGraphC.setNeighbors(i,j);
 
+				dValue = motionSimilarityBetw2Nodes(i,j,pNodes);
+
 				segGraphC.setDataCost(i,j,dValue);
+
 			}else
 			{
 				segGraphC.setDataCost(i,j,1e5);
 			}
         }
 	}
+
+	segGraphC.printfNeig();
+
 }
 
 void DualwayPropagation::setSegDataItem(GCoptimizationGeneralGraph& segGraphC)
@@ -3399,7 +3408,44 @@ void DualwayPropagation::getSegLabels(GCoptimizationGeneralGraph& segGraphC, vec
 
 ScalarType DualwayPropagation::motionSimilarityBetw2Nodes(IndexType i, IndexType j, vector<PatchTraj>& oriTraj)
 {
-	return 0.;
+	//Frobenius
+	IndexType strF = max(oriTraj[i].startFrame, oriTraj[j].startFrame);
+
+	IndexType endF = min(oriTraj[i].endFrame, oriTraj[j].endFrame);
+
+	if (strF >= endF)
+	{
+		return 1e5;
+	}
+
+	ScalarType fDis = -1e5;
+
+	IndexType iStr = oriTraj[i].startFrame;
+	IndexType jStr = oriTraj[j].startFrame;
+
+	for (IndexType fid = strF; fid < endF; ++ fid)
+	{
+		Matrix34 iTrans;
+		Matrix34 jTrans;
+
+		iTrans = oriTraj[i].fNode[fid - iStr];
+		jTrans = oriTraj[j].fNode[fid - jStr];
+
+		Logger<<iTrans<<endl;
+
+		Logger<<jTrans<<endl;
+
+		Logger<<(iTrans - jTrans)<<endl;
+
+		ScalarType tDis = (iTrans - jTrans).norm();
+
+		if (tDis > fDis)
+		{
+			fDis = tDis;
+		}
+	}
+
+	return fDis;
 }
 
 void DualwayPropagation::calculateTrans(IndexType lab,IndexType sFrame, IndexType tFrame, Matrix34& toTrans, Matrix34& backTrans)

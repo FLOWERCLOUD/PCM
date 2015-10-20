@@ -2143,14 +2143,6 @@ bool DeformableRegistration::sampleValidTraj(vector<PCloudTraj> & totTraj,vector
  //---------------------------
  void DeformableRegistration::calculateAffineTrans(Matrix3X& srCoor, Matrix3X& tgCoor,Matrix34& affineMat)
  {
-	 //
-
-// 	 Logger<<"sr coor = "<<endl;
-// 	 Logger<<srCoor<<endl;
-// 
-// 	 Logger<<"tg coor = "<<endl;
-// 	 Logger<<tgCoor<<endl;
-
 	 MatrixXX srOriCoor = srCoor;
 
 	 MatrixXX tgOriCoor = tgCoor;
@@ -2164,16 +2156,11 @@ bool DeformableRegistration::sampleValidTraj(vector<PCloudTraj> & totTraj,vector
 
 	 MatrixXX rAT = rA.transpose();
 
-// 	 Logger<<"rAT = "<<endl;
-// 	 Logger<<rAT<<endl;
 
 	 //MatrixXX res = rAT.ldlt().solve(tgOriCoor.transpose() );
 	 MatrixXX res = rAT.fullPivHouseholderQr().solve(tgOriCoor.transpose() );
 
 	 affineMat = res.transpose();
-
-// 	 Logger<<" result transformation = "<<endl;
-// 	 Logger<<affineMat<<endl;
  }
  //---------------------------
 

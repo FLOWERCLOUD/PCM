@@ -2000,89 +2000,114 @@ void GraphMatch::getCorrCoor(Matrix3X& tgCoor, Matrix3X& corrCoor, MatrixXXi& vt
 
 }
 
-void GraphMatch::mergeTinyPatches(IndexType frameId, IndexType gLevel, IndexType outlierSize)
+void GraphMatch::mergeTinyPatches(IndexType frameId, IndexType outlierSize)
 {
- //set<IndexType> mergeS;
-// 	mergeS.insert(2);
-// 	mergeS.insert(7);
-// 	mergePatchesOri(gLevel,frameId,mergeS);
 
-
-// 	//遍历原图的点集--遍历目标图的点集
 	HFrame& cur_frame = components_[frameId];
 
-	LabelsGraph* curGraph = cur_frame.hier_graph[gLevel];
+	IndexType gLevel = cur_frame.hier_graph.size();//合并最高层中的小块
 
-	VertexIterator vBeginIter,vEndIter;
+	--gLevel;
 
-	AdjacencyIterator vAdjBeginIter,vAdjEndIter;
+	vector<HLabel*> vtxBucket = cur_frame.hier_label_bucket[gLevel];
 
-	tie(vBeginIter,vEndIter) = boost::vertices(*curGraph);
+	IndexType minSize = 1e5;
 
-	vector<HLabel*> vtxBucket = components_[frameId].hier_label_bucket[gLevel];
-
-	map<IndexType,IndexType>& indexMap = components_[frameId].hier_label_vtxBucket_index[gLevel];
-
-	set<IndexType> mergeS;
-
-	IndexType i = 0;
-
-	IndexType tempSize = 1e5;
-
-	vector<IndexType> minAdj;
-
-	for (auto vIter = vtxBucket.begin(); vIter != vtxBucket.end(); ++vIter,++i)
+	for (auto vIter = vtxBucket.begin(); vIter != vtxBucket.end(); ++vIter)
 	{
 		IndexType vSize= (*vIter)->vertex_bucket.size();
-		if( vSize > outlierSize) continue;
-		mergeS.clear();
-
-		VertexIterator nodeIter = (vBeginIter + i);
-		VertexDescriptor nodeDec = *nodeIter;
-		auto adjIter = boost::adjacent_vertices(nodeDec,*curGraph);
-
-		mergeS.insert(*nodeIter);
-
-		minAdj.clear();
-		for (; adjIter.first != adjIter.second; ++ adjIter.first)
+		if (vSize < minSize)
 		{
-			IndexType adjSize = vtxBucket[*(adjIter.first)]->vertex_bucket.size();	
-// 			if (adjSize > vSize )
-// 			{
-// 				mergeS.insert(*(adjIter.first) );
-// 				break;
-// 			}
-			//在邻域中找一个最小的块进行合并
+			minSize = vSize;
+		}
+	}
 
-			if (adjSize > vSize)
+	while (minSize < outlierSize)
+	{
+		map<IndexType,IndexType>& indexMap = cur_frame.hier_label_vtxBucket_index[gLevel];
+
+		LabelsGraph* curGraph = cur_frame.hier_graph[gLevel];
+
+		VertexIterator vBeginIter,vEndIter;
+
+		AdjacencyIterator vAdjBeginIter,vAdjEndIter;
+
+		tie(vBeginIter,vEndIter) = boost::vertices(*curGraph);
+
+		set<IndexType> mergeS;
+
+		IndexType i = 0;
+
+		IndexType tempSize = 1e5;
+
+		vector<IndexType> minAdj;
+
+		for (auto vIter = vtxBucket.begin(); vIter != vtxBucket.end(); ++vIter,++i)
+		{
+			IndexType vSize= (*vIter)->vertex_bucket.size();
+			if( vSize > outlierSize) continue;
+			mergeS.clear();
+
+			VertexIterator nodeIter = (vBeginIter + i);
+			VertexDescriptor nodeDec = *nodeIter;
+			auto adjIter = boost::adjacent_vertices(nodeDec,*curGraph);
+
+			mergeS.insert(*nodeIter);
+
+			minAdj.clear();
+			for (; adjIter.first != adjIter.second; ++ adjIter.first)
 			{
-				if (minAdj.empty())
+				IndexType adjSize = vtxBucket[*(adjIter.first)]->vertex_bucket.size();	
+				if (adjSize > vSize) //合并到小的块中
 				{
-				   minAdj.push_back(*(adjIter.first) );
-				}else
-				{
-					auto adjB =minAdj.begin();
-					IndexType bSize = vtxBucket[*adjB]->vertex_bucket.size();
-					if (adjSize < bSize)
+					if (minAdj.empty())
 					{
-						minAdj.insert(adjB,*(adjIter.first) );
+						minAdj.push_back(*(adjIter.first) );
+					}else
+					{
+						auto adjB =minAdj.begin();
+						IndexType bSize = vtxBucket[*adjB]->vertex_bucket.size();
+						if (adjSize < bSize)
+						{
+							minAdj.insert(adjB,*(adjIter.first) );
+						}
 					}
 				}
+
 			}
 
-		}
+			if (!minAdj.empty())
+			{
+				mergeS.insert( *(minAdj.begin() ) );
+			}
 
-		if (!minAdj.empty())
+			if ( mergeS.size() > 1)
+			{
+				mergePatchesOri(gLevel,frameId,mergeS);
+				break;
+			}
+
+		} //end for vtx bucket;
+
+
+		//判断是否继续merge操作
+
+		gLevel = cur_frame.hier_graph.size();//合并最高层中的小块
+
+		--gLevel;
+
+		vtxBucket = cur_frame.hier_label_bucket[gLevel];
+
+		minSize = 1e5;
+
+		for (auto vIter = vtxBucket.begin(); vIter != vtxBucket.end(); ++vIter)
 		{
-			mergeS.insert( *(minAdj.begin() ) );
+			IndexType vSize= (*vIter)->vertex_bucket.size();
+			if (vSize < minSize)
+			{
+				minSize = vSize;
+			}
 		}
-
-		if ( mergeS.size() > 1)
-		{
-		     mergePatchesOri(gLevel,frameId,mergeS);
-			 break;
-		}
-
 
 	}
 

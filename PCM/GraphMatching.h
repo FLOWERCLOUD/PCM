@@ -89,7 +89,7 @@ public:
 
 	void getCorrCoor(Matrix3X& tgCoor, Matrix3X& corrCoor, MatrixXXi& vtxMap);
 
-	void mergeTinyPatches(IndexType frameId, IndexType gLevel, IndexType outlierSize);
+	void mergeTinyPatches(IndexType frameId, IndexType outlierSize);
 
 public:
 	IndexType srFrame;
