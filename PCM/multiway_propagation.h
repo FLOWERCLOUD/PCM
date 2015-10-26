@@ -578,6 +578,7 @@ public:
 
 	void getCoorByVtxBucket(IndexType lab, IndexType frameId, Matrix3X& vtxCoor);
 
+	void initGraphAfterCoseg();
 
 public:
 

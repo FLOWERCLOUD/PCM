@@ -377,6 +377,9 @@ void DualwayPropagation:: init_labeles_graph_hier(ScalarType distThr)
 						PointType point2 =  s.vertices_matrix().col(index2);
 
 						ScalarType distance = (point1 - point2).norm();
+
+						//用dijstra最短距离来计算两点之间的距离
+
 						if(distance < minDis)minDis = distance;
 						IndexType label1 = hier_componets_[citer->first].label_of_vtx[ index1];
 						IndexType label2 = hier_componets_[citer->first].label_of_vtx[ index2];
@@ -2173,17 +2176,19 @@ void DualwayPropagation::buildPatchCorrespondenceByLabel()
 
 			vector<HLabel*>& tg_labelBucket = hier_componets_[frame_id + 1].hier_label_bucket[tLevel];
 
-			IndexType i = 0;
-			for ( auto mIter = sr_labelIndexMap.begin(); mIter != sr_labelIndexMap.end(); ++mIter,++i )
+
+			for ( auto mIter = sr_labelIndexMap.begin(); mIter != sr_labelIndexMap.end(); ++mIter )
 			{
 				IndexType labelId = mIter->first;
+				IndexType realSrLabIdx = mIter->second;
+
 				if (tg_labelIndexMap.find(labelId) != tg_labelIndexMap.end() )//存在相同的label
 				{
 					IndexType corLabelId = tg_labelIndexMap[labelId];
 
-					labelBucket[i]->next_corr = tg_labelBucket[corLabelId]; //next correspondence
+					labelBucket[realSrLabIdx]->next_corr = tg_labelBucket[corLabelId]; //next correspondence
 
-					tg_labelBucket[corLabelId]->prev_corr = labelBucket[i]; //prev correspondence
+					tg_labelBucket[corLabelId]->prev_corr = labelBucket[realSrLabIdx]; //prev correspondence
 				}
 			}
 
@@ -3431,11 +3436,11 @@ ScalarType DualwayPropagation::motionSimilarityBetw2Nodes(IndexType i, IndexType
 		iTrans = oriTraj[i].fNode[fid - iStr];
 		jTrans = oriTraj[j].fNode[fid - jStr];
 
-		Logger<<iTrans<<endl;
-
-		Logger<<jTrans<<endl;
-
-		Logger<<(iTrans - jTrans)<<endl;
+// 		Logger<<iTrans<<endl;
+// 
+// 		Logger<<jTrans<<endl;
+// 
+// 		Logger<<(iTrans - jTrans)<<endl;
 
 		ScalarType tDis = (iTrans - jTrans).norm();
 
@@ -3519,4 +3524,64 @@ void DualwayPropagation::getCoorByVtxBucket(IndexType lab, IndexType frameId, Ma
 		vtxCoor.col(i) = smp.vertices_matrix().col(vId);
 	}
 
+}
+
+void DualwayPropagation::initGraphAfterCoseg()
+{
+	//HFrame 里面有vtx_bucket 和 vtxBucketMap, 但没有graph; 
+	//coseg之后图不变,但图对应的节点已经变了,需要调整vector的顺序
+
+
+	for (auto fIter = hier_componets_.begin(); fIter != hier_componets_.end(); fIter ++)
+	{
+		IndexType bLevel = fIter->second.hier_label_bucket.size();//访问最高层 图结构
+		--bLevel;
+
+		IndexType gLevel = fIter->second.hier_graph.size();  //此时,graph比bucket少一层
+	    --gLevel;
+
+		LabelsGraph* nGraph =  new LabelsGraph(  *(fIter->second.hier_graph[gLevel] ) );//获取当前最新的图结构 
+
+		fIter->second.hier_graph.push_back(nGraph); //赋旧图结构
+
+		vector<HLabel*> temp = fIter->second.hier_label_bucket[bLevel]; //最上层的bucket
+
+		vector<HLabel*> secBucket = fIter->second.hier_label_bucket[bLevel - 1]; //倒数第二层的bucket
+
+		map<IndexType, IndexType> secbucketIdx = fIter->second.hier_label_vtxBucket_index[bLevel - 1];
+
+		map<IndexType, IndexType> lasterbucketIdx = fIter->second.hier_label_vtxBucket_index[bLevel];
+
+		vector<HLabel*> midBucket;
+		midBucket.resize(secBucket.size() );
+
+		map<IndexType, IndexType> midBucketIdx;
+		midBucketIdx.clear();
+
+		IndexType i = 0;
+		for (auto hiter = secBucket.begin(); hiter != secBucket.end(); ++ hiter,++ i)
+		{
+
+			HVertex* tV= (*(*hiter)->vertex_bucket.begin()).second;
+
+			IndexType vtxId = tV->vtx_id;
+
+			IndexType lasterLab = fIter->second.label_of_vtx[vtxId];
+
+			IndexType labIdx = lasterbucketIdx[lasterLab];
+
+			//IndexType interIdxM = secbucketIdx[iterLab];
+// 			midBucketIdx[lasterLab] = interIdxM; 
+// 			midBucket[interIdxM] = temp[labIdx];
+
+			midBucketIdx[lasterLab] = i;
+
+			midBucket.push_back(temp[labIdx] );
+		}
+
+		fIter->second.hier_label_bucket[bLevel] = midBucket;
+
+		fIter->second.hier_label_vtxBucket_index[bLevel] = midBucketIdx;
+
+	}
 }
