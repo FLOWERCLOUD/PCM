@@ -3299,9 +3299,10 @@ void DualwayPropagation::graphCuts(vector<PatchTraj>& pNodes, vector<IndexType>&
    //setSegSmoothItem(*segGraphC);//用形状统计图
 
    segGraphC->expansion(2);
+   segGraphC->swap(1);
 
-   //segGraphC->whatLabel(1);
    getSegLabels(*segGraphC,labels);
+
 
 }
 
@@ -3320,7 +3321,7 @@ void DualwayPropagation::setSegNeihbor(vector<PatchTraj>& pNodes, GCoptimization
 
 		segGraphC.setLabel(i,i);
 
-		ScalarType dValue = 0.0;
+		ScalarType dValue = 1000.0;
 		segGraphC.setDataCost(i,i,0.);
 
 		j = i + 1;
@@ -3340,6 +3341,8 @@ void DualwayPropagation::setSegNeihbor(vector<PatchTraj>& pNodes, GCoptimization
 			}
         }
 	}
+
+	segGraphC.setLabel(i,i); //the end() node
 
 	segGraphC.printfNeig();
 
@@ -3408,6 +3411,9 @@ void DualwayPropagation::getSegLabels(GCoptimizationGeneralGraph& segGraphC, vec
 	for (IndexType i = 0; i < vSize; ++ i)
 	{
 		labels[i] = segGraphC.whatLabel(i);
+
+		printf("%d Node's label is %d.\n",i,labels[i]);
+
 	}
 }
 

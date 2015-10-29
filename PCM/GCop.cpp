@@ -3235,7 +3235,7 @@ void GCop::cosegProcessing(DualwayPropagation& dp_solver)
 
 	coseg_solver.components2HierComponets();
 
-	dp_solver.init_labeles_graph_hier(0.03); //不需要构造一个图结构, 因为共分割并没有改变原来的图结构.只需要调整vector<HLabel*>到原来的就可以
+	dp_solver.init_labeles_graph_hier(0.015); //不需要构造一个图结构, 因为共分割并没有改变原来的图结构.只需要调整vector<HLabel*>到原来的就可以
 
 	//dp_solver.initGraphAfterCoseg();
 

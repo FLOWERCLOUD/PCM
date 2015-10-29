@@ -4,6 +4,8 @@
 #include "DeformaleRegistration.h"
 #include "sample_set.h"
 
+#define USNORMAL
+
 class Traj2ModDistanceFunc{
 
 public:
@@ -128,17 +130,18 @@ public:
 			rowTrajCoordinate.block(0, 3 * nodeId,1,3) = trajNode.transpose().block(0,0,1,3);
 
 			///normal
-// 			N_x = m_smpSet[startFrame][vtxIndex].nx();
-// 			N_y = m_smpSet[startFrame][vtxIndex].ny();
-// 			N_z = m_smpSet[startFrame][vtxIndex].nz();
-			//NormalType tNormal(N_x,N_y,N_z);
-			//NormalType tNormal(0,0,-1);
+#ifdef USNORMAL
+			N_x = m_smpSet[startFrame][vtxIndex].nx();
+			N_y = m_smpSet[startFrame][vtxIndex].ny();
+			N_z = m_smpSet[startFrame][vtxIndex].nz();
+			NormalType tNormal(N_x,N_y,N_z);
+			NormalType tNormal(0,0,-1);
 
-// 			TrajNormal.col(nodeId) = tNormal;
-// 			rowTrajNormal.block(0, 3 * nodeId,1,3) = tNormal.transpose().block(0,0,1,3);
+			TrajNormal.col(nodeId) = tNormal;
+			rowTrajNormal.block(0, 3 * nodeId,1,3) = tNormal.transpose().block(0,0,1,3);
+#endif
+
 		}
-
-
 
 
 		// produce a  new traj under motion mode [model]
@@ -158,15 +161,13 @@ public:
 			tempdis = ((tempTraj.row(0) - rowTrajCoordinate.row(0)).norm()) / totFrame;
 
 			//tempdis = 0.0;
-			///
-			//calNewTrajNormalUnderModel(nodeId,model,TrajNormal.col(nodeId),tempTrajNormal);
+#ifdef USNORMAL
+			calNewTrajNormalUnderModel(nodeId,model,TrajNormal.col(nodeId),tempTrajNormal);
 			//calNewTrajNormalUnderModel_Coor(nodeId,model,TrajNormal.col(nodeId),tempTrajNormal,TrajCoordinate);
 			//ScalarType n_dot = (tempTrajNormal.row(0)-rowTrajNormal.row(0)).norm()/totFrame;
-			//ScalarType n_dot = calcualteInnerProduct(rowTrajNormal,tempTrajNormal);
-			///
-
-			//tempdis =  /*tempdis + */n_dot;
-			//tempdis += 20* n_dot;
+			ScalarType n_dot = calcualteInnerProduct(rowTrajNormal,tempTrajNormal);
+			tempdis += /*20* */n_dot;
+#endif // USNORMAL
 
 			if(tempdis < dis)
 			{
@@ -396,10 +397,6 @@ public:
 			for (IndexType fId = 0; fId < fNum; fId ++)
 			{
 				rotmate = model.fNode[nodeId + fId];
-				//x_mean = model.Centers.col(nodeId + fId);
-				//y_mean = model.Centers.col(nodeId + fId + 1);
-				//transPoint = rotmate * (transPoint - x_mean) + y_mean;
-
 				transPoint = rotmate * transPoint;
 				rowNewTrajNorm.block(0, 3 * (nodeId + fId + 1),1,3) = transPoint.transpose().block(0,0,1,3);
 			}
@@ -408,10 +405,6 @@ public:
 			for(IndexType fId = bNum - 1 ; fId >= 0; fId --)
 			{
 				rotmate = model.bNode[fId];
-				//x_mean  = model.Centers.col(fId + 1);
-				//y_mean  = model.Centers.col(fId);
-
-				//transPoint = rotmate * (transPoint - x_mean) + y_mean;
 				transPoint = rotmate* transPoint;
 				rowNewTrajNorm.block(0, 3 * fId,1,3) = transPoint.transpose().block(0,0,1,3);
 
@@ -424,13 +417,6 @@ public:
 				for (IndexType fId = 0; fId < totFrame; fId ++)
 				{
 					rotmate = model.fNode[fId];
-					//x_mean = model.Centers.col(fId);
-					//y_mean = model.Centers.col(fId + 1);
-
-					//transPoint = rotmate * (transPoint - x_mean) + y_mean;
-					//Logger<<rotmate<<endl;
-
-
 					transPoint = rotmate* transPoint;
 					rowNewTrajNorm.block(0, 3 * (fId + 1),1,3) = transPoint.transpose().block(0,0,1,3);
 				}
@@ -440,10 +426,6 @@ public:
 				for(IndexType fId = totFrame - 1; fId >= 0;fId --)
 				{
 					rotmate = model.bNode[fId];
-					//x_mean = model.Centers.col(fId + 1);
-					//y_mean = model.Centers.col(fId);
-
-					//transPoint = rotmate * (transPoint - x_mean) + y_mean; 
 					transPoint = rotmate* transPoint;
 					rowNewTrajNorm.block(0, 3 * fId,1,3) = transPoint.transpose().block(0,0,1,3);
 
