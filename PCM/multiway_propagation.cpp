@@ -3296,7 +3296,7 @@ void DualwayPropagation::graphCuts(vector<PatchTraj>& pNodes, vector<IndexType>&
 
    setSegNeihbor(pNodes,*segGraphC);//设置边界,同时设置数据项  //setSegDataItem(*segGraphC);
 
-   //setSegSmoothItem(*segGraphC);//用形状统计图
+   setSegSmoothItem(*segGraphC);//用形状统计图
 
    segGraphC->expansion(2);
    segGraphC->swap(1);
@@ -3356,7 +3356,7 @@ void DualwayPropagation::setSegDataItem(GCoptimizationGeneralGraph& segGraphC)
 
 void DualwayPropagation::setSegSmoothItem(GCoptimizationGeneralGraph& segGraphC)
 {
-
+//运用SDF值来确定两块之间的相似性
 }
 
 bool DualwayPropagation::isAdjInSeq(PatchTraj& nodeA, PatchTraj& nodeB)

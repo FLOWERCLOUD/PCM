@@ -140,7 +140,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Program Files\MATLAB\R2013a\extern\include;..;G:\F_dis\VCC\PCM\PCM;..\eigen-3-1-4;.\GeneratedFiles;.;.\GeneratedFiles\$(ConfigurationName);$(QTDIR_64_12)\include\QtCore;$(QTDIR_64_12)\include;$(QTDIR_64_12)\include\QtGui;$(QTDIR_64_12)\include\QtOpenGL;$(QTDIR_64_12)\include\QtWidgets;$(QTDIR_64_12)\include\QtXml;E:\software_8_30\opencv\build\include;E:\software_8_30\opencv\build\include\opencv;E:\software_8_30\opencv\build\include\opencv2;G:\F_dis\VCC\PCM\PCM\boost_1_59_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MatlabDir);..;$(SolutionDir);..\eigen-3-1-4;.\GeneratedFiles;.;.\GeneratedFiles\$(ConfigurationName);$(QTDIR_64_12)\include\QtCore;$(QTDIR_64_12)\include;$(QTDIR_64_12)\include\QtGui;$(QTDIR_64_12)\include\QtOpenGL;$(QTDIR_64_12)\include\QtWidgets;$(QTDIR_64_12)\include\QtXml;$(OpenCVDir);$(OpenCVcv);$(BoostDir);$(OpenCVc2);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -148,7 +148,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>C:\Program Files\MATLAB\R2013a\extern\lib\win64\microsoft;G:\F_dis\VCC\PCM\PCM\x64\Release;$(QTDIR_64_12)\lib;E:\software_8_30\opencv\build\x64\vc11\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>G:\F_dis\VCC\PCM\PCM\x64\Release;$(SolutionDir)\x64\Release;$(MatlabLib);$(QTDIR_64_12)\lib;$(OPencvLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glu32.lib;QGLViewer2.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Core.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Gui.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5OpenGL.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Widgets.lib;libeng.lib;libmx.lib;libmex.lib;libmat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>

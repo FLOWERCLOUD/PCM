@@ -135,7 +135,7 @@ public:
 			N_y = m_smpSet[startFrame][vtxIndex].ny();
 			N_z = m_smpSet[startFrame][vtxIndex].nz();
 			NormalType tNormal(N_x,N_y,N_z);
-			NormalType tNormal(0,0,-1);
+			//NormalType tNormal(0,0,-1);
 
 			TrajNormal.col(nodeId) = tNormal;
 			rowTrajNormal.block(0, 3 * nodeId,1,3) = tNormal.transpose().block(0,0,1,3);
@@ -156,11 +156,11 @@ public:
 
 		for (IndexType nodeId = 0; nodeId < totFrame; nodeId ++)
 		{
-			tempTraj.setZero();
-			calNewTrajUnderModel(nodeId,model,TrajCoordinate.col(nodeId),tempTraj);
-			tempdis = ((tempTraj.row(0) - rowTrajCoordinate.row(0)).norm()) / totFrame;
+			//只用法向
+// 			tempTraj.setZero();
+// 			calNewTrajUnderModel(nodeId,model,TrajCoordinate.col(nodeId),tempTraj);
+// 			tempdis = ((tempTraj.row(0) - rowTrajCoordinate.row(0)).norm()) / totFrame;
 
-			//tempdis = 0.0;
 #ifdef USNORMAL
 			calNewTrajNormalUnderModel(nodeId,model,TrajNormal.col(nodeId),tempTrajNormal);
 			//calNewTrajNormalUnderModel_Coor(nodeId,model,TrajNormal.col(nodeId),tempTrajNormal,TrajCoordinate);
@@ -547,7 +547,7 @@ public:
 			ScalarType temp = 1. - abs(sNorm.dot(tNorm));
 			res += temp;
 		}
-		return 3*res/(tot/*-3*/);
+		return 3*res/(tot);
 	}
 //private:
 public:

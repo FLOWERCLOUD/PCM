@@ -3216,7 +3216,7 @@ void GCop::splitProcess(DualwayPropagation& dp_solver)
  	dp_solver.smoothAfterSplit(); //k =30,分裂之后进行smooth操作
  
     //平滑处理之后,有些块点个数变为零,或者个数很小,需要进行合并操作!
-	dp_solver.mergeSingleTinyPatches(10); //加入了循环操作,
+	dp_solver.mergeSingleTinyPatches(10); //remove empty segments 加入了循环操作,
 
 //      dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
 //   
@@ -3225,7 +3225,7 @@ void GCop::splitProcess(DualwayPropagation& dp_solver)
 //--------------------------
 void GCop::cosegProcessing(DualwayPropagation& dp_solver)
 {
-	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1014cosegResults.txt";
+	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1101cosegResults.txt";
 
 	CoSegmentation coseg_solver(SampleSet::get_instance(),dp_solver.getCompents());
 	
