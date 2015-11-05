@@ -4,9 +4,9 @@
 #include "pool_allocator.h"
 #include "tracer.h"
 
-// #include "boost/graph/adjacency_list.hpp"
-// #include "boost/graph/named_graph.hpp"
-
+#include <engine.h>
+#include <time.h>
+#include <direct.h>
 
 #include <queue>
 #include <vector>
@@ -579,6 +579,8 @@ public:
 	void getCoorByVtxBucket(IndexType lab, IndexType frameId, Matrix3X& vtxCoor);
 
 	void initGraphAfterCoseg();
+
+	void calculateSimilar2Componet();
 
 public:
 

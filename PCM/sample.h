@@ -75,6 +75,15 @@ public:
 
 	Box getBox(){return box_;}
 
+public:
+	inline Matrix3X& nor_matrix()
+	{
+		if (kd_tree_should_rebuild_)
+		{
+			build_kdtree();
+		}
+		return nor_matrix_;
+	}
 // public:
 // 	QMutex										mutex_;
 
@@ -84,6 +93,9 @@ private:
 	Box						box_;
 
 	Matrix3X									vtx_matrix_; // 3 * NumOfVtx
+	//
+	Matrix3X                                    nor_matrix_;
+	//
 	//Attention: kdtree is just a adapter, it means it use the reference of its data source
 	nanoflann::KDTreeAdaptor<Matrix3X, 3>*		kd_tree_;
 	bool										kd_tree_should_rebuild_;

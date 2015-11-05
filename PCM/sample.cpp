@@ -134,12 +134,14 @@ void Sample::build_kdtree()
 
 	size_t n_vtx = vertices_.size();
 	vtx_matrix_ = Matrix3X( 3, n_vtx );
-
+	nor_matrix_  = Matrix3X(3,n_vtx );
 	//reconstruct vtx_matrix
 	for ( IndexType v_idx = 0; v_idx < n_vtx; v_idx++ )
 	{
 		Vertex*	pv = vertices_[v_idx];
 		vtx_matrix_.col(v_idx) << pv->x() , pv->y() , pv->z();
+
+		nor_matrix_.col(v_idx) <<pv->nx(), pv->ny(), pv->nz();
 	}
 
 	kd_tree_ = new nanoflann::KDTreeAdaptor<Matrix3X, 3>(vtx_matrix_);

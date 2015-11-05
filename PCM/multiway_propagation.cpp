@@ -8,7 +8,7 @@
 #define frame_label_to_key(f,l) ((f<<16)|l)
 #define get_index_from_key(k) (k&0xffff)
 #define get_frame_from_key(k) (k>>16)
-
+#define get_current_dir _getcwd
 
 
 PoolAllocator DualwayPropagation::allocator_;
@@ -3296,6 +3296,8 @@ void DualwayPropagation::graphCuts(vector<PatchTraj>& pNodes, vector<IndexType>&
 
    setSegNeihbor(pNodes,*segGraphC);//设置边界,同时设置数据项  //setSegDataItem(*segGraphC);
 
+   calculateSimilar2Componet();
+
    setSegSmoothItem(*segGraphC);//用形状统计图
 
    segGraphC->expansion(2);
@@ -3589,5 +3591,153 @@ void DualwayPropagation::initGraphAfterCoseg()
 
 		fIter->second.hier_label_vtxBucket_index[bLevel] = midBucketIdx;
 
+	}
+}
+
+void DualwayPropagation::calculateSimilar2Componet()
+{
+	Engine* ep;
+	if (! (ep = engOpen(NULL)) )
+	{
+		Logger<< "Can't not start Matlab engine.\n";
+		return;
+	}
+
+	//Get the executable file's path
+	char cur_path[FILENAME_MAX];
+	if (!get_current_dir(cur_path, sizeof(cur_path)))
+	{
+		Logger<<"read error current path.\n";
+		return;
+	}
+
+	cur_path[sizeof(cur_path) - 1] = '\0';
+	strcat(cur_path,"\\sdf_dist");
+	char cd_cur_path[FILENAME_MAX + 3] = "cd ";
+	strcat(cd_cur_path, cur_path);
+	engEvalString(ep, cd_cur_path );
+
+	//函数调用 "sdf_dist_matrix( points, normals, patches, patch_to_do, outliers, idx, flat_strictness )"
+
+	for (auto fIter = hier_componets_.begin(); fIter != hier_componets_.end(); fIter ++)
+	{
+		IndexType bLevel = fIter->second.hier_label_bucket.size();//访问最高层 图结构
+
+		--bLevel;
+
+		Sample& tempS = SampleSet::get_instance()[fIter->first];
+
+		map<IndexType,IndexType>& vId2Graph = hier_componets_[fIter->first].gId_of_vtx;
+
+		IndexType sVSize = vId2Graph.size();
+
+ 		Eigen::MatrixXd sCoorMat;
+ 
+ 		Eigen::MatrixXd sNormMat;
+        
+		sCoorMat.resize(3,sVSize);
+
+		sNormMat.resize(3,sVSize);
+
+
+        for (auto mBeg = vId2Graph.begin(); mBeg != vId2Graph.end(); ++ mBeg)
+        {
+			IndexType vIdOri = mBeg->first;
+			IndexType vIdGra = mBeg->second;
+
+			sCoorMat.col(vIdGra) << tempS.vertices_matrix()(0,vIdOri),tempS.vertices_matrix()(1,vIdOri),tempS.vertices_matrix()(2,vIdOri);
+			sNormMat.col(vIdGra) << tempS.nor_matrix()(0,vIdOri),tempS.nor_matrix()(1,vIdOri),tempS.nor_matrix()(2,vIdOri);
+        }
+
+		mxArray* mxCoor = mxCreateDoubleMatrix(3,sVSize,mxREAL);
+
+		mxArray* mxNorm = mxCreateDoubleMatrix(3,sVSize,mxREAL);
+
+		memcpy( (char*)mxGetPr(mxCoor), (char*)sCoorMat.data(), 3*sVSize*sizeof(double) );
+
+		engPutVariable(ep,"points",mxCoor);
+
+		memcpy((char*)mxGetPr(mxNorm), (char*)sNormMat.data(), 3*sVSize*sizeof(double) );
+
+		engPutVariable(ep,"normals",mxNorm);
+
+		vector<HLabel*> label_buctet = hier_componets_[fIter->first].hier_label_bucket[bLevel];
+
+		IndexType vBSize = label_buctet.size();
+
+		auto vIter = label_buctet.begin();
+
+		auto vEnd = label_buctet.end();
+
+		mwSize * te = new mwSize[vBSize];
+
+		Eigen::VectorXd patchTodoVS;
+
+		patchTodoVS.resize(vBSize,1);
+
+		Eigen::VectorXd vIdAll;
+
+		vIdAll.resize(sVSize,1);
+
+		IndexType iV = 0;
+		IndexType iVV = 0;
+
+		for (; vIter != vEnd; ++ vIter, ++ iV)
+		{
+			auto vtxBktBeg =  (*vIter)->vertex_bucket.begin();
+
+			auto vtxBktEnd =  (*vIter)->vertex_bucket.end();
+
+			IndexType vSize = (*vIter)->vertex_bucket.size();
+
+			te[iV] = vSize;
+		    
+			patchTodoVS[iV] = (iV + 1);
+
+			for (; vtxBktBeg != vtxBktEnd; ++ vtxBktBeg)
+			{
+				IndexType vtxId = vtxBktBeg->first;
+
+				IndexType gVtxId = vId2Graph[vtxId];
+
+				vIdAll[iVV] = gVtxId;
+
+				++ iVV;
+			}
+		}
+
+		const mwSize *dims = te; 
+
+		mxArray* mxPatches = mxCreateCellArray(vBSize, dims);//(维数,各个维度的长度)
+	    
+	    mxArray* mxPatchTodo  = mxCreateDoubleMatrix(1, label_buctet.size(),mxREAL);
+
+		memcpy((char*)mxGetPr(mxPatchTodo), (char*)patchTodoVS.data(), label_buctet.size() * sizeof(double) );
+
+		engPutVariable(ep,"patches",mxPatches);
+
+		engPutVariable(ep,"patch_to_do",mxPatchTodo);
+
+		mxArray* outlier = mxCreateDoubleMatrix(1,1,mxREAL);
+
+		engPutVariable(ep,"outliers",outlier);
+
+		mxArray* pointId = mxCreateDoubleMatrix(1, vId2Graph.size(),mxREAL);
+
+		memcpy((char*)mxGetPr(pointId), (char*)vIdAll.data(), vId2Graph.size() * sizeof(double) );
+
+		engPutVariable(ep,"idx",pointId);
+
+		mxArray* flat_st = mxCreateDoubleScalar(0.1);
+
+		engPutVariable(ep,"flat_strictness",flat_st);
+
+		engEvalString(ep,"dist_matrix = sdf_dist_matrix( points, normals, patches, patch_to_do, outliers, idx, flat_strictness );" );
+
+		mxArray* mxSimilar = NULL;
+
+		mxSimilar = engGetVariable(ep,"dist_matrix");
+
+		engClose(ep);
 	}
 }
