@@ -585,6 +585,7 @@ public:
 public:
 
 	Sample* downSample;
+	vector<Eigen::MatrixXd> patchSimilarMea;
 
 private:
 	map<IndexType, CFrame> components_;

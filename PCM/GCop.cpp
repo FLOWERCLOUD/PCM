@@ -1,6 +1,8 @@
 #include "GCop.h"
 #include"sample_set.h"
 
+#define get_current_dir _getcwd
+
 using namespace std;
 
 #define SHOW_SAMPLE
@@ -67,7 +69,6 @@ void GCop::run()
 	Logger<<"Start Split & Coseg & Merge Process!\n";
 
 	//在初始分割之后, 分别进行split,coseg以及merge过程. 20151009
-
 	//horse data
 	char* in_label_file = "D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\panther\\CoSeg\\update7TotLabels(2_10)_edit.txt";//j-linkage后每帧的分割结果
 

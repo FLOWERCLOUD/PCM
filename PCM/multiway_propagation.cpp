@@ -3193,6 +3193,9 @@ void DualwayPropagation::show_corresponding(int f)
 
 void DualwayPropagation::mergePatchTraj()
 {
+
+   calculateSimilar2Componet();
+
 	vector<PatchTraj> ptnodes;
 
 
@@ -3296,11 +3299,12 @@ void DualwayPropagation::graphCuts(vector<PatchTraj>& pNodes, vector<IndexType>&
 
    setSegNeihbor(pNodes,*segGraphC);//设置边界,同时设置数据项  //setSegDataItem(*segGraphC);
 
-   calculateSimilar2Componet();
+   //calculateSimilar2Componet();
 
    setSegSmoothItem(*segGraphC);//用形状统计图
 
    segGraphC->expansion(2);
+
    segGraphC->swap(1);
 
    getSegLabels(*segGraphC,labels);
@@ -3596,7 +3600,10 @@ void DualwayPropagation::initGraphAfterCoseg()
 
 void DualwayPropagation::calculateSimilar2Componet()
 {
+	patchSimilarMea.clear();
+
 	Engine* ep;
+
 	if (! (ep = engOpen(NULL)) )
 	{
 		Logger<< "Can't not start Matlab engine.\n";
@@ -3631,14 +3638,17 @@ void DualwayPropagation::calculateSimilar2Componet()
 
 		IndexType sVSize = vId2Graph.size();
 
- 		Eigen::MatrixXd sCoorMat;
- 
- 		Eigen::MatrixXd sNormMat;
-        
+//  		Eigen::MatrixXd sCoorMat;
+//  
+//  		Eigen::MatrixXd sNormMat;
+    
+		MatrixXXDR sCoorMat;
+
+		MatrixXXDR sNormMat;
+
 		sCoorMat.resize(3,sVSize);
 
 		sNormMat.resize(3,sVSize);
-
 
         for (auto mBeg = vId2Graph.begin(); mBeg != vId2Graph.end(); ++ mBeg)
         {
@@ -3649,9 +3659,9 @@ void DualwayPropagation::calculateSimilar2Componet()
 			sNormMat.col(vIdGra) << tempS.nor_matrix()(0,vIdOri),tempS.nor_matrix()(1,vIdOri),tempS.nor_matrix()(2,vIdOri);
         }
 
-		mxArray* mxCoor = mxCreateDoubleMatrix(3,sVSize,mxREAL);
+		mxArray* mxCoor = mxCreateDoubleMatrix(sVSize, 3, mxREAL);
 
-		mxArray* mxNorm = mxCreateDoubleMatrix(3,sVSize,mxREAL);
+		mxArray* mxNorm = mxCreateDoubleMatrix(sVSize, 3, mxREAL);
 
 		memcpy( (char*)mxGetPr(mxCoor), (char*)sCoorMat.data(), 3*sVSize*sizeof(double) );
 
@@ -3671,6 +3681,12 @@ void DualwayPropagation::calculateSimilar2Componet()
 
 		mwSize * te = new mwSize[vBSize];
 
+		mwSize* ndim = new mwSize[1];
+
+		ndim[0] = vBSize;
+
+		mxArray *mxPatches = mxCreateCellArray(1, ndim);//(维数,各个维度的长度)
+
 		Eigen::VectorXd patchTodoVS;
 
 		patchTodoVS.resize(vBSize,1);
@@ -3680,7 +3696,7 @@ void DualwayPropagation::calculateSimilar2Componet()
 		vIdAll.resize(sVSize,1);
 
 		IndexType iV = 0;
-		IndexType iVV = 0;
+		//IndexType iVV = 0;
 
 		for (; vIter != vEnd; ++ vIter, ++ iV)
 		{
@@ -3694,27 +3710,45 @@ void DualwayPropagation::calculateSimilar2Componet()
 		    
 			patchTodoVS[iV] = (iV + 1);
 
-			for (; vtxBktBeg != vtxBktEnd; ++ vtxBktBeg)
+			Eigen::MatrixXd tempId;
+			tempId.resize(vSize,1);
+
+			mxArray* tempMat = mxCreateDoubleMatrix(vSize,1,mxREAL);
+
+			IndexType iId = 0;
+			for (; vtxBktBeg != vtxBktEnd; ++ vtxBktBeg, ++iId)
 			{
 				IndexType vtxId = vtxBktBeg->first;
 
 				IndexType gVtxId = vId2Graph[vtxId];
 
-				vIdAll[iVV] = gVtxId;
+				//vIdAll[iVV] = (gVtxId + 1);
 
-				++ iVV;
+				vIdAll[gVtxId] = (iV + 1);
+
+				tempId(iId,0) = (gVtxId + 1);
+
+				//++ iVV;
 			}
+			
+			memcpy( (char*)mxGetPr(tempMat), (char*)tempId.data(), vSize * sizeof(double) );
+			
+			engPutVariable(ep,"testT",tempMat);
+
+			//const mwSize *dims = te;
+
+			//mxArray *mxPatches = mxCreateCellArray(1, dims);//(维数,各个维度的长度)
+
+			mxSetCell(mxPatches,iV,tempMat);
+
+
 		}
 
-		const mwSize *dims = te; 
-
-		mxArray* mxPatches = mxCreateCellArray(vBSize, dims);//(维数,各个维度的长度)
-	    
-	    mxArray* mxPatchTodo  = mxCreateDoubleMatrix(1, label_buctet.size(),mxREAL);
-
-		memcpy((char*)mxGetPr(mxPatchTodo), (char*)patchTodoVS.data(), label_buctet.size() * sizeof(double) );
-
 		engPutVariable(ep,"patches",mxPatches);
+
+	    mxArray* mxPatchTodo  = mxCreateDoubleMatrix(1, vBSize,mxREAL);
+
+		memcpy((char*)mxGetPr(mxPatchTodo), (char*)patchTodoVS.data(), vBSize * sizeof(double) );
 
 		engPutVariable(ep,"patch_to_do",mxPatchTodo);
 
@@ -3722,13 +3756,13 @@ void DualwayPropagation::calculateSimilar2Componet()
 
 		engPutVariable(ep,"outliers",outlier);
 
-		mxArray* pointId = mxCreateDoubleMatrix(1, vId2Graph.size(),mxREAL);
+		mxArray* pointId = mxCreateDoubleMatrix(1, sVSize,mxREAL);
 
-		memcpy((char*)mxGetPr(pointId), (char*)vIdAll.data(), vId2Graph.size() * sizeof(double) );
+		memcpy((char*)mxGetPr(pointId), (char*)vIdAll.data(), sVSize * sizeof(double) );
 
 		engPutVariable(ep,"idx",pointId);
 
-		mxArray* flat_st = mxCreateDoubleScalar(0.1);
+		mxArray* flat_st = mxCreateDoubleScalar(0.5);
 
 		engPutVariable(ep,"flat_strictness",flat_st);
 
@@ -3738,6 +3772,22 @@ void DualwayPropagation::calculateSimilar2Componet()
 
 		mxSimilar = engGetVariable(ep,"dist_matrix");
 
-		engClose(ep);
+		double* patchSimi = (double*)mxGetData(mxSimilar);
+
+		Eigen::MatrixXd sigFrameSimi;
+
+		sigFrameSimi.resize(vBSize,vBSize);
+
+		memcpy((char*)(&sigFrameSimi), (char*)(patchSimi), vBSize * vBSize * sizeof(double) );
+
+		patchSimilarMea.push_back(sigFrameSimi);
+
+		mxDestroyArray(mxCoor);
+		mxDestroyArray(mxNorm);
+		//mxDestroyArray(mxPatches);
+		mxDestroyArray(mxPatchTodo);
+		mxDestroyArray(mxSimilar);//?
 	}
+		engClose(ep);
+
 }
