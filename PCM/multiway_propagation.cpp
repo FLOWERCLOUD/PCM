@@ -3123,6 +3123,8 @@ void DualwayPropagation::addGraphEdge(PCloudGraph& pcGraph, IndexType frameId)
 
 		for (IndexType i = 1; i < k; ++i)
 		{
+			//增加两点法向夹角判断,若不大于180°,则添加一条边;否则不添加边操作.
+
 		  bool temp = recordEdges[frame_index_to_key(gIndex,neighbours[i]) ];
 
 		  if (!temp)
@@ -3636,40 +3638,48 @@ void DualwayPropagation::calculateSimilar2Componet()
 
 		map<IndexType,IndexType>& vId2Graph = hier_componets_[fIter->first].gId_of_vtx;
 
-		IndexType sVSize = vId2Graph.size();
+		map<IndexType,IndexType>& labVtx = hier_componets_[fIter->first].label_of_vtx;
 
-//  		Eigen::MatrixXd sCoorMat;
-//  
-//  		Eigen::MatrixXd sNormMat;
-    
+		IndexType sVSize = vId2Graph.size();
+		IndexType oriVSize = tempS.num_vertices();
+
 		MatrixXXDR sCoorMat;
 
 		MatrixXXDR sNormMat;
 
-		sCoorMat.resize(3,sVSize);
+// 		sCoorMat.resize(3,oriVSize);
+// 		sNormMat.resize(3,oriVSize);
 
-		sNormMat.resize(3,sVSize);
+// 		for (auto mBeg = vId2Graph.begin(); mBeg != vId2Graph.end(); ++ mBeg)
+// 		{
+// 			IndexType vIdOri = mBeg->first;
+// 			IndexType vIdGra = mBeg->second;
+// 			sCoorMat.col(vIdGra) << tempS.vertices_matrix()(0,vIdOri),tempS.vertices_matrix()(1,vIdOri),tempS.vertices_matrix()(2,vIdOri);
+// 			sNormMat.col(vIdGra) << tempS.nor_matrix()(0,vIdOri),tempS.nor_matrix()(1,vIdOri),tempS.nor_matrix()(2,vIdOri);
+// 		}
 
-        for (auto mBeg = vId2Graph.begin(); mBeg != vId2Graph.end(); ++ mBeg)
-        {
-			IndexType vIdOri = mBeg->first;
-			IndexType vIdGra = mBeg->second;
 
-			sCoorMat.col(vIdGra) << tempS.vertices_matrix()(0,vIdOri),tempS.vertices_matrix()(1,vIdOri),tempS.vertices_matrix()(2,vIdOri);
-			sNormMat.col(vIdGra) << tempS.nor_matrix()(0,vIdOri),tempS.nor_matrix()(1,vIdOri),tempS.nor_matrix()(2,vIdOri);
-        }
+		//传入原始点云数据
+		sCoorMat.resize(3,oriVSize);
 
-		mxArray* mxCoor = mxCreateDoubleMatrix(sVSize, 3, mxREAL);
+		sNormMat.resize(3,oriVSize);
 
-		mxArray* mxNorm = mxCreateDoubleMatrix(sVSize, 3, mxREAL);
+		sCoorMat = tempS.vertices_matrix().transpose().cast<double>();
 
-		memcpy( (char*)mxGetPr(mxCoor), (char*)sCoorMat.data(), 3*sVSize*sizeof(double) );
+		sNormMat = tempS.nor_matrix().transpose().cast<double>();
+
+		mxArray* mxCoor = mxCreateDoubleMatrix(oriVSize, 3, mxREAL);
+
+		mxArray* mxNorm = mxCreateDoubleMatrix(oriVSize, 3, mxREAL);
+
+		memcpy( (char*)mxGetPr(mxCoor), (char*)sCoorMat.data(), 3*oriVSize*sizeof(double) );
 
 		engPutVariable(ep,"points",mxCoor);
 
-		memcpy((char*)mxGetPr(mxNorm), (char*)sNormMat.data(), 3*sVSize*sizeof(double) );
+		memcpy((char*)mxGetPr(mxNorm), (char*)sNormMat.data(), 3*oriVSize*sizeof(double) );
 
 		engPutVariable(ep,"normals",mxNorm);
+
 
 		vector<HLabel*> label_buctet = hier_componets_[fIter->first].hier_label_bucket[bLevel];
 
@@ -3696,7 +3706,6 @@ void DualwayPropagation::calculateSimilar2Componet()
 		vIdAll.resize(sVSize,1);
 
 		IndexType iV = 0;
-		//IndexType iVV = 0;
 
 		for (; vIter != vEnd; ++ vIter, ++ iV)
 		{
@@ -3719,28 +3728,16 @@ void DualwayPropagation::calculateSimilar2Componet()
 			for (; vtxBktBeg != vtxBktEnd; ++ vtxBktBeg, ++iId)
 			{
 				IndexType vtxId = vtxBktBeg->first;
+				tempId(iId,0) = (vtxId + 1);//原始点云索引
 
-				IndexType gVtxId = vId2Graph[vtxId];
-
-				//vIdAll[iVV] = (gVtxId + 1);
-
-				vIdAll[gVtxId] = (iV + 1);
-
-				tempId(iId,0) = (gVtxId + 1);
-
-				//++ iVV;
+				//IndexType gVtxId = vId2Graph[vtxId];
+				//vIdAll[gVtxId] = (iV + 1);//采样点的分类结果
+				//tempId(iId,0) = (gVtxId + 1);//graph 上点索引
 			}
 			
 			memcpy( (char*)mxGetPr(tempMat), (char*)tempId.data(), vSize * sizeof(double) );
 			
-			engPutVariable(ep,"testT",tempMat);
-
-			//const mwSize *dims = te;
-
-			//mxArray *mxPatches = mxCreateCellArray(1, dims);//(维数,各个维度的长度)
-
 			mxSetCell(mxPatches,iV,tempMat);
-
 
 		}
 
@@ -3756,9 +3753,30 @@ void DualwayPropagation::calculateSimilar2Componet()
 
 		engPutVariable(ep,"outliers",outlier);
 
-		mxArray* pointId = mxCreateDoubleMatrix(1, sVSize,mxREAL);
+//      采样点分类结果
+// 		mxArray* pointId = mxCreateDoubleMatrix(1, sVSize,mxREAL);
+// 
+// 		memcpy((char*)mxGetPr(pointId), (char*)vIdAll.data(), sVSize * sizeof(double) );
+// 
+// 		engPutVariable(ep,"idx",pointId);
 
-		memcpy((char*)mxGetPr(pointId), (char*)vIdAll.data(), sVSize * sizeof(double) );
+
+		vector<IndexType> smpVtxId;
+		vector<IndexType> smpvtxLab;
+		vector<double> oriVtxId;
+		oriVtxId.resize(oriVSize,0);
+
+		for (auto vIter = labVtx.begin(); vIter != labVtx.end(); ++vIter)
+		{
+			smpVtxId.push_back(vIter->first);
+			smpvtxLab.push_back(vIter->second);
+		}
+
+		propagateLabel2Orignal(tempS,smpVtxId,smpvtxLab,oriVtxId);
+
+		mxArray* pointId = mxCreateDoubleMatrix(1, oriVSize,mxREAL);
+
+		memcpy((double*)mxGetPr(pointId), (double*)oriVtxId.data(), oriVSize * sizeof(double) );
 
 		engPutVariable(ep,"idx",pointId);
 
@@ -3790,4 +3808,56 @@ void DualwayPropagation::calculateSimilar2Componet()
 	}
 		engClose(ep);
 
+}
+
+void DualwayPropagation::propagateLabel2Orignal(Sample& oriPC,vector<IndexType>& sampleVtxId,vector<IndexType>& label_smp,vector<double>& label_ori)
+{
+	Logger<<"Start paopa label to ori.\n";
+
+	IndexType nCluster = 35;
+
+	map<IndexType,IndexType> smpLabel;
+	map<IndexType,IndexType>::iterator IsValidIter;
+	for (int i = 0; i < label_smp.size(); i++)
+	{
+		smpLabel.insert(make_pair(sampleVtxId[i],label_smp[i]));
+	}
+
+	const IndexType k = 250;
+	IndexType neighbours[k];
+	ScalarType dist[k];
+
+	IndexType vtx_num = oriPC.num_vertices();
+	IndexType result_label;
+
+
+	for(IndexType vtx_id = 0; vtx_id < vtx_num; vtx_id ++)
+	{
+		vector<IndexType> recordLabelTime(nCluster,0);
+		result_label = -1;
+		oriPC.neighbours(vtx_id, k, neighbours, dist);
+		for(IndexType neig_id = 0; neig_id < k; neig_id ++)
+		{
+			IsValidIter = smpLabel.find(neighbours[neig_id]);
+			if(IsValidIter != smpLabel.end())
+			{
+				recordLabelTime[IsValidIter->second] += 1;
+			}
+		}
+		for (int i = 0; i < nCluster; i++)
+		{
+			if(result_label < recordLabelTime[i])
+			{
+				//label_ori[vtx_id] = i;
+
+				label_ori[vtx_id] = (i + 1.);//为了把数据传输给matlab,label标签加1;
+				result_label = recordLabelTime[i];
+			}
+		}
+
+	}
+
+	smpLabel.clear();
+
+	Logger<<"End propagation label to ori .\n";
 }

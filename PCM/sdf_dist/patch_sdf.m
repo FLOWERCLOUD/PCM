@@ -12,7 +12,7 @@ npatches = length(patches);
 flats = [];
 flats2 = cell(npatches,1);
 
-raysAngle = 20 / 180 * pi; % angle of the cone
+raysAngle = 60 / 180 * pi; % angle of the cone
 
 nbins = 10;
 pow = 0.5; % damping factor

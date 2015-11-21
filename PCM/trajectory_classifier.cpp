@@ -140,7 +140,7 @@ void TrajectoryClassifier::run()
 			                         141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173};
 
  			char corr_file_name[1024];
-  			sprintf(corr_file_name,"F:\\EG2015\\overseg1026\\panther_corr%.2d_%.2f.txt",centerFrame,perC);
+  			sprintf(corr_file_name,"F:\\EG2015\\overseg1111\\horse_corr%.2d_%.2f.txt",centerFrame,perC);
   			FILE *in_correspond = fopen(corr_file_name,"w");
   
   			for ( int i=0; i<sampleCenterVtxId.size();i++ )
@@ -179,7 +179,7 @@ void TrajectoryClassifier::run()
 		 #ifdef SAVE_LABELS
 
   		    char label_labsmooth[1024];
-  		   	sprintf(label_labsmooth,"F:\\EG2015\\overseg1026\\panther_labels%.2d_%.2f.txt",centerFrame,perC);
+  		   	sprintf(label_labsmooth,"F:\\EG2015\\overseg1111\\horse_labels%.2d_%.2f.txt",centerFrame,perC);
   		   	FILE *in_label_smooth = fopen(label_labsmooth, "w");
   		   	IndexType tpd = 0;
   		 		 

@@ -582,6 +582,8 @@ public:
 
 	void calculateSimilar2Componet();
 
+	void propagateLabel2Orignal(Sample& oriPC,vector<IndexType>& sampleVtxId,vector<IndexType>& label_smp,vector<double>& label_ori);
+
 public:
 
 	Sample* downSample;
