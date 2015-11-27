@@ -8,7 +8,7 @@
 #include <map>
 #include "..\ICP\ICP.h"
 
-#define USE_RADIUS_NEAREST
+//#define USE_RADIUS_NEAREST
 
 template<class Scalar>
 class BFSClassifier{

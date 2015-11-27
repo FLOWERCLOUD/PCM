@@ -147,6 +147,8 @@ public:
 	void cosegProcessing(DualwayPropagation& dp_solver);
 	void mergeProcess(DualwayPropagation& dp_solver);
 
+	void setCurSmpId(IndexType curId){m_centerF = curId;}
+
 private:
 	GraphNodeCtr* gcNode;
 	GCoptimizationGeneralGraph *m_gc;

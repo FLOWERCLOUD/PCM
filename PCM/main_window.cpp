@@ -436,12 +436,14 @@ void main_window::doPlanFit()
 void main_window::doOrder()
 {
 		GCop* gc= new GCop();
+		gc->setCurSmpId(cur_select_sample_idx_);
 		gc->orderLabelsOnly();
 }
 
 void main_window::doRefineSigFrame()
 {
 			GCop* gc= new GCop();
+			gc->setCurSmpId(cur_select_sample_idx_);
 			gc->refineSegm();
 }
 

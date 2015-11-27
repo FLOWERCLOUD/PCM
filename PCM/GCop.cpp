@@ -66,36 +66,46 @@ GCop::~GCop()
 }
 void GCop::run()
 {
-	Logger<<"Start Split & Coseg & Merge Process!\n";
+	bool isrefine = false;
+	if (isrefine)
+	{
+		Logger<<"Start refine single frame.\n";
+		refineSegm();
+	}else
+	{
+		Logger<<"Start Split & Coseg & Merge Process!\n";
 
-	//在初始分割之后, 分别进行split,coseg以及merge过程. 20151009
-	//panther data
-	char* in_label_file = "D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\panther\\CoSeg\\update7TotLabels(2_10)_edit.txt";//j-linkage后每帧的分割结果
-	char* in_corr_file = "D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\panther\\CoSeg\\0904TotCorr(2_10).txt";//horse的对应数据一致没有改变 0904
+		//在初始分割之后, 分别进行split,coseg以及merge过程. 20151009
+		//panther data
+		//char* in_label_file = "D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\panther\\CoSeg\\update7TotLabels(2_10)_edit.txt";//j-linkage后每帧的分割结果
+		//char* in_corr_file = "D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\panther\\CoSeg\\0904TotCorr(2_10).txt";//horse的对应数据一致没有改变 0904
 	
-	/// horse data
-	//char* in_label_file = "D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\panther\\CoSeg\\update7TotLabels(2_10)_edit.txt";//j-linkage后每帧的分割结果
-	//char* in_corr_file = "D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\panther\\CoSeg\\0904TotCorr(2_10).txt";//horse的对应数据一致没有改变 0904
+		/// single data
+		char* in_label_file = "F:\\EG2015\\rebuttal1127\\15_26\\totLable(15_24).txt";//j-linkage后每帧的分割结果
+		char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\15_26\\totCorr(15_24).txt";//horse的对应数据一致没有改变 0904
 
-	DualwayPropagation dp_solver;
+		DualwayPropagation dp_solver;
 
-	dp_solver.read_data(in_label_file,in_corr_file);
+		dp_solver.read_data(in_label_file,in_corr_file);
 
-	dp_solver.init_labeles_graph_hier(m_nTradeOff); //构建分块对应的Graph;
+		dp_solver.init_labeles_graph_hier(m_nTradeOff); //构建分块对应的Graph;
 
-	dp_solver.constructPCloudGraph();    //构建点云对应的Graph;
+		dp_solver.constructPCloudGraph();    //构建点云对应的Graph;
 
-	splitProcess(dp_solver);
+		splitProcess(dp_solver);
 
-	Logger<<"End Split Process!\n";
+		Logger<<"End Split Process!\n";
 
-	cosegProcessing(dp_solver);
+		cosegProcessing(dp_solver);
 
-	Logger<<"End  Coseg Process!\n";
+		Logger<<"End  Coseg Process!\n";
 
-	mergeProcess(dp_solver);
+// 		mergeProcess(dp_solver);
+// 
+// 		Logger<<"End Merge Process!\n";
+	}
 
-	Logger<<"End Merge Process!\n";
+
 }
 
 
@@ -307,8 +317,8 @@ void GCop::refineSegm()
 
 
 	//0925 compr traj len
-	sprintf(input_label_file,"D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\EG2015\\compar\\diffusionOrder\\diffusionOrderLabel%.2d.txt",m_centerF);
-	sprintf(input_cor_file,"D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\EG2015\\compar\\horse_corr%.2d_0.50.txt",m_centerF);
+	sprintf(input_label_file,"F:\\EG2015\\rebuttal1127\\15_26\\diffusionOrderLabel%.3d.txt",m_centerF);
+	sprintf(input_cor_file,"F:\\EG2015\\rebuttal1127\\15_26\\cross_corr%.3d_0.60.txt",m_centerF);
 
 
     m_nLabels = gcNode->readnLabelFile(input_label_file);
@@ -328,23 +338,23 @@ void GCop::refineSegm()
  	    
 #ifdef EXPSWAP
 
-        //  	MatrixXX totError;
-        //  	ransacMultiRotTan(gcNode->node_vec,totError); //meanwhile set data items
-        //      
-        ////          	unordered_map<IndexType, set<IndexType>> edgePoints;
-        ////          	findEdgePoint(edgePoints);
-        ////          
-        ////          	//visualEdgePoints(edgePoints);//可视化边界点
-        ////          	setDataItem(totError,edgePoints);
-        //  
-        //        	  setSmoothItem();
-        //        	  m_gc->setLabelOrder(true);
-        //        
-        //   		  m_gc->expansion(m_nExpansion);
-        //   		  //m_gc->alpha_expansion(m_nExpansion);
-        //   
-        //   		  m_gc->swap(m_nSwap);
-        //       	  //m_gc->alpha_beta_swap(1,2);
+          	MatrixXX totError;
+          	ransacMultiRotTan(gcNode->node_vec,totError); //meanwhile set data items
+              
+        //          	unordered_map<IndexType, set<IndexType>> edgePoints;
+        //          	findEdgePoint(edgePoints);
+        //          
+        //          	//visualEdgePoints(edgePoints);//可视化边界点
+        //          	setDataItem(totError,edgePoints);
+          
+			setSmoothItem();
+			m_gc->setLabelOrder(true);
+                
+			m_gc->expansion(m_nExpansion);
+			//m_gc->alpha_expansion(m_nExpansion);
+           
+			m_gc->swap(m_nSwap);
+			//m_gc->alpha_beta_swap(1,2);
 #else
 	ransacMultiRotTan(gcNode->node_vec);//利用多帧间的平均误差---用来可视化
 #endif // Expansion
@@ -3416,9 +3426,13 @@ void GCop::orderLabelsOnly()
 	char output_lab_file[2048];
 	char output_label_only[2048];
 
-	sprintf(input_label_file,"D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\EG2015\\compar\\horse_Labels%.2d_0.50_6.txt",m_centerF);
 
-	sprintf(output_lab_file,"D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\EG2015\\compar\\diffusion_r6\\diffusionOrderLabel%.2d.txt",m_centerF);
+	// single girl dancing 11-27
+
+	sprintf(input_label_file,"F:\\EG2015\\rebuttal1127\\15_26\\cross_labels%.3d_0.60.txt",m_centerF);
+
+	sprintf(output_lab_file,"F:\\EG2015\\rebuttal1127\\15_26\\diffusionOrderLabel%.3d.txt",m_centerF);
+
 	//sprintf(output_label_only,"D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\horse_multiview0804\\EG0923\\labelCorr(1_9)\\singleseglabels\\oriPC\\orderLabelOnly%.2d.txt",m_centerF);
 
 	vector<IndexType> tempLabels;
@@ -3456,6 +3470,8 @@ void GCop::orderLabelsOnly()
 
 
 	IndexType labelNum = orderLabels(tempLabels);
+
+	m_nDiffu = 20;
 
 	diff_using_bfs(tempLabels,vtx_id,m_centerF);//中心帧赋值需要注意实际帧索引
 
