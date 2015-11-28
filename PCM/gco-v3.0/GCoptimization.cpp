@@ -2240,6 +2240,11 @@ ScalarType GCoptimizationGeneralGraph::smoothCostFn::distantOnly(IndexType side1
 	PointType tP = curF.vertices_matrix().col(t_node->index);
 	ScalarType dist = (tP -sP).norm();
 
+	NormalType sN = curF.nor_matrix().col(s_node->index);
+	NormalType tN = curF.nor_matrix().col(t_node->index);
+
+	ScalarType inVal = sN.dot(tN);
+
 	dist = max(dist,0.001f); //1.5次方,以及法向夹角
  	//Logger<<"dist = "<<dist<<endl;
  //   dist = std::powf(dist,3);
@@ -2257,8 +2262,14 @@ ScalarType GCoptimizationGeneralGraph::smoothCostFn::distantOnly(IndexType side1
  	//return res;
 // 
 // // 	dist = max(dist,5.f);
-// 
- 	return 1./dist;
+
+
+	//与距离成反比
+ 	//return 1./dist;
+
+	// 考虑了法向夹角
+	ScalarType nValue = exp(inVal);
+	return  (1./dist) * (nValue);
 
 }
 

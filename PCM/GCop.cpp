@@ -6,7 +6,7 @@
 using namespace std;
 
 #define SHOW_SAMPLE
-//#define OUTPUT_LABELS
+#define OUTPUT_LABELS
 
 
 GCop::GCop()
@@ -70,7 +70,10 @@ void GCop::run()
 	if (isrefine)
 	{
 		Logger<<"Start refine single frame.\n";
+
 		refineSegm();
+
+		Logger<<"End refine single frame.\n";
 	}else
 	{
 		Logger<<"Start Split & Coseg & Merge Process!\n";
@@ -81,7 +84,8 @@ void GCop::run()
 		//char* in_corr_file = "D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\panther\\CoSeg\\0904TotCorr(2_10).txt";//horse的对应数据一致没有改变 0904
 	
 		/// single data
-		char* in_label_file = "F:\\EG2015\\rebuttal1127\\15_26\\totLable(15_24).txt";//j-linkage后每帧的分割结果
+		//char* in_label_file = "F:\\EG2015\\rebuttal1127\\15_26\\totLable(15_24).txt";//j-linkage后每帧的分割结果
+		char* in_label_file = "F:\\EG2015\\rebuttal1127\\15_26\\totLabelSmooth(15_24).txt";//boundary smoothing results
 		char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\15_26\\totCorr(15_24).txt";//horse的对应数据一致没有改变 0904
 
 		DualwayPropagation dp_solver;
@@ -96,9 +100,9 @@ void GCop::run()
 
 		Logger<<"End Split Process!\n";
 
-		cosegProcessing(dp_solver);
-
-		Logger<<"End  Coseg Process!\n";
+// 		cosegProcessing(dp_solver);
+// 
+// 		Logger<<"End  Coseg Process!\n";
 
 // 		mergeProcess(dp_solver);
 // 
@@ -858,20 +862,20 @@ void GCop::visulizationLabels()
 
 // 	IndexType nIter = 1;
 // 	while (nIter-->0)
-// 	{
+// 	{`
 // 		smoothSampleLabel(curF,m_smpId,m_optLabel,m_optLabel);
 // 	}
 //// 
  	//diff_using_bfs(m_optLabel,m_smpId,centFrame);
 
-	//IndexType finalLabels = orderLabels(m_optLabel);
-	//IndexType finalLabels = 10;
+	IndexType finalLabels = orderLabels(m_optLabel);
+	//IndexType finalLabels = 2;
 
 #ifdef  SHOW_SAMPLE
 
 		#ifdef OUTPUT_LABELS
 			char outputLabelName[1024]; 
-			sprintf(outputLabelName,"D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\qinghuadata\\inter\\inter(30_40)\\boundarySmoothing\\boundarySmTwoPLabels%.2d.txt",centFrame);
+			sprintf(outputLabelName,"F:\\EG2015\\rebuttal1127\\15_26\\boundaryLabels%.2d.txt",centFrame);
 			FILE *in_label = fopen(outputLabelName,"w");
 			fprintf(in_label,"%d\n",finalLabels);
 		#endif // OUTPUT_LABELS
@@ -3224,16 +3228,16 @@ void GCop::splitProcess(DualwayPropagation& dp_solver)
 {
  	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1014splitResults.txt";
 
- 	dp_solver.splitAllSquenceGraph(8/*m_centerF*/);//读取j-linkagelabel文件之后进行前后的分裂操作,参数表示序列分裂的帧数;
+ 	dp_solver.splitAllSquenceGraph(/*8*/m_centerF);//读取j-linkagelabel文件之后进行前后的分裂操作,参数表示序列分裂的帧数;
  
- 	dp_solver.smoothAfterSplit(); //k =30,分裂之后进行smooth操作
+ 	//dp_solver.smoothAfterSplit(); //k =30,分裂之后进行smooth操作
  
     //平滑处理之后,有些块点个数变为零,或者个数很小,需要进行合并操作!
-	dp_solver.mergeSingleTinyPatches(10); //remove empty segments 加入了循环操作,
+	//dp_solver.mergeSingleTinyPatches(10); //remove empty segments 加入了循环操作,
 
-//      dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
-//   
-//   	visualCosegmentation(out_label_file);
+      dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
+   
+   	visualCosegmentation(out_label_file);
 }
 //--------------------------
 void GCop::cosegProcessing(DualwayPropagation& dp_solver)

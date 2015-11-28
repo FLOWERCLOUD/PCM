@@ -1321,12 +1321,11 @@ void DualwayPropagation::splitAllSquenceGraph(IndexType iterN)
 
 	map<IndexType,HFrame>::iterator  cEnd = hier_componets_.end();
 
-	//++cIter;
-// 	IndexType startF = 6;
-// 	while (startF -- > 0)
-// 	{
-// 		++cIter;
-// 	}
+ 	IndexType startF = 6;
+ 	while (startF -- > 0)
+ 	{
+ 		++cIter;
+ 	}
 	//cIter;
 	--cEnd;
 
@@ -2371,7 +2370,6 @@ void DualwayPropagation::split_twoAjacent_graph_next_order(IndexType srFrame, In
 
 		boost::add_vertex(vp,*new_graph);
 
-
 		//更新分割块信息,新增加的Label标号为nSize. 被分裂的点为nodeId
 		IndexType new_label = nSize;
 
@@ -2389,18 +2387,10 @@ void DualwayPropagation::split_twoAjacent_graph_next_order(IndexType srFrame, In
 		for (auto iter = splitedLabel->vertex_bucket.begin(); iter != splitedLabel->vertex_bucket.end(); )
 		{
 			IndexType vtx_id = iter->first;
-			if (vtx_id == 562|| vtx_id == 22176||vtx_id == 913 || vtx_id == 15073|| vtx_id == 15073 || vtx_id == 913)
-			{
-				Logger<<"stop!.\n";
-
-			}
 
 			IndexType pId = iter->second->prev_corr->vtx_id;
 
 			IndexType prev_id = iter->second->prev_corr->label_parent[gLevel]->label_id; //得不到最新的label_parent地址.
-
-
-
 
 			if (prev_id == eS)
 			{
@@ -2437,7 +2427,6 @@ void DualwayPropagation::split_twoAjacent_graph_next_order(IndexType srFrame, In
 		//用随机取点产生的最小距离来判断不确定点属于哪个类.unmark 要么属于nodeid 要么属于new_label
 		determinateUnmarkPoints(tgFrame,unMakePs,new_label_bucket,nodeId,new_label,tgGraSize);
 
-
 		//对这两个点进行加边操作,
 		//node<--->new_node
 		GraphEdgeProperty newEP;
@@ -2450,13 +2439,11 @@ void DualwayPropagation::split_twoAjacent_graph_next_order(IndexType srFrame, In
 
 		newEP.edgePoints[edgeKey].insert(edgeCorrNextVtx.begin(),edgeCorrNextVtx.end());
 
-
 		boost::add_edge(nodeId,nSize,newEP,*new_graph);
 
 		//断定查找两个节点与其它节点进行连边操作只会出现 recordColapseEdges.size()次数.
 		for (auto iter = collapseEdges.begin(); iter != collapseEdges.end(); iter ++)
 		{
-
 			GraphEdgeProperty glueEdge;
 
 			glueEdge = (*iter);
@@ -2517,14 +2504,7 @@ void DualwayPropagation::split_twoAjacent_graph_next_order(IndexType srFrame, In
 		}//遍历collapse的边
 	} //end  while
 
-
-	//0920 在遍历target frame上的每个节点
-
-	//0920 在遍历target frame上的每个节点
-
-
 	checkPsNewLabelParentPtr(new_label_bucket,labParentsize);//next dirction
-
 
 	map<IndexType,IndexType> labelIndex;
 	IndexType kk=0;
