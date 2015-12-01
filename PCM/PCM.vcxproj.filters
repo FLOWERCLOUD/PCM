@@ -53,9 +53,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Visualize</Filter>
     </ClCompile>
-    <ClCompile Include="main_window.cpp">
-      <Filter>Visualize</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_main_window.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -157,6 +154,18 @@
     </ClCompile>
     <ClCompile Include="GraphMatching.cpp">
       <Filter>Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="saveSnapshotDialog.cpp">
+      <Filter>Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_saveSnapshotDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_saveSnapshotDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="main_window.cpp">
+      <Filter>Visualize</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +340,12 @@
     <CustomBuild Include="dlg_fitPlan.h">
       <Filter>Visualize</Filter>
     </CustomBuild>
+    <CustomBuild Include="savesnapshotDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="saveSnapshotDialog.h">
+      <Filter>Algorithm</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="traj2AffineModel_distance.h">
@@ -349,6 +364,12 @@
       <Filter>Algorithm</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_dlg_plan.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="snapshotsetting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_savesnapshotDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

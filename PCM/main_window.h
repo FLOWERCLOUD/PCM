@@ -19,6 +19,8 @@
 #include "dlg_graphcuts.h"
 #include "dlg_fitPlan.h"
 
+#include "saveSnapshotDialog.h"
+
 using namespace std;
 
 
@@ -78,7 +80,15 @@ public:
 		//void finishDoPlanFit();
 		void doOrder();
 		void doRefineSigFrame();
+		bool saveSnapshot();
 
+public:
+
+	PaintCanvas* getCanvas()
+	{
+		return main_canvas_;
+
+	}
 private:
 		void createAction();
 		void createFileMenuAction();
@@ -88,6 +98,7 @@ private:
 
 		void createStatusBar();
 		void resetSampleSet();
+
 
 
 private:

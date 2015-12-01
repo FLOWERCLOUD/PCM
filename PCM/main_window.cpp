@@ -174,8 +174,14 @@ void main_window::setSceneToolMode()
 
 void main_window::createFileMenuAction()
 {
-	connect(ui.actionImportFiles, SIGNAL(triggered()),this, SLOT(openFiles()));
+	connect(ui.actionImportFiles, SIGNAL(triggered() ),this, SLOT( openFiles() )  );
+	connect(ui.actionSaveSnapshot, SIGNAL(triggered() ), this, SLOT(saveSnapshot() ) );
 }
+
+// void main_window::createFileMenuAction()
+// {
+// 	connect(ui.actionImportFiles, SIGNAL(triggered()),this, SLOT(openFiles()));
+// }
 
 bool main_window::openFile()
 {
@@ -235,6 +241,8 @@ void main_window::selectedSampleChanged(QTreeWidgetItem * item, int column)
 	main_canvas_->updateGL();
 
 }
+
+
 
 void main_window::showTracer()
 {
@@ -517,4 +525,32 @@ void main_window::iterateTrajClustering()
 	connect( cluster, SIGNAL(finished()), cluster, SLOT(deleteLater()) );
 	connect(cluster,SIGNAL(finish_compute()), this, SLOT(iterateTrajClustering()));
 	cluster->start();
+}
+
+bool main_window::saveSnapshot()
+{
+	SaveSnapshotDialog dialog(this);
+
+	dialog.setValues(getCanvas()->ss);
+
+	if (dialog.exec()==QDialog::Accepted)
+	{
+	getCanvas()->ss=dialog.getValues();
+	getCanvas()->saveSnapshot();
+
+	// if user ask to add the snapshot to raster layers
+	/*
+	if(dialog.addToRasters())
+	{
+	  QString savedfile = QString("%1/%2%3.png")
+	.arg(GLA()->ss.outdir).arg(GLA()->ss.basename)
+	.arg(GLA()->ss.counter,2,10,QChar('0'));
+
+	  importRaster(savedfile);
+	}
+	*/
+	return true;
+	}
+
+	return false;
 }

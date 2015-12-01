@@ -28,6 +28,7 @@
      <string>Files</string>
     </property>
     <addaction name="actionImportFiles"/>
+    <addaction name="actionSaveSnapshot"/>
    </widget>
    <widget class="QMenu" name="menuPaint">
     <property name="title">
@@ -284,6 +285,11 @@
   <action name="actionRefineSigFrame">
    <property name="text">
     <string>refineSigFrame</string>
+   </property>
+  </action>
+  <action name="actionSaveSnapshot">
+   <property name="text">
+    <string>SaveSnapshot</string>
    </property>
   </action>
  </widget>

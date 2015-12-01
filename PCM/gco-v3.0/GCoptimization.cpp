@@ -2268,8 +2268,11 @@ ScalarType GCoptimizationGeneralGraph::smoothCostFn::distantOnly(IndexType side1
  	//return 1./dist;
 
 	// ¿¼ÂÇÁË·¨Ïò¼Ð½Ç
+	ScalarType ndist = exp(dist);
+
 	ScalarType nValue = exp(inVal);
-	return  (1./dist) * (nValue);
+
+	return  (ndist) * (nValue);
 
 }
 

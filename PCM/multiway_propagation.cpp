@@ -235,7 +235,7 @@ void DualwayPropagation::getEdgeVertexs2( IndexType _CFrameId , distanPriQueue& 
 
 
 	IndexType sr_labelLevel,tg_labelLevel;
-	for( IndexType i  = 10 ; i >0 ; --i)
+	for( IndexType i  = 5 ; i >0 ; --i)
 	{
 		if (_PriQuemap.empty())
 		{
@@ -1321,12 +1321,12 @@ void DualwayPropagation::splitAllSquenceGraph(IndexType iterN)
 
 	map<IndexType,HFrame>::iterator  cEnd = hier_componets_.end();
 
- 	IndexType startF = 6;
- 	while (startF -- > 0)
- 	{
- 		++cIter;
- 	}
-	//cIter;
+//  	IndexType startF = 6;
+//  	while (startF -- > 0)
+//  	{
+//  		++cIter;
+//  	}
+
 	--cEnd;
 
 	IndexType iterNum = 0;
@@ -1343,7 +1343,7 @@ void DualwayPropagation::splitAllSquenceGraph(IndexType iterN)
 
 		//split_twoAjacent_graph_next(srFrame,tgFrame );
 
-		//show_corresponding(srFrame);
+		show_corresponding(srFrame);
 
 		split_twoAjacent_graph_next_order(srFrame,tgFrame );
 
