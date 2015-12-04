@@ -504,7 +504,7 @@ void main_window::computeSampleNormal()
 
 void main_window::batchTrajClustering()
 {
-	iterate_sample_idx_ = 11;
+	iterate_sample_idx_ = 0;
 	//iterate_sample_idx_ = 100;
 	iterateTrajClustering();
 }

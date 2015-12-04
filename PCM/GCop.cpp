@@ -85,8 +85,16 @@ void GCop::run()
 	
 		/// single data
 		//char* in_label_file = "F:\\EG2015\\rebuttal1127\\15_26\\totLable(15_24).txt";//j-linkage后每帧的分割结果
-		char* in_label_file = "F:\\EG2015\\rebuttal1127\\15_26\\totLabelSmooth(15_24).txt";//boundary smoothing results
-		char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\15_26\\totCorr(15_24).txt";
+		//char* in_label_file = "F:\\EG2015\\rebuttal1127\\15_26\\totLabelSmooth(15_24).txt";//boundary smoothing results
+		//char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\15_26\\totCorr(15_24).txt";
+
+		// hanger data
+		//char* in_label_file = "F:\\EG2015\\rebuttal1127\\hanger\\totLabels(13_22).txt";//boundary smoothing results
+		//char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\hanger\\totCorr(13_22).txt";
+
+		//hanger data
+		char* in_label_file = "F:\\EG2015\\rebuttal1127\\hanger\\totBrySmth(13_22).txt";//boundary smoothing results
+		char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\hanger\\totCorr(13_22).txt";
 
 		DualwayPropagation dp_solver;
 
@@ -325,8 +333,15 @@ void GCop::refineSegm()
 	//sprintf(input_cor_file,"F:\\EG2015\\rebuttal1127\\15_26\\cross_corr%.3d_0.60.txt",m_centerF);
 
 	//two dancing girls
-	sprintf(input_label_file,"F:\\EG2015\\rebuttal1127\\two_girls\\diffusionOrderLabel%.3d.txt",m_centerF);
-	sprintf(input_cor_file,"F:\\EG2015\\rebuttal1127\\two_girls\\twoGirls_corr%.3d_0.50.txt",m_centerF);
+	//sprintf(input_label_file,"F:\\EG2015\\rebuttal1127\\two_girls\\diffusionOrderLabel%.3d.txt",m_centerF);
+	//sprintf(input_cor_file,"F:\\EG2015\\rebuttal1127\\two_girls\\twoGirls_corr%.3d_0.50.txt",m_centerF);
+
+	// hanger data
+	//sprintf(input_label_file,"F:\\EG2015\\rebuttal1127\\hanger\\OrderLabel%.2d.txt",m_centerF); //in order to smoothig
+
+	sprintf(input_label_file,"F:\\EG2015\\compar\\diffusionOrder\\split(17_18)\\OrderLabel%.2d.txt",m_centerF);
+	sprintf(input_cor_file,"F:\\EG2015\\rebuttal1127\\hanger\\hanger_corr%.2d.txt",m_centerF);
+
 
     m_nLabels = gcNode->readnLabelFile(input_label_file);
     gcNode->read_corres_file(input_cor_file); 
@@ -878,7 +893,7 @@ void GCop::visulizationLabels()
 
 		#ifdef OUTPUT_LABELS
 			char outputLabelName[1024]; 
-			sprintf(outputLabelName,"F:\\EG2015\\rebuttal1127\\15_26\\boundaryLabels%.2d.txt",centFrame);
+			sprintf(outputLabelName,"F:\\EG2015\\rebuttal1127\\hanger\\boundaryLabels%.2d.txt",centFrame);
 			FILE *in_label = fopen(outputLabelName,"w");
 			fprintf(in_label,"%d\n",finalLabels);
 		#endif // OUTPUT_LABELS
@@ -3229,23 +3244,23 @@ void GCop::coSegmentation()
 //--------------------------
 void GCop::splitProcess(DualwayPropagation& dp_solver)
 {
- 	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1014splitResults.txt";
+ 	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1203splitResultsSmth.txt";
 
- 	dp_solver.splitAllSquenceGraph(/*8*/m_centerF);//读取j-linkagelabel文件之后进行前后的分裂操作,参数表示序列分裂的帧数;
+ 	dp_solver.splitAllSquenceGraph(m_centerF);//读取j-linkagelabel文件之后进行前后的分裂操作,参数表示序列分裂的帧数;
  
  	dp_solver.smoothAfterSplit(); //k =30,分裂之后进行smooth操作
  
     //平滑处理之后,有些块点个数变为零,或者个数很小,需要进行合并操作!
-	//dp_solver.mergeSingleTinyPatches(10); //remove empty segments 加入了循环操作,
-
-      dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
+	dp_solver.mergeSingleTinyPatches(m_nSwap); //remove empty segments 加入了循环操作,
+    
+	dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
    
    	visualCosegmentation(out_label_file);
 }
 //--------------------------
 void GCop::cosegProcessing(DualwayPropagation& dp_solver)
 {
-	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1101cosegResults.txt";
+	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1203cosegResults.txt";
 
 	CoSegmentation coseg_solver(SampleSet::get_instance(),dp_solver.getCompents());
 	
@@ -3291,7 +3306,10 @@ void GCop::visualCosegmentation(char *labels_file)
 
 	SampleSet& smpSet = SampleSet::get_instance();
 
-	IndexType frames[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};//horse
+
+	//IndexType frames[] = {115,116,117,118,119,120,121,122,123,124,125};//single girl
+	//IndexType frames[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};//horse
+	IndexType frames[] = {6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22};//hanger data
 	//IndexType frames[] = {0,1,2,3,4,5,6,7,8,9,10/*,11,12*/};//finger
 	//IndexType frames[] = {29,30,31,32,33,34,35,36,37,38,39,40,41,42};//two girls
 	//IndexType frames[] = {10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39};
@@ -3305,9 +3323,9 @@ void GCop::visualCosegmentation(char *labels_file)
 	}
 
 	//为了转化成ply格式
-//        char filename[1024];
-//        sprintf(filename,"D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\EG2015\\compar\\diffusionOrder\\NosmNomergeLabel%.2d.txt",m_centerF);//"labels_frame05.txt";
-//        FILE* outfile = fopen(filename, "w");
+//         char filename[1024];
+//         sprintf(filename,"F:\\EG2015\\rebuttal1127\\hanger\\singleMerge%.2d.txt",m_centerF);//"labels_frame05.txt";
+//         FILE* outfile = fopen(filename, "w");
  //  
 //  	  vector<IndexType> smpId;
 //  	  vector<IndexType> label_smp;
@@ -3322,15 +3340,15 @@ void GCop::visualCosegmentation(char *labels_file)
 		if(stat==EOF)break;
 		smpSet[frame][vtx_idx].set_visble(true);
 		smpSet[frame][vtx_idx].set_label(label);
-// 		if (m_centerF == frame)
-// 		{
-// 			//Vertex& tV = oriPC[vtx_idx];
-// 			//ColorType pClr = Color_Utility::span_color_from_hy_table(label );
-// 			//fprintf(outfile,"%.4f %.4f %.4f %.4f %.4f %.4f %d %d %d\n", tV.x(),tV.y(), tV.z(),tV.nx(),tV.ny(),tV.nz(),pClr(0,0),pClr(1,0),pClr(2,0) );
-// 			//fprintf(outfile,"%d %d %d\n", frame, label, vtx_idx);
-// 			smpId.push_back(vtx_idx);
-// 			label_smp.push_back(label);
-// 		}
+//  		if (m_centerF == frame)
+//  		{
+//  			//Vertex& tV = oriPC[vtx_idx];
+//  			//ColorType pClr = Color_Utility::span_color_from_hy_table(label );
+//  			//fprintf(outfile,"%.4f %.4f %.4f %.4f %.4f %.4f %d %d %d\n", tV.x(),tV.y(), tV.z(),tV.nx(),tV.ny(),tV.nz(),pClr(0,0),pClr(1,0),pClr(2,0) );
+//  			//fprintf(outfile,"%d %d %d\n", frame, label, vtx_idx);
+//  			//smpId.push_back(vtx_idx);
+//  			//label_smp.push_back(label);
+//  		}
 
 	}
 
@@ -3436,9 +3454,14 @@ void GCop::orderLabelsOnly()
 
 	// single girl dancing 11-27
 
-	sprintf(input_label_file,"F:\\EG2015\\rebuttal1127\\two_girls\\twoGirls_labels%.3d_0.50.txt",m_centerF);
+	//sprintf(input_label_file,"F:\\EG2015\\rebuttal1127\\hanger\\singleMerge%.2d.txt",m_centerF);
+	//sprintf(output_lab_file,"F:\\EG2015\\rebuttal1127\\hanger\\OrderLabel%.2d.txt",m_centerF);
 
-	sprintf(output_lab_file,"F:\\EG2015\\rebuttal1127\\two_girls\\diffusionOrderLabel%.3d.txt",m_centerF);
+
+	// single girl dancing 11-27
+
+	sprintf(input_label_file,"F:\\EG2015\\compar\\diffusionOrder\\split(17_18)\\splitLabels%.2d.txt",m_centerF);
+	sprintf(output_lab_file,"F:\\EG2015\\compar\\diffusionOrder\\split(17_18)\\OrderLabel%.2d.txt",m_centerF);
 
 	//sprintf(output_label_only,"D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\horse_multiview0804\\EG0923\\labelCorr(1_9)\\singleseglabels\\oriPC\\orderLabelOnly%.2d.txt",m_centerF);
 

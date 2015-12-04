@@ -26,6 +26,8 @@ PaintCanvas::PaintCanvas(const QGLFormat& format, QWidget *parent):
 	camera()->lookAt(sceneCenter());
 	camera()->setType(Camera::PERSPECTIVE);
 	camera()->showEntireScene();
+	takeSnapTile = false;
+
 }
 
 void PaintCanvas::draw()
@@ -56,15 +58,21 @@ void PaintCanvas::draw()
 			switch (which_color_mode_)
 			{
 			case PaintCanvas::VERTEX_COLOR:
+				 glEnable(GL_MULTISAMPLE);
 				set[i].draw(ColorMode::VertexColorMode(),Paint_Param::g_step_size * (ScalarType)i);
+				glDisable(GL_MULTISAMPLE);
 				break;
 			case PaintCanvas::OBJECT_COLOR:
+				 glEnable(GL_MULTISAMPLE);
 				set[i].draw(ColorMode::ObjectColorMode(), 
 					Paint_Param::g_step_size * (ScalarType)i);
+				glDisable(GL_MULTISAMPLE);
 				break;
 			case PaintCanvas::LABEL_COLOR:
+				 glEnable(GL_MULTISAMPLE);
 				set[i].draw(ColorMode::LabelColorMode(),
 					Paint_Param::g_step_size * (ScalarType)i);
+				glDisable(GL_MULTISAMPLE);
 				break;
 			default:
 				break;
@@ -96,6 +104,7 @@ void PaintCanvas::init()
 
 	//setGridIsDrawn();//²Î¿¼Æ½Ãæ2014-12-16
 	//camera()->frame()->setSpinningSensitivity(100.f);
+
 	setMouseTracking(true);
 	// light0
 	GLfloat	light_position[] = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -107,6 +116,9 @@ void PaintCanvas::init()
 
 	glEnable(GL_LIGHT0);		// Enable Light 0
 	glEnable(GL_LIGHTING);
+
+	glDisable(GL_LIGHT0);
+	glDisable(GL_LIGHTING);
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -174,7 +186,7 @@ void PaintCanvas::drawCornerAxis()
 	glScissor(scissor[0], scissor[1], scissor[2], scissor[3]);
 	glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
 
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 }
 
 void PaintCanvas::mousePressEvent(QMouseEvent *e)
@@ -436,7 +448,7 @@ void PaintCanvas::saveSnapshotImp(SnapshotSetting& _ss)
 	tileRow = tileCol = 0;
 	QString outfile;
 
-
+	makeCurrent();
 	//if (snapBuffer.isNull())
 		snapBuffer = QImage( tileBuffer.width() * _ss.resolution, tileBuffer.height() * _ss.resolution, tileBuffer.format());
 
@@ -445,13 +457,15 @@ void PaintCanvas::saveSnapshotImp(SnapshotSetting& _ss)
 		{
 			for( int tileCol = 0 ; tileCol < totalCols ;++tileCol)
 			{
-				preDraw();
+				preDraw(); 
+				//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); 
 				glMatrixMode(GL_PROJECTION);
 				glLoadIdentity();
 				setTileView( totalCols ,totalRows ,tileCol ,tileRow);
 				glMatrixMode(GL_MODELVIEW);
 				draw();
 				postDraw();
+				//Q_EMIT drawFinished(true);
 				tileBuffer =grabFrameBuffer(true).mirrored(false,true);
 
 				uchar *snapPtr = snapBuffer.bits() + (tileBuffer.bytesPerLine() * tileCol) + ((totalCols * tileRow) * tileBuffer.byteCount());

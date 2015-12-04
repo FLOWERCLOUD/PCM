@@ -44,7 +44,7 @@ void TrajectoryClassifier::run()
 	// calculate feature
  	DeformableRegistration nonrigid;
 
-	nonrigid.setNeigNum(neigborNum);
+	//nonrigid.setNeigNum(neigborNum);
 
 	//Logger<<"Neighbor Number = "<<neigborNum<<endl;
  	//MatrixXX featureMat;
@@ -103,15 +103,16 @@ void TrajectoryClassifier::run()
 
 	}else
 	{
-		Logger<<"Using Affine motion  model"<<endl;
+// 		Logger<<"Using Affine motion  model"<<endl;
+// 
+// 		vector<PCloudAffModel> totalModel;
+// 		totalModel.clear();
+// 		nonrigid.sampleAffineModel(totalTraj,totalModel,modeNum);
+// 
+// 		J_LinkageAdapter_Matlab<PCloudTraj, PCloudAffModel, Traj2AffModelDistFunc>	algo_adaptor(totalTraj, totalModel, labels, Traj2AffModelDistFunc(threshold),perC);
+// 
+// 		algo_adaptor.compute();
 
-		vector<PCloudAffModel> totalModel;
-		totalModel.clear();
-		nonrigid.sampleAffineModel(totalTraj,totalModel,modeNum);
-
-		J_LinkageAdapter_Matlab<PCloudTraj, PCloudAffModel, Traj2AffModelDistFunc>	algo_adaptor(totalTraj, totalModel, labels, Traj2AffModelDistFunc(threshold),perC);
-
-		algo_adaptor.compute();
 	}
 
 
@@ -140,7 +141,13 @@ void TrajectoryClassifier::run()
 			                         141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173};
 
  			char corr_file_name[1024];
-  			sprintf(corr_file_name,"F:\\EG2015\\rebuttal1127\\two_girls\\twoGirls_corr_64_%.2d_%.2f.txt",centerFrame,perC);
+
+  			//sprintf(corr_file_name,"F:\\EG2015\\rebuttal1127\\hanger\\hanger_corr%.2d_%.2f.txt",centerFrame,perC);
+
+			//sprintf(corr_file_name,"F:\\EG2015\\rebuttal1127\\15_26\\single_corr%.2d_%.2f.txt",centerFrame,perC);
+
+			sprintf(corr_file_name,"F:\\EG2015\\rebuttal1127\\hanger\\hangerAll\\hangerAll_corr%.2d_%.2f.txt",centerFrame,perC);
+
   			FILE *in_correspond = fopen(corr_file_name,"w");
   
   			for ( int i=0; i<sampleCenterVtxId.size();i++ )
@@ -161,25 +168,30 @@ void TrajectoryClassifier::run()
 
 		#endif
 
-        	bubleSort(sampleCenterVtxId,labels,labels.size());//为了配合顶点号码索引-
-     		vector<IndexType> label_smooth(labels.size(),0);
-     
-     		diff_using_bfs(labels,sampleCenterVtxId,centerFrame);//相同颜色不同连同块标记不同颜色
-     
-     		nonrigid.smoothSmapleLabel_KDTree(sample0,sampleCenterVtxId,labels,label_smooth);
- 
-  			IndexType nLabels = 1;
- 
-      		nLabels = orderLabels(label_smooth);
-    
-     		Logger<<"seg size = "<<nLabels; //是的label标号从0开始计算
+//          	bubleSort(sampleCenterVtxId,labels,labels.size());//为了配合顶点号码索引-
+//       		vector<IndexType> label_smooth(labels.size(),0);
+//       
+//       		diff_using_bfs(labels,sampleCenterVtxId,centerFrame);//相同颜色不同连同块标记不同颜色
+//       
+//       		nonrigid.smoothSmapleLabel_KDTree(sample0,sampleCenterVtxId,labels,label_smooth);
+//   
+//    			IndexType nLabels = 1;
+//   
+//        		nLabels = orderLabels(label_smooth);
+//      
+//       		Logger<<"seg size = "<<nLabels; //是的label标号从0开始计算
 
 
 		// 
 		 #ifdef SAVE_LABELS
 
   		    char label_labsmooth[1024];
-  		   	sprintf(label_labsmooth,"F:\\EG2015\\rebuttal1127\\two_girls\\twoGirls_labels_64%.2d_%.2f.txt",centerFrame,perC);
+  		   	//sprintf(label_labsmooth,"F:\\EG2015\\rebuttal1127\\hanger\\hanger_labels%.2d_%.2f.txt",centerFrame,perC);
+
+			//sprintf(label_labsmooth,"F:\\EG2015\\rebuttal1127\\15_26\\labels%.2d_%.2f.txt",centerFrame,perC);
+
+			sprintf(label_labsmooth,"F:\\EG2015\\rebuttal1127\\hanger\\hangerAll\\hangerAll_labels%.2d_%.2f.txt",centerFrame,perC);
+
   		   	FILE *in_label_smooth = fopen(label_labsmooth, "w");
   		   	IndexType tpd = 0;
   		 		 
@@ -187,8 +199,8 @@ void TrajectoryClassifier::run()
   		   	{
   		   		if (isSelector[i])
   		   		{
-  		   		  fprintf( in_label_smooth, "%d %d %d\n", centerFrame,label_smooth[tpd], i );//需要对labels排序
-  				  //fprintf( in_label_smooth, "%d %d %d\n", centerFrame,0, i );//需要对labels排序_为了传播分割结果
+  		   		  //fprintf( in_label_smooth, "%d %d %d\n", centerFrame,label_smooth[tpd], i );//需要对labels排序
+  				  fprintf( in_label_smooth, "%d %d %d\n", centerFrame,0, i );//需要对labels排序_为了传播分割结果
   		   		  tpd++;
   		   		} 
   		   	}
@@ -208,8 +220,8 @@ void TrajectoryClassifier::run()
      					if (isSelector[i])
      					{
      						(*v_iter)->set_visble(true);
-     						//(*v_iter)->set_label( labels[k] );//orignal label
-     						(*v_iter)->set_label( label_smooth[k] );//smooth label
+     						(*v_iter)->set_label( labels[k] );//orignal label
+     						//(*v_iter)->set_label( label_smooth[k] );//smooth label
      						k++;
      					}else
      					{

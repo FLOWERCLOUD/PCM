@@ -235,7 +235,7 @@ void DualwayPropagation::getEdgeVertexs2( IndexType _CFrameId , distanPriQueue& 
 
 
 	IndexType sr_labelLevel,tg_labelLevel;
-	for( IndexType i  = 5 ; i >0 ; --i)
+	for( IndexType i  = 10 ; i >0 ; --i)
 	{
 		if (_PriQuemap.empty())
 		{
@@ -306,7 +306,7 @@ void DualwayPropagation:: init_labeles_graph_hier(ScalarType distThr)
 
 	if (distThr >= 1.0 || distThr < 0.0)
 	{
-		distThr = 0.1;
+		distThr = 0.05;
 	}
 
 	for (auto citer = hier_componets_.begin(); citer!=hier_componets_.end(); citer++)
@@ -912,7 +912,7 @@ void DualwayPropagation::split_twoAjacent_graph_prev(IndexType srFrame, IndexTyp
 		new_label_bucket[new_label]->frame_parent = &hier_componets_[tgFrame];
 
 		//开始分裂
-		map<IndexType,HVertex*> unMakePs;
+		map<IndexType,HVertex*> unMarkPs;
 
 		for (auto iter = splitedLabel->vertex_bucket.begin(); iter != splitedLabel->vertex_bucket.end(); )
 		{
@@ -942,15 +942,53 @@ void DualwayPropagation::split_twoAjacent_graph_prev(IndexType srFrame, IndexTyp
 
 				}else//一些待确定label的点
 				{
-					unMakePs.insert(*iter);
+					unMarkPs.insert(*iter);
 					iter = splitedLabel->vertex_bucket.erase(iter);
 				}
 			}
 
 		} //遍历需要分裂块的每个点
 
-			//用随机取点产生的最小距离来判断不确定点属于哪个类.unmark 要么属于nodeid 要么属于new_label
-		determinateUnmarkPoints(srFrame,unMakePs,new_label_bucket,edgePsCorNode,new_label,srGraphSize);
+		if (!unMarkPs.empty())
+		{
+			if ( (!new_label_bucket[new_label]->vertex_bucket.empty() ) && (!new_label_bucket[edgePsCorNode]->vertex_bucket.empty() ) )
+			{
+				//用随机取点产生的最小距离来判断不确定点属于哪个类.unmark 要么属于nodeid 要么属于new_label
+				determinateUnmarkPoints(srFrame,unMarkPs,new_label_bucket,edgePsCorNode,new_label,srGraphSize);
+
+			}else if (new_label_bucket[new_label]->vertex_bucket.empty())
+			{
+				Logger<<"分裂出来的点太少.\n";
+
+				new_label_bucket.pop_back();
+
+				for (auto iter = unMarkPs.begin(); iter != unMarkPs.end();)//放回原来的块中
+				{
+					new_label_bucket[edgePsCorNode]->vertex_bucket.insert(*iter);
+
+					hier_componets_[tgFrame].label_of_vtx[iter->first] = edgePsCorNode;
+
+					iter->second->label_parent.resize(srGraphSize + 1);
+					iter->second->label_parent[srGraphSize] = new_label_bucket[edgePsCorNode];
+
+					iter = unMarkPs.erase(iter); 
+
+				}
+
+				continue;
+
+			}else if(new_label_bucket[edgePsCorNode]->vertex_bucket.empty() )
+			{
+				Logger<<"ori parch empty!.\n";
+
+				break;
+			}
+
+		}
+
+		//用随机取点产生的最小距离来判断不确定点属于哪个类.unmark 要么属于nodeid 要么属于new_label
+		//determinateUnmarkPoints(srFrame,unMakePs,new_label_bucket,edgePsCorNode,new_label,srGraphSize);
+
 
 		//对这两个点进行加边操作,
 		//node<--->new_node
@@ -1321,7 +1359,8 @@ void DualwayPropagation::splitAllSquenceGraph(IndexType iterN)
 
 	map<IndexType,HFrame>::iterator  cEnd = hier_componets_.end();
 
-//  	IndexType startF = 6;
+
+//  	IndexType startF = 4;
 //  	while (startF -- > 0)
 //  	{
 //  		++cIter;
@@ -1689,7 +1728,26 @@ void DualwayPropagation::determinateUnmarkPoints(IndexType cFrame,map<IndexType,
 // 		ScalarType d2size = p2PatchMinDis(cFrame,pCoor,oriLabelBucket[newLabe]->vertex_bucket );
 
 
-		//测地线距离
+// 		//测地线距离
+// 		ScalarType d2node = 0.;
+// 		ScalarType d2size = 0.;
+// 
+// 		if (oriLabelBucket[nodeId]->vertex_bucket.empty() )
+// 		{
+// 			d2node = 1e5;
+// 		}else
+// 		{
+// 			d2node = p2PatchGeoDis(cFrame,*(*iter).second,oriLabelBucket[nodeId]->vertex_bucket);//距离严格最小
+// 		}
+// 
+// 		if (oriLabelBucket[newLabe]->vertex_bucket.empty() )
+// 		{
+// 			d2size = 1e5;
+// 		}else
+// 		{
+// 			d2size = p2PatchGeoDis(cFrame,*(*iter).second,oriLabelBucket[newLabe]->vertex_bucket );
+// 		}
+
 		ScalarType d2node = p2PatchGeoDis(cFrame,*(*iter).second,oriLabelBucket[nodeId]->vertex_bucket);//距离严格最小
 		ScalarType d2size = p2PatchGeoDis(cFrame,*(*iter).second,oriLabelBucket[newLabe]->vertex_bucket );
 
@@ -1890,6 +1948,11 @@ void DualwayPropagation::checkPsNewLabelParentPtr(vector<HLabel*> oriLabelBucket
 	{
 		 map<IndexType,HVertex*>& vtxBucket = (*vIter)->vertex_bucket;
 
+		 if (vtxBucket.empty())
+		 {
+			 continue;
+		 }
+
 		 HVertex* fVtx = (*vtxBucket.begin()).second;
 
 		 IndexType vlfSize = fVtx->label_parent.size();
@@ -1949,7 +2012,7 @@ void DualwayPropagation::smoothSingleFrame(IndexType frame_idx)//没有修改根据lab
 	IndexType hLevel_idx = graphLevel - 1;
 	//IndexType beforLabelSize = hier_componets_[frame_idx].hier_label_bucket[hLevel_idx].size();
 
-	IndexType beforLabelSize = 25;
+	IndexType beforLabelSize = 100;
 
 	for ( i=0; i<idx_mapper.size(); i++)
 	{
@@ -2295,27 +2358,7 @@ void DualwayPropagation::split_twoAjacent_graph_next_order(IndexType srFrame, In
 
 		Logger<<"  边的起点为"<<eS<<"终点为"<<eE<<endl;
 
-// 		IndexType recordS = 0;       
-// 		IndexType recordE = 0;
-// 
-// 		IndexType vtxBSzie = splitedLabel->vertex_bucket.size();
-// 
-//  		for (auto iter = splitedLabel->vertex_bucket.begin(); iter != splitedLabel->vertex_bucket.end(); iter ++)
-//  		{
-//  			IndexType prev_id = iter->second->prev_corr->label_parent[gLevel]->label_id; //
-//  
-//  			if (prev_id == eS)
-//  			{
-//  				recordS ++;
-//  
-//  			}else if(prev_id == eE)
-//  			{
-//  				recordE ++;
-//  			}
-//  		}
- 
- 		//ScalarType ration = (ScalarType)(recordS + recordE)/vtxBSzie;
- 
+		
  		//若分裂出来的点个数有一个数据很少,则该边不做裂变
  
  		if ( oEdge.srCorNum < 10 || oEdge.tgCorNum < 10 )
@@ -2362,13 +2405,13 @@ void DualwayPropagation::split_twoAjacent_graph_next_order(IndexType srFrame, In
 			boost::remove_edge(*oit,*new_graph);//删除这条边
 		}
 
-		//增加一个节点
-
-		IndexType nSize = boost::num_vertices(*new_graph);
-
-		GraphVertexProperty vp(nSize,-1,-1);
-
-		boost::add_vertex(vp,*new_graph);
+// 		//增加一个节点// 增加顶点操作放在前面.
+// 
+ 		IndexType nSize = boost::num_vertices(*new_graph);
+// 
+// 		GraphVertexProperty vp(nSize,-1,-1);
+// 
+// 		boost::add_vertex(vp,*new_graph);
 
 		//更新分割块信息,新增加的Label标号为nSize. 被分裂的点为nodeId
 		IndexType new_label = nSize;
@@ -2382,7 +2425,7 @@ void DualwayPropagation::split_twoAjacent_graph_next_order(IndexType srFrame, In
 
 		// 		//对应回去,标签是起始点,则保持不变
 
-		map<IndexType,HVertex*> unMakePs;
+		map<IndexType,HVertex*> unMarkPs;
 
 		for (auto iter = splitedLabel->vertex_bucket.begin(); iter != splitedLabel->vertex_bucket.end(); )
 		{
@@ -2411,21 +2454,99 @@ void DualwayPropagation::split_twoAjacent_graph_next_order(IndexType srFrame, In
 
 			}else//一些待确定label的点
 			{
-				unMakePs.insert(*iter);
+				unMarkPs.insert(*iter);
 				iter = splitedLabel->vertex_bucket.erase(iter);
 			}
 
 		}
 
-		if (new_label_bucket[new_label]->vertex_bucket.size() == 0 )
+		if (!unMarkPs.empty())
 		{
-			Logger<<"分裂出来的点太少.\n";
-			new_label_bucket.pop_back();
-			continue;
+			if ( (!new_label_bucket[new_label]->vertex_bucket.empty() ) && (!new_label_bucket[nodeId]->vertex_bucket.empty() ) )
+			{
+				//用随机取点产生的最小距离来判断不确定点属于哪个类.unmark 要么属于nodeid 要么属于new_label
+				determinateUnmarkPoints(tgFrame,unMarkPs,new_label_bucket,nodeId,new_label,tgGraSize);
+
+			}else if (new_label_bucket[new_label]->vertex_bucket.empty())
+			{
+				Logger<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!分裂出来的点太少.\n";
+
+				new_label_bucket.pop_back();
+
+				for (auto iter = unMarkPs.begin(); iter != unMarkPs.end();)//放回原来的块中--并没增加节点
+				{
+					new_label_bucket[nodeId]->vertex_bucket.insert(*iter);
+
+					hier_componets_[tgFrame].label_of_vtx[iter->first] = nodeId;
+
+					iter->second->label_parent.resize(tgGraSize + 1);
+					iter->second->label_parent[tgGraSize] = new_label_bucket[nodeId];
+
+					iter = unMarkPs.erase(iter); 
+
+				}
+
+				continue;
+
+			}else if(new_label_bucket[nodeId]->vertex_bucket.empty() )
+			{
+				Logger<<"ori parch empty!.\n";
+				//unmarked和new_label都放回到原来的块中.
+
+				for (auto iter = unMarkPs.begin(); iter != unMarkPs.end();)//放回原来的块中--并没增加节点
+				{
+					new_label_bucket[nodeId]->vertex_bucket.insert(*iter);
+
+					hier_componets_[tgFrame].label_of_vtx[iter->first] = nodeId;
+
+					iter->second->label_parent.resize(tgGraSize + 1);
+					iter->second->label_parent[tgGraSize] = new_label_bucket[nodeId];
+
+					iter = unMarkPs.erase(iter); 
+
+				}
+
+				//把新生成的块也放回原块中
+
+				auto bMapVtx = new_label_bucket[new_label]->vertex_bucket.begin();
+				auto eMapVtx = new_label_bucket[new_label]->vertex_bucket.end();
+
+				for (; bMapVtx != eMapVtx; ++ bMapVtx)
+				{
+					new_label_bucket[nodeId]->vertex_bucket.insert(*bMapVtx);
+
+					hier_componets_[tgFrame].label_of_vtx[bMapVtx->first] = nodeId;
+
+					bMapVtx->second->label_parent.resize(tgGraSize + 1);
+
+					bMapVtx->second->label_parent[tgGraSize] = new_label_bucket[nodeId];
+
+				}
+
+				new_label_bucket.pop_back();
+
+				break;
+			}
+
 		}
 
-		//用随机取点产生的最小距离来判断不确定点属于哪个类.unmark 要么属于nodeid 要么属于new_label
-		determinateUnmarkPoints(tgFrame,unMakePs,new_label_bucket,nodeId,new_label,tgGraSize);
+
+// 		if (new_label_bucket[new_label]->vertex_bucket.size() == 0 )
+// 		{
+// 			Logger<<"分裂出来的点太少.\n";
+// 			new_label_bucket.pop_back();
+// 			//continue;
+// 		}
+
+
+		//增加一个节点 --把增加顶点操作放在确定增加一个类上面.
+
+		//IndexType nSize = boost::num_vertices(*new_graph);
+
+		GraphVertexProperty vp(nSize,-1,-1);
+
+		boost::add_vertex(vp,*new_graph);
+
 
 		//对这两个点进行加边操作,
 		//node<--->new_node
@@ -2848,6 +2969,8 @@ void DualwayPropagation::generateOrderededges(IndexType srFrame, IndexType tgFra
 
 		IndexType newGraphEdgeSize = new_graph->m_edges.size();
 
+		//并没有更新图结构
+
 		IndexType nodeId = checkNextLabelBucket(edgePoints,edgeCorrNextVtx);//获得边界点在下一帧对应的块和对应点
 		//IndexType nodeId = edgeCorrNextVtx.size();
 
@@ -3144,10 +3267,10 @@ void DualwayPropagation::show_corresponding(int f)
 				Tracer::get_instance().add_record(f, vtx.vtx_id, f+1, vtx.next_corr->vtx_id);
 			}
 
-// 			if (vtx.prev_corr)
-// 			{
-// 				Tracer::get_instance().add_record(f, vtx.vtx_id, f-1, vtx.prev_corr->vtx_id);
-// 			}
+			if (vtx.prev_corr)
+			{
+				Tracer::get_instance().add_record(f, vtx.vtx_id, f-1, vtx.prev_corr->vtx_id);
+			}
 
 		}
 	}
