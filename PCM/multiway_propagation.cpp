@@ -1360,11 +1360,11 @@ void DualwayPropagation::splitAllSquenceGraph(IndexType iterN)
 	map<IndexType,HFrame>::iterator  cEnd = hier_componets_.end();
 
 
-//  	IndexType startF = 4;
-//  	while (startF -- > 0)
-//  	{
-//  		++cIter;
-//  	}
+	IndexType startF = 51;
+	while (startF -- > 0)
+	{
+		++cIter;
+	}
 
 	--cEnd;
 
@@ -1382,11 +1382,11 @@ void DualwayPropagation::splitAllSquenceGraph(IndexType iterN)
 
 		//split_twoAjacent_graph_next(srFrame,tgFrame );
 
-		show_corresponding(srFrame);
+		//show_corresponding(srFrame);
 
 		split_twoAjacent_graph_next_order(srFrame,tgFrame );
 
-		split_nest_graph_prev(startFrameId,srFrame,tgFrame);
+		//split_nest_graph_prev(startFrameId,srFrame,tgFrame);
 
 	}
 

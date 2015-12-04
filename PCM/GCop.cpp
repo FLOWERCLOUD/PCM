@@ -96,6 +96,10 @@ void GCop::run()
 		char* in_label_file = "F:\\EG2015\\rebuttal1127\\hanger\\totBrySmth(13_22).txt";//boundary smoothing results
 		char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\hanger\\totCorr(13_22).txt";
 
+		//hanger data  propogation to all frames
+		//char* in_label_file = "F:\\EG2015\\rebuttal1127\\hanger\\hangerAll\\labeloutput0_87center51.txt";//boundary smoothing results
+		//char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\hanger\\hangerAll\\corroutput0_87center51.txt";
+
 		DualwayPropagation dp_solver;
 
 		dp_solver.read_data(in_label_file,in_corr_file);
@@ -3244,14 +3248,14 @@ void GCop::coSegmentation()
 //--------------------------
 void GCop::splitProcess(DualwayPropagation& dp_solver)
 {
- 	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1203splitResultsSmth.txt";
+ 	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1204splitResultsSmth.txt";
 
  	dp_solver.splitAllSquenceGraph(m_centerF);//读取j-linkagelabel文件之后进行前后的分裂操作,参数表示序列分裂的帧数;
  
  	dp_solver.smoothAfterSplit(); //k =30,分裂之后进行smooth操作
  
     //平滑处理之后,有些块点个数变为零,或者个数很小,需要进行合并操作!
-	dp_solver.mergeSingleTinyPatches(m_nSwap); //remove empty segments 加入了循环操作,
+	//dp_solver.mergeSingleTinyPatches(m_nSwap); //remove empty segments 加入了循环操作,
     
 	dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
    
@@ -3310,6 +3314,9 @@ void GCop::visualCosegmentation(char *labels_file)
 	//IndexType frames[] = {115,116,117,118,119,120,121,122,123,124,125};//single girl
 	//IndexType frames[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};//horse
 	IndexType frames[] = {6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22};//hanger data
+
+	//IndexType frames[] = {51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,};//hanger data  all
+
 	//IndexType frames[] = {0,1,2,3,4,5,6,7,8,9,10/*,11,12*/};//finger
 	//IndexType frames[] = {29,30,31,32,33,34,35,36,37,38,39,40,41,42};//two girls
 	//IndexType frames[] = {10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39};
