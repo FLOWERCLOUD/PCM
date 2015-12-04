@@ -1360,7 +1360,7 @@ void DualwayPropagation::splitAllSquenceGraph(IndexType iterN)
 	map<IndexType,HFrame>::iterator  cEnd = hier_componets_.end();
 
 
-	IndexType startF = 51;
+	IndexType startF = 4;
 	while (startF -- > 0)
 	{
 		++cIter;

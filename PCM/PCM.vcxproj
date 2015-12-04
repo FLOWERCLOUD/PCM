@@ -107,7 +107,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(MatlabDir)\lib\win64;$(QTDIR_64_12)\lib;$(MatlabDir)\extern\lib\win64\microsoft;$(OPencvLib);$(SolutionDir)\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\qtmaind.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Cored.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Guid.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5OpenGLd.lib;opengl32.lib;glu32.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Widgetsd.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Xmld.lib;QGLViewerd2.lib;libeng.lib;libmx.lib;libmex.lib;libmat.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(QTDIR_64_12)\lib\qtmaind.lib;$(QTDIR_64_12)\lib\Qt5Cored.lib;$(QTDIR_64_12)\lib\Qt5Guid.lib;$(QTDIR_64_12)\lib\Qt5OpenGLd.lib;opengl32.lib;glu32.lib;$(QTDIR_64_12)\lib\Qt5Widgetsd.lib;$(QTDIR_64_12)\lib\Qt5Xmld.lib;QGLViewerd2.lib;libeng.lib;libmx.lib;libmex.lib;libmat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <CustomBuildStep>
