@@ -93,7 +93,8 @@ void GCop::run()
 		//char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\hanger\\totCorr(13_22).txt";
 
 		//hanger data
-		char* in_label_file = "F:\\EG2015\\rebuttal1127\\hanger\\totBrySmth(13_22).txt";//boundary smoothing results
+		//char* in_label_file = "F:\\EG2015\\rebuttal1127\\hanger\\totBrySmth(13_22).txt";//boundary smoothing results
+		char* in_label_file = "F:\\EG2015\\compar\\diffusionOrder\\labelAfterCoseg\\totCosegSmth(13_22).txt";//coseg for each single frame  and  smoothing
 		char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\hanger\\totCorr(13_22).txt";
 
 		//hanger data  propogation to all frames
@@ -112,13 +113,13 @@ void GCop::run()
 
 		Logger<<"End Split Process!\n";
 
-// 		cosegProcessing(dp_solver);
-// 
-// 		Logger<<"End  Coseg Process!\n";
+		cosegProcessing(dp_solver);
 
-// 		mergeProcess(dp_solver);
-// 
-// 		Logger<<"End Merge Process!\n";
+		Logger<<"End  Coseg Process!\n";
+
+		mergeProcess(dp_solver);
+
+		Logger<<"End Merge Process!\n";
 	}
 
 
@@ -343,7 +344,9 @@ void GCop::refineSegm()
 	// hanger data
 	//sprintf(input_label_file,"F:\\EG2015\\rebuttal1127\\hanger\\OrderLabel%.2d.txt",m_centerF); //in order to smoothig
 
-	sprintf(input_label_file,"F:\\EG2015\\compar\\diffusionOrder\\split(17_18)\\OrderLabel%.2d.txt",m_centerF);
+	//sprintf(input_label_file,"F:\\EG2015\\compar\\diffusionOrder\\split(17_18)\\OrderLabel%.2d.txt",m_centerF);
+
+	sprintf(input_label_file,"F:\\EG2015\\compar\\diffusionOrder\\labelAfterCoseg\\OrderLabel%.2d.txt",m_centerF); //in order to smoothig after coseg,2015-12-05
 	sprintf(input_cor_file,"F:\\EG2015\\rebuttal1127\\hanger\\hanger_corr%.2d.txt",m_centerF);
 
 
@@ -897,7 +900,7 @@ void GCop::visulizationLabels()
 
 		#ifdef OUTPUT_LABELS
 			char outputLabelName[1024]; 
-			sprintf(outputLabelName,"F:\\EG2015\\rebuttal1127\\hanger\\boundaryLabels%.2d.txt",centFrame);
+			sprintf(outputLabelName,"F:\\EG2015\\compar\\diffusionOrder\\labelAfterCoseg\\boundaryLabels%.2d.txt",centFrame);
 			FILE *in_label = fopen(outputLabelName,"w");
 			fprintf(in_label,"%d\n",finalLabels);
 		#endif // OUTPUT_LABELS
@@ -3248,23 +3251,23 @@ void GCop::coSegmentation()
 //--------------------------
 void GCop::splitProcess(DualwayPropagation& dp_solver)
 {
- 	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1204splitResultsSmth.txt";
+ 	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1205splitResultsSmth.txt";
 
  	dp_solver.splitAllSquenceGraph(m_centerF);//读取j-linkagelabel文件之后进行前后的分裂操作,参数表示序列分裂的帧数;
  
  	dp_solver.smoothAfterSplit(); //k =30,分裂之后进行smooth操作
  
     //平滑处理之后,有些块点个数变为零,或者个数很小,需要进行合并操作!
-	//dp_solver.mergeSingleTinyPatches(m_nSwap); //remove empty segments 加入了循环操作,
+	dp_solver.mergeSingleTinyPatches(m_nSwap); //remove empty segments 加入了循环操作,
     
-	dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
-   
-   	visualCosegmentation(out_label_file);
+ 	dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
+    
+    visualCosegmentation(out_label_file);
 }
 //--------------------------
 void GCop::cosegProcessing(DualwayPropagation& dp_solver)
 {
-	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1203cosegResults.txt";
+	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1205cosegResults.txt";
 
 	CoSegmentation coseg_solver(SampleSet::get_instance(),dp_solver.getCompents());
 	
@@ -3274,9 +3277,11 @@ void GCop::cosegProcessing(DualwayPropagation& dp_solver)
 
 	coseg_solver.components2HierComponets();
 
-	dp_solver.init_labeles_graph_hier(0.015); //重新构造一个图结构
+	//dp_solver.init_labeles_graph_hier(0.015); //重新构造一个图结构
 
-	//dp_solver.initGraphAfterCoseg();//不需要构造一个图结构, 因为共分割并没有改变原来的图结构.只需要调整vector<HLabel*>到原来的就可以
+	////dp_solver.initGraphAfterCoseg();//不需要构造一个图结构, 因为共分割并没有改变原来的图结构.只需要调整vector<HLabel*>到原来的就可以
+
+	//dp_solver.mergeSingleTinyPatches(50);
 
 	dp_solver.wirteSplitGraphLables(out_label_file);
 
@@ -3285,13 +3290,13 @@ void GCop::cosegProcessing(DualwayPropagation& dp_solver)
 //---------------------------
 void GCop::mergeProcess(DualwayPropagation& dp_solver)
 {
-	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1010mergeResults.txt";
+	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1205mergeResults.txt";
 
-	//dp_solver.mergePatchesAfterCoSeg(); // 读取共分割的label文件之后,建立图结构, 然后进行图的merge操作 0831
+	dp_solver.mergePatchesAfterCoSeg(); // 读取共分割的label文件之后,建立图结构, 然后进行图的merge操作 0831
 	
 	////merge squences by Graph cuts
 
-    dp_solver.mergePatchTraj();
+    //dp_solver.mergePatchTraj();
 
  	dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
  
@@ -3330,16 +3335,12 @@ void GCop::visualCosegmentation(char *labels_file)
 	}
 
 	//为了转化成ply格式
-//         char filename[1024];
-//         sprintf(filename,"F:\\EG2015\\rebuttal1127\\hanger\\singleMerge%.2d.txt",m_centerF);//"labels_frame05.txt";
-//         FILE* outfile = fopen(filename, "w");
- //  
-//  	  vector<IndexType> smpId;
-//  	  vector<IndexType> label_smp;
-//  	  vector<IndexType> oriLabels;
+#ifdef OUTPUT_LABELS
+         char filename[1024];
+         sprintf(filename,"F:\\EG2015\\compar\\diffusionOrder\\labelAfterCoseg\\cosegLabel%.2d.txt",m_centerF);// signle labels after coseg
+         FILE* outfile = fopen(filename, "w");
+#endif // OUTPUT_LABELS
 
-
-	//Sample& oriPC = SampleSet::get_instance()[m_centerF];
 
 	while (true)
 	{
@@ -3347,42 +3348,19 @@ void GCop::visualCosegmentation(char *labels_file)
 		if(stat==EOF)break;
 		smpSet[frame][vtx_idx].set_visble(true);
 		smpSet[frame][vtx_idx].set_label(label);
-//  		if (m_centerF == frame)
-//  		{
-//  			//Vertex& tV = oriPC[vtx_idx];
-//  			//ColorType pClr = Color_Utility::span_color_from_hy_table(label );
-//  			//fprintf(outfile,"%.4f %.4f %.4f %.4f %.4f %.4f %d %d %d\n", tV.x(),tV.y(), tV.z(),tV.nx(),tV.ny(),tV.nz(),pClr(0,0),pClr(1,0),pClr(2,0) );
-//  			//fprintf(outfile,"%d %d %d\n", frame, label, vtx_idx);
-//  			//smpId.push_back(vtx_idx);
-//  			//label_smp.push_back(label);
-//  		}
+
+#ifdef OUTPUT_LABELS
+  		if (m_centerF == frame)
+  		{
+  			fprintf(outfile,"%d %d %d\n", frame, label, vtx_idx);
+  		}
+#endif // OUTPUT_LABELS
 
 	}
 
-
-//   	IndexType vtxSize = oriPC.num_vertices();
-//   
-//   	oriLabels.resize(vtxSize,0);
- 
-  	//propagateLabel2Orignal(oriPC,smpId,label_smp,oriLabels);
- // 
- 	//IndexType i = 0;
- 	//for (Sample::vtx_iterator v_iter = oriPC.begin(); v_iter != oriPC.end(); ++ v_iter,++ i)
- 	//{
- 		//fprintf(outfile,"%d %d %d \n",m_centerF, oriLabels[i], i);
-//  		Vertex& tV = oriPC[i];
-//  		ColorType pClr = Color_Utility::span_color_from_hy_table(oriLabels[i] );
-//  		oriPC[i].set_visble(true);
-//  		oriPC[i].set_value(oriLabels[i]);
-//  
-//  		fprintf(outfile,"%.4f %.4f %.4f %.4f %.4f %.4f %.f %.f %.f\n", tV.x(),tV.y(), tV.z(),tV.nx(),tV.ny(),tV.nz(),pClr(0,0),pClr(1,0),pClr(2,0) );
-	//}
-// 
-// 	//写原始文件
-// 
-
-
- 	//fclose(outfile);
+#ifdef OUTPUT_LABELS
+ 	fclose(outfile);
+#endif // OUTPUT_LABELS
 
 	fclose(in_file);
 }
@@ -3467,10 +3445,15 @@ void GCop::orderLabelsOnly()
 
 	// single girl dancing 11-27
 
-	sprintf(input_label_file,"F:\\EG2015\\compar\\diffusionOrder\\split(17_18)\\splitLabels%.2d.txt",m_centerF);
-	sprintf(output_lab_file,"F:\\EG2015\\compar\\diffusionOrder\\split(17_18)\\OrderLabel%.2d.txt",m_centerF);
+	//sprintf(input_label_file,"F:\\EG2015\\compar\\diffusionOrder\\split(17_18)\\splitLabels%.2d.txt",m_centerF);
+	//sprintf(output_lab_file,"F:\\EG2015\\compar\\diffusionOrder\\split(17_18)\\OrderLabel%.2d.txt",m_centerF);
 
 	//sprintf(output_label_only,"D:\\desk_file\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\horse_multiview0804\\EG0923\\labelCorr(1_9)\\singleseglabels\\oriPC\\orderLabelOnly%.2d.txt",m_centerF);
+
+
+	// hanger data seg after coseg
+	sprintf(input_label_file,"F:\\EG2015\\compar\\diffusionOrder\\labelAfterCoseg\\cosegLabel%.2d.txt",m_centerF);
+	sprintf(output_lab_file,"F:\\EG2015\\compar\\diffusionOrder\\labelAfterCoseg\\OrderLabel%.2d.txt",m_centerF);
 
 	vector<IndexType> tempLabels;
 	vector<IndexType> vtx_id;

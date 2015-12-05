@@ -1669,8 +1669,8 @@ void GraphMatch::findBestPatches(IndexType srLevel, IndexType tgLevel,set<IndexT
 
 void GraphMatch::mergePatchesAfterCoSeg(IndexType srLevel, IndexType tgLevel,set<IndexType>& srBestSet, set<IndexType>& tgBestSet)
 {
-	IndexType fpId = 1;
-	IndexType spid = 6;
+	IndexType fpId = 6;
+	IndexType spid = 20;
 
 	printf("Start to merge patch %d and %d.\n",fpId,spid);
 

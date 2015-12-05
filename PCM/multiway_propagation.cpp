@@ -1360,11 +1360,11 @@ void DualwayPropagation::splitAllSquenceGraph(IndexType iterN)
 	map<IndexType,HFrame>::iterator  cEnd = hier_componets_.end();
 
 
-	IndexType startF = 4;
-	while (startF -- > 0)
-	{
-		++cIter;
-	}
+// 	IndexType startF = 4;
+// 	while (startF -- > 0)
+// 	{
+// 		++cIter;
+// 	}
 
 	--cEnd;
 
@@ -1386,7 +1386,7 @@ void DualwayPropagation::splitAllSquenceGraph(IndexType iterN)
 
 		split_twoAjacent_graph_next_order(srFrame,tgFrame );
 
-		//split_nest_graph_prev(startFrameId,srFrame,tgFrame);
+		split_nest_graph_prev(startFrameId,srFrame,tgFrame);
 
 	}
 
@@ -2185,7 +2185,7 @@ void DualwayPropagation::mergePatchesAfterCoSeg() //0831
 
 	buildPatchCorrespondenceByLabel();
 
-	IndexType itNum = 5;
+	IndexType itNum = 9;
 	IndexType i = 0;
 
 	for (auto fIter = hier_componets_.begin(); fIter != hier_componets_.end() &&  i < itNum ; ++ fIter,++i)
@@ -3299,7 +3299,7 @@ void DualwayPropagation::show_corresponding(int f)
 void DualwayPropagation::mergePatchTraj()
 {
 
-   calculateSimilar2Componet();
+   //calculateSimilar2Componet();
 
 	vector<PatchTraj> ptnodes;
 
@@ -3406,7 +3406,7 @@ void DualwayPropagation::graphCuts(vector<PatchTraj>& pNodes, vector<IndexType>&
 
    //calculateSimilar2Componet();
 
-   setSegSmoothItem(*segGraphC);//用形状统计图
+   setSegSmoothItem(*segGraphC);//用形状统计图--默认值为0
 
    segGraphC->expansion(2);
 
@@ -3552,12 +3552,6 @@ ScalarType DualwayPropagation::motionSimilarityBetw2Nodes(IndexType i, IndexType
 
 		iTrans = oriTraj[i].fNode[fid - iStr];
 		jTrans = oriTraj[j].fNode[fid - jStr];
-
-// 		Logger<<iTrans<<endl;
-// 
-// 		Logger<<jTrans<<endl;
-// 
-// 		Logger<<(iTrans - jTrans)<<endl;
 
 		ScalarType tDis = (iTrans - jTrans).norm();
 
