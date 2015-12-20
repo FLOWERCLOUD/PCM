@@ -27,7 +27,7 @@ void GraphNodeCtr::run()
 		//read_smooth_label_file("label_smp000_0.01200.txt");
 
 		//2015-1-1-box
-		//read_smooth_label_file("C:\\Users\\kobe\\Desktop\\graphCut\\2015-1-1 box\\label_cor_\\box_labels_smp05_10.00000.txt");//horse-(0-19)-顺序搞错了当时
+		//read_smooth_label_file("C:\\Users\\kobe\\Desktop\\graphCut\\2015-1-1 box\\label_cor_\\box_labels_smp05_10.00000.txt");//horse-(0-19)-脣鲁脨貌赂茫麓铆脕脣碌卤脢卤
 		
 		//read_smooth_label_file("box_labels_smp15_8.00000.txt");
 		//read_smooth_label_file("shiqun_labels_smp10_13.00000.txt");
@@ -43,7 +43,7 @@ void GraphNodeCtr::run()
 		//read_smooth_label_file("sq_walk_labels_smp25_0.70.txt");
 		//read_label_file("box_labels11_0.60.txt");
 
-		read_smooth_label_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\hand_leg_cor_labels\\hand_leg_labels_smp20_0.60.txt");
+		read_smooth_label_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\hand_leg_cor_labels\\hand_leg_labels_smp20_0.60.txt");
 		pca_box_ctr();
 
 		Engine*	ep;
@@ -230,7 +230,7 @@ void GraphNodeCtr::run()
 	//read_corres_file("horse_cor_345.txt");
 
 
-	//7-8-9 co-segmenation示意图--horse
+	//7-8-9 co-segmenation脢戮脪芒脥录--horse
 	//read_label_file("smp_labels_all.txt");
 	//read_corres_file("smp_cor_all.txt");
 
@@ -252,43 +252,43 @@ void GraphNodeCtr::run()
 // 	read_corres_file("corres(23_24.txt)");
 
 
-	//read_smooth_label_file("handup_5_15_labels.txt");//单手
+	//read_smooth_label_file("handup_5_15_labels.txt");//碌楼脢脰
 	//read_corres_file("handup_5_15_corres.txt");
 
-	//手脚一起摆动
-	//read_label_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\cluster_result\\co-segmentation(15_25)\\labels_15_25.txt");
-	//read_corres_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\cluster_result\\co-segmentation(15_25)\\corres_15_25.txt");
+	//脢脰陆脜脪禄脝冒掳脷露炉
+	//read_label_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\cluster_result\\co-segmentation(15_25)\\labels_15_25.txt");
+	//read_corres_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\cluster_result\\co-segmentation(15_25)\\corres_15_25.txt");
 
 
-	//read_smooth_label_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\hand_leg_cor_labels\\co-segmentation(6_7_8)\\labels(6_7_8).txt");
-	//read_corres_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\hand_leg_cor_labels\\co-segmentation(6_7_8)\\corres(6_7_8).txt");
+	//read_smooth_label_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\hand_leg_cor_labels\\co-segmentation(6_7_8)\\labels(6_7_8).txt");
+	//read_corres_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\hand_leg_cor_labels\\co-segmentation(6_7_8)\\corres(6_7_8).txt");
 
 
-	//read_smooth_label_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\hand_leg_cor_labels\\18_19_20\\labels.txt");
-	//read_corres_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\hand_leg_cor_labels\\18_19_20\\corres.txt");
+	//read_smooth_label_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\hand_leg_cor_labels\\18_19_20\\labels.txt");
+	//read_corres_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\hand_leg_cor_labels\\18_19_20\\corres.txt");
 
 	//update 18 frame results
-	//read_smooth_label_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\hand_leg_cor_labels\\new_18_19_20\\labels.txt");
-	//read_corres_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\hand_leg_cor_labels\\new_18_19_20\\corres.txt");
+	//read_smooth_label_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\hand_leg_cor_labels\\new_18_19_20\\labels.txt");
+	//read_corres_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\hand_leg_cor_labels\\new_18_19_20\\corres.txt");
 
 
 
 	//scanning hands- teaser
-	//read_label_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\hands\\labels_cor_info\\diff_labels(3_5).txt");
-	//read_corres_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\hands\\labels_cor_info\\diff_corres(3_5).txt");
+	//read_label_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\hands\\labels_cor_info\\diff_labels(3_5).txt");
+	//read_corres_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\hands\\labels_cor_info\\diff_corres(3_5).txt");
 
 
-	read_label_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\hands\\labels_cor_info\\diff_labels(0_7).txt");
-	read_corres_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\hands\\labels_cor_info\\diff_corres(0_7).txt");
+	read_label_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\hands\\labels_cor_info\\diff_labels(0_7).txt");
+	read_corres_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\hands\\labels_cor_info\\diff_corres(0_7).txt");
 
-	//read_label_file("C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\hands\\labels_cor_info\\final_labels(01234567).txt");
+	//read_label_file("C:\\Users\\kobe\\Desktop\\脗脹脦脛脢碌脩茅脛脷脠脻2014-12-30\\hands\\labels_cor_info\\final_labels(01234567).txt");
 
 	IndexType n = cur_graph_index_;
 
-	pca_box_ctr();//计算包围盒信息
- 	calculateNorm();//计算法向
+	pca_box_ctr();//录脝脣茫掳眉脦搂潞脨脨脜脧垄
+ 	calculateNorm();//录脝脣茫路篓脧貌
  	////construct boxes distances
- 	constructBoxDis(label_bucket);//建立包围盒之间的对应准确率
+ 	constructBoxDis(label_bucket);//陆篓脕垄掳眉脦搂潞脨脰庐录盲碌脛露脭脫娄脳录脠路脗脢
  
  	Engine*	ep;
  	if (! (ep = engOpen(NULL)) )
@@ -439,7 +439,7 @@ void GraphNodeCtr::run()
 	SampleSet &smp_set = SampleSet::get_instance();
 	IndexType frames[] = {0,1,2,3,4,5,6,7/*18,19,20*//*23,24*//*0,1,2,3*//*,2,3,4*//*9,10,11*//*0,1,2,3,4,*//*15,16,17,18,19,20,21,22,23,24,25*//*,16,17,18,19*/};
 
-	//只可视化sample上的点
+	//脰禄驴脡脢脫禄炉sample脡脧碌脛碌茫
  	for ( IndexType i=0; i<(sizeof(frames)/sizeof(IndexType));i++ )
  	{
  		for (IndexType j=0; j<smp_set[frames[i]].num_vertices(); j++)
@@ -458,7 +458,7 @@ void GraphNodeCtr::run()
  	}
 
 
-	/////tranfer to ori poin把分割信息传播到原始点云上
+	/////tranfer to ori poin掳脩路脰赂卯脨脜脧垄麓芦虏楼碌陆脭颅脢录碌茫脭脝脡脧
 
 	//IndexType fSize = sizeof(frames)/sizeof(IndexType);
 	//vector<vector<IndexType> > vtxId(fSize);
@@ -481,7 +481,7 @@ void GraphNodeCtr::run()
 	//	propagateLabel2Orignal(smp_set[i + frames[0]],vtxId[i],vtxLabel[i],resultLabel[i]);
 	//}
 
-	//////给顶点赋号码//k-means
+	//////赂酶露楼碌茫赂鲁潞脜脗毛//k-means
 	//for (IndexType i = 0;i< fSize;i++)
 	//{
 	//	vtxId[i].clear();
@@ -492,10 +492,10 @@ void GraphNodeCtr::run()
 	//}
 	//for (IndexType i = 0; i < fSize; i++)
 	//{
-	//	diff_using_bfs(resultLabel[i],vtxId[i],frames[i]);//在j-linkage中相同块分出不同的颜色出来
+	//	diff_using_bfs(resultLabel[i],vtxId[i],frames[i]);//脭脷j-linkage脰脨脧脿脥卢驴茅路脰鲁枚虏禄脥卢碌脛脩脮脡芦鲁枚脌麓
 	//}
 	
-	//显示采样点可视化效果--保存最终点的label信息到文件中
+	//脧脭脢戮虏脡脩霉碌茫驴脡脢脫禄炉脨搂鹿没--卤拢麓忙脳卯脰脮碌茫碌脛label脨脜脧垄碌陆脦脛录镁脰脨
 
 //	for (IndexType i=0;i<fSize;i++)
 //	{

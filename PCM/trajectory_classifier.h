@@ -18,9 +18,9 @@ public:
 		centerFrame = cFrame;
 		trajLen = 2;
 		octreeRes = 32;
-		perC = 0.5;
+		perC = 0.50;
 		threshold = 0.7;
-		modelT = 1;
+		modelT = 4;
 		lifeT = 2;
 		isEqual = true;
 		isRigid = false;

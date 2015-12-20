@@ -262,8 +262,6 @@ void DualwayPropagation::getEdgeVertexs2( IndexType _CFrameId , distanPriQueue& 
 	}
 
 	IndexType seKey = frame_label_to_key(sr_labelLevel, tg_labelLevel);
-	//IndexType seKey = frame_label_to_key( pd.labelofvtx1_, pd.labelofvtx2_);
-
 	_edgepoints[ seKey] = edgedps;
 
 }
@@ -383,7 +381,8 @@ void DualwayPropagation:: init_labeles_graph_hier(ScalarType distThr)
 						if(distance < minDis)minDis = distance;
 						IndexType label1 = hier_componets_[citer->first].label_of_vtx[ index1];
 						IndexType label2 = hier_componets_[citer->first].label_of_vtx[ index2];
-						if( distance < dia*distThr){
+						if( distance < dia*distThr)
+						{
 							pointdistance tpd( index1 ,  label1 , index2 ,label2 ,distance );
 							PriQue.push( tpd);
 						}
@@ -2531,14 +2530,6 @@ void DualwayPropagation::split_twoAjacent_graph_next_order(IndexType srFrame, In
 		}
 
 
-// 		if (new_label_bucket[new_label]->vertex_bucket.size() == 0 )
-// 		{
-// 			Logger<<"分裂出来的点太少.\n";
-// 			new_label_bucket.pop_back();
-// 			//continue;
-// 		}
-
-
 		//增加一个节点 --把增加顶点操作放在确定增加一个类上面.
 
 		//IndexType nSize = boost::num_vertices(*new_graph);
@@ -2561,6 +2552,88 @@ void DualwayPropagation::split_twoAjacent_graph_next_order(IndexType srFrame, In
 		newEP.edgePoints[edgeKey].insert(edgeCorrNextVtx.begin(),edgeCorrNextVtx.end());
 
 		boost::add_edge(nodeId,nSize,newEP,*new_graph);
+
+
+		////12-12-2015
+		////两点之间边距离满足某一阈值则进行加边操作，不做边保持不变的假设。
+		////遍历所有的节点除了nodeid和nSize;
+		//map<IndexType,HVertex*> nodeVtx = new_label_bucket[nodeId]->vertex_bucket;
+		//map<IndexType,HVertex*> nSizeVtx = new_label_bucket[nSize]->vertex_bucket;
+
+		//pair<VertexIterator, VertexIterator> vi = boost::vertices(*new_graph);
+		//for (VertexIterator fIt = vi.first; fIt != vi.second; ++fIt)
+		//{
+		//	VertexDescriptor vD = (*fIt);
+		//	GraphVertexProperty& vP = (*new_graph)[vD];
+
+		//	IndexType nId = vP.index;
+		//	if (nodeId == nId || nSize == nId)
+		//	{
+		//		continue;
+		//	}
+
+		//	map<IndexType,HVertex*> curVtx = new_label_bucket[nId]->vertex_bucket;
+
+		//	ScalarType minNode = 0.0;
+		//	ScalarType minSize = 0.0;
+
+		//	minDistBeTwoParts(tgFrame,curVtx,nodeVtx,minNode);
+		//	minDistBeTwoParts(tgFrame,curVtx,nSizeVtx,minSize);
+
+		//	if(minNode < 0.05 )
+		//	{
+		//		GraphEdgeProperty newEP;
+
+		//		if (nId < nodeId)
+		//		{
+		//			newEP.start_ = nId;
+		//			newEP.end_ = nodeId;
+		//		} 
+		//		else
+		//		{
+		//			newEP.start_ = nodeId;
+		//			newEP.end_ = nId;
+		//		}
+		//		newGraphEdgeSize = new_graph->m_edges.size();
+		//		newEP.index = newGraphEdgeSize;
+
+		//		IndexType edgeKey = frame_index_to_key(newEP.start_,newEP.end_);
+		//		//还没对degePoints赋值,只有赋上合理的值才能在下次分裂时起作用。
+
+		//		//newEP.edgePoints[edgeKey].insert(edgeCorrNextVtx.begin(),edgeCorrNextVtx.end());
+
+		//		boost::add_edge(nId,nodeId,newEP,*new_graph);
+		//	}
+
+		//	if (minSize < 0.05)
+		//	{
+		//		GraphEdgeProperty newEP;
+
+		//		if (nId < nSize)
+		//		{
+		//			newEP.start_ = nId;
+		//			newEP.end_ = nSize;
+		//		} 
+		//		else
+		//		{
+		//			newEP.start_ = nSize;
+		//			newEP.end_ = nId;
+		//		}
+		//		newGraphEdgeSize = new_graph->m_edges.size();
+		//		newEP.index = newGraphEdgeSize;
+
+		//		IndexType edgeKey = frame_index_to_key(newEP.start_,newEP.end_);
+		//		//还没对degePoints赋值,只有赋上合理的值才能在下次分裂时起作用。
+
+		//		//newEP.edgePoints[edgeKey].insert(edgeCorrNextVtx.begin(),edgeCorrNextVtx.end());
+
+		//		boost::add_edge(nId,nodeId,newEP,*new_graph);
+		//	}
+
+		//}//end for vertex
+
+  //     //结束加入循环判断
+
 
 		//断定查找两个节点与其它节点进行连边操作只会出现 recordColapseEdges.size()次数.
 		for (auto iter = collapseEdges.begin(); iter != collapseEdges.end(); iter ++)
@@ -2623,6 +2696,8 @@ void DualwayPropagation::split_twoAjacent_graph_next_order(IndexType srFrame, In
 			boost::add_edge(glueEdge.start_,glueEdge.end_,glueEdge,*new_graph);
 
 		}//遍历collapse的边
+
+
 	} //end  while
 
 	checkPsNewLabelParentPtr(new_label_bucket,labParentsize);//next dirction

@@ -95,7 +95,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(BoostDir);$(OpenCVcv);$(OpenCVDir);$(OpenCVc2);.\GeneratedFiles;.;$(QTDIR_64_12)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR_64_12)\include\QtCore;$(MatlabDir)\extern\include;$(QTDIR_64_12)\include\QtCore\5.3.2;$(QTDIR_64_12)\include\QtGui;$(QTDIR_64_12)\include\QtOpenGL;$(QTDIR_64_12)\include\QtWidgets;$(QTDIR_64_12)\include\QtXml;$(SolutionDir)\x64\Debug;$(SolutionDir)\PCM;$(SolutionDir)\eigen-3-1-4;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BoostDir);$(OpenCVDir)\opencv;$(OpenCVDir);$(OpenCVDir)\opencv2;.\GeneratedFiles;.;$(QTDIR_64_12)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR_64_12)\include\QtCore;$(MatlabDir)\extern\include;$(QTDIR_64_12)\include\QtCore\5.3.2;$(QTDIR_64_12)\include\QtGui;$(QTDIR_64_12)\include\QtOpenGL;$(QTDIR_64_12)\include\QtWidgets;$(QTDIR_64_12)\include\QtXml;$(SolutionDir)\x64\Debug;$(SolutionDir)\PCM;$(SolutionDir)\eigen-3-1-4;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -140,7 +140,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(MatlabDir)\\extern\include;..;$(SolutionDir);..\eigen-3-1-4;.\GeneratedFiles;.;.\GeneratedFiles\$(ConfigurationName);$(QTDIR_64_12)\include\QtCore;$(QTDIR_64_12)\include;$(QTDIR_64_12)\include\QtGui;$(QTDIR_64_12)\include\QtOpenGL;$(QTDIR_64_12)\include\QtWidgets;$(QTDIR_64_12)\include\QtXml;$(OpenCVDir);$(OpenCVcv);$(BoostDir);$(OpenCVc2);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MatlabDir)\\extern\include;..;$(SolutionDir);..\eigen-3-1-4;.\GeneratedFiles;.;.\GeneratedFiles\$(ConfigurationName);$(QTDIR_64_12)\include\QtCore;$(QTDIR_64_12)\include;$(QTDIR_64_12)\include\QtGui;$(QTDIR_64_12)\include\QtOpenGL;$(QTDIR_64_12)\include\QtWidgets;$(QTDIR_64_12)\include\QtXml;$(OpenCVDir);$(OpenCVDir)\opencv;$(BoostDir);$(OpenCVDir)\opencv2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>

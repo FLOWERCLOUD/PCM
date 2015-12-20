@@ -16,7 +16,7 @@
 DeformableRegistration::DeformableRegistration():
 	m_smpSet(SampleSet::get_instance())
 {
-	m_neigNum = 50;
+	m_neigNum = 60;
 	//Logger<<"Local ICP using neighbor K ="<<m_neigNum<<endl;
 }
 
@@ -1913,7 +1913,7 @@ void DeformableRegistration::drawLifespansTraj(vector<PCloudTraj> & lifeSpans)
 	IndexType totsize =lifeSpans.size();
 	PCloudTraj temp;
 	//IndexType trajNum = 0;
-	for (IndexType trajIndex = 0; trajIndex < totsize; trajIndex += 30)
+	for (IndexType trajIndex = 0; trajIndex < totsize; trajIndex += 20)
 	{
 		temp = lifeSpans[trajIndex];
 		traj_start = temp.trajLifeSpan.start;
@@ -3282,8 +3282,6 @@ void DeformableRegistration::calculateFixedLengthTrajWithTracingAlong(vector<PCl
 
 
 
-
-
 		vector<int> pre_idx_map(trajs.size());
 
 		for ( int i=0; i<trajs.size(); ++i )
@@ -3293,6 +3291,8 @@ void DeformableRegistration::calculateFixedLengthTrajWithTracingAlong(vector<PCl
 			pre_idx_map[i] = i;
 
 		}
+
+
 
 		//backward trace
 
@@ -3337,54 +3337,53 @@ void DeformableRegistration::calculateFixedLengthTrajWithTracingAlong(vector<PCl
 		}
 
 
-
-		for ( int i=0; i<trajs.size(); ++i )
-
-		{
-			pre_idx_map[i] = i;
-		}
+ 		for ( int i=0; i<trajs.size(); ++i )
+ 
+ 		{
+ 			pre_idx_map[i] = i;
+ 		}
 
 		//forward trace
 
-		for ( int j = smp_idx+1; j<=end_idx; ++j )
-
-		{
-
-			Sample* srGraph = p_subsmp_set[j- start_idx-1];
-
-			Sample* tgGraph = p_subsmp_set[j - start_idx];
-
-			Matrix3X srVtxMatrix = srGraph->vertices_matrix();
-
-			MatrixXXi   global_vtx_map;
-
-			MatrixXX    isDeformable;
-
-			std::set<IndexType> distoredLargeSet;
-
-
-
-			non_rigidRegister(*srGraph,*tgGraph,global_vtx_map,isDeformable,distoredLargeSet);
-
-
-
-			srGraph->vertices_matrix() = srVtxMatrix; 
-
-			srGraph->update();//back to original position after registeration
-
-			for ( int i=0; i<trajs.size();i++ )
-
-			{
-
-				trajs[i].trajNode[j-start_idx] = vtx_map[j-start_idx][global_vtx_map(0,pre_idx_map[i])];
-
-				pre_idx_map[i] = global_vtx_map(0,pre_idx_map[i]);
-
-			}
-
-
-
-		}
+ 		for ( int j = smp_idx+1; j<=end_idx; ++j )
+ 
+ 		{
+ 
+ 			Sample* srGraph = p_subsmp_set[j- start_idx-1];
+ 
+ 			Sample* tgGraph = p_subsmp_set[j - start_idx];
+ 
+ 			Matrix3X srVtxMatrix = srGraph->vertices_matrix();
+ 
+ 			MatrixXXi   global_vtx_map;
+ 
+ 			MatrixXX    isDeformable;
+ 
+ 			std::set<IndexType> distoredLargeSet;
+ 
+ 
+ 
+ 			non_rigidRegister(*srGraph,*tgGraph,global_vtx_map,isDeformable,distoredLargeSet);
+ 
+ 
+ 
+ 			srGraph->vertices_matrix() = srVtxMatrix; 
+ 
+ 			srGraph->update();//back to original position after registeration
+ 
+ 			for ( int i=0; i<trajs.size();i++ )
+ 
+ 			{
+ 
+ 				trajs[i].trajNode[j-start_idx] = vtx_map[j-start_idx][global_vtx_map(0,pre_idx_map[i])];
+ 
+ 				pre_idx_map[i] = global_vtx_map(0,pre_idx_map[i]);
+ 
+ 			}
+ 
+ 
+ 
+ 		}
 
 		//draw traj
 

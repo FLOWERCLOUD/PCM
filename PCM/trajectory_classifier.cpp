@@ -1,4 +1,4 @@
-#include "trajectory_classifier.h"
+﻿#include "trajectory_classifier.h"
 #include "globals.h"
 #include "basic_types.h"
 #include "sample.h"
@@ -59,21 +59,21 @@ void TrajectoryClassifier::run()
 
 	if (isEqual)
 	{
-		//��ȳ��켣��õļ��㷽��
+		//ÇóµÈ³¤¹ì¼£×î³£ÓÃµÄ¼ÆËã·½·¨
 		Logger<<"Using Equal Length Traj"<<endl;
-		nonrigid.calculateFixedLengthTrajWithTracingAlong(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes);//������׼
-		//nonrigid.calculateFixedLengthTraj(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes);//�Ȳ�������׼--�����׼--always
+		nonrigid.calculateFixedLengthTrajWithTracingAlong(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes);//Á¬ÐøÅä×¼
+		//nonrigid.calculateFixedLengthTraj(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes);//ÏÈ²ÉÑùÔÙÅä×¼--¼ä¸ôÅä×¼--always
 
 	}else
 	{
-		//�ٴβ��Բ��ȳ��켣����7-22  ///���ȳ��켣
+		//ÔÙ´Î²âÊÔ²»µÈ³¤¹ì¼£¼ÆËã7-22  ///²»µÈ³¤¹ì¼£
 		Logger<<"Using Unequal Length Traj"<<endl;
 		//nonrigid.calculateDownSmpLifeSpanTraj(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes,threshold,lifeT);
 		nonrigid.calculateDownSmpLifeSpanTrajCenter(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes,threshold,lifeT); 
 	}
 
 
-	//�˶�ģ�͸���
+	//ÔË¶¯Ä£ÐÍ¸öÊý
 	IndexType modeNum = modelT * sampleCenterVtxId.size();
 	vector<IndexType> labels;//12-25
 	labels.resize(totalTraj.size(),0);
@@ -90,12 +90,12 @@ void TrajectoryClassifier::run()
 
 	if (isRigid)
 	{
-		//����ģ��
+		//²ÉÑùÄ£ÐÍ
 		Logger<<"Using Rigid motion  model"<<endl;
 
 		vector<PCloudModel> totalModel;
 		totalModel.clear();
-		nonrigid.sampleModel(totalTraj,totalModel,modeNum);//�����켣/�������켣
+		nonrigid.sampleModel(totalTraj,totalModel,modeNum);//¶¨³¤¹ì¼£/²»¶¨³¤¹ì¼£
 
 		J_LinkageAdapter_Matlab<PCloudTraj, PCloudModel, Traj2ModDistanceFunc>	algo_adaptor(totalTraj, totalModel, labels, Traj2ModDistanceFunc(threshold),perC);
 
@@ -103,20 +103,20 @@ void TrajectoryClassifier::run()
 
 	}else
 	{
-// 		Logger<<"Using Affine motion  model"<<endl;
-// 
-// 		vector<PCloudAffModel> totalModel;
-// 		totalModel.clear();
-// 		nonrigid.sampleAffineModel(totalTraj,totalModel,modeNum);
-// 
-// 		J_LinkageAdapter_Matlab<PCloudTraj, PCloudAffModel, Traj2AffModelDistFunc>	algo_adaptor(totalTraj, totalModel, labels, Traj2AffModelDistFunc(threshold),perC);
-// 
-// 		algo_adaptor.compute();
+		Logger<<"Using Affine motion  model"<<endl;
+
+		vector<PCloudAffModel> totalModel;
+		totalModel.clear();
+		nonrigid.sampleAffineModel(totalTraj,totalModel,modeNum);
+
+		J_LinkageAdapter_Matlab<PCloudTraj, PCloudAffModel, Traj2AffModelDistFunc>	algo_adaptor(totalTraj, totalModel, labels, Traj2AffModelDistFunc(threshold),perC);
+
+		algo_adaptor.compute();
 
 	}
 
 
-    //�������
+    //Êä³ö²ÎÊý
 	Logger<<"centerFrame = "<<centerFrame<<endl;
 
 	LOCK( set[centerFrame] );
@@ -144,9 +144,13 @@ void TrajectoryClassifier::run()
 
   			//sprintf(corr_file_name,"F:\\EG2015\\rebuttal1127\\hanger\\hanger_corr%.2d_%.2f.txt",centerFrame,perC);
 
-			//sprintf(corr_file_name,"F:\\EG2015\\rebuttal1127\\15_26\\single_corr%.2d_%.2f.txt",centerFrame,perC);
+			//sprintf(corr_file_name,"G:\\Projects\\EG2015\\rebuttal1127\\15_26\\hksingle_corr%.2d_%.2f.txt",centerFrame,perC);
 
-			sprintf(corr_file_name,"F:\\EG2015\\rebuttal1127\\hanger\\hangerAll\\hangerAll_corr%.2d_%.2f.txt",centerFrame,perC);
+			//sprintf(corr_file_name,"G:\\Projects\\EG2015\\rebuttal1127\\hanger\\hangerAll\\hangerAll_corr%.2d_%.2f.txt",centerFrame,perC);
+
+			//horse eva 12-15
+
+			sprintf(corr_file_name,"G:\\Data\\horse\\quaEva1215\\hksingle_corr%.2d_%.2f.txt",centerFrame,perC);
 
   			FILE *in_correspond = fopen(corr_file_name,"w");
   
@@ -168,18 +172,18 @@ void TrajectoryClassifier::run()
 
 		#endif
 
-//          	bubleSort(sampleCenterVtxId,labels,labels.size());//Ϊ����϶����������-
-//       		vector<IndexType> label_smooth(labels.size(),0);
-//       
-//       		diff_using_bfs(labels,sampleCenterVtxId,centerFrame);//��ͬ��ɫ��ͬ��ͬ���ǲ�ͬ��ɫ
-//       
-//       		nonrigid.smoothSmapleLabel_KDTree(sample0,sampleCenterVtxId,labels,label_smooth);
-//   
-//    			IndexType nLabels = 1;
-//   
-//        		nLabels = orderLabels(label_smooth);
-//      
-//       		Logger<<"seg size = "<<nLabels; //�ǵ�label��Ŵ�0��ʼ����
+          	bubleSort(sampleCenterVtxId,labels,labels.size());//ÎªÁËÅäºÏ¶¥µãºÅÂëË÷Òý-
+       		vector<IndexType> label_smooth(labels.size(),0);
+       
+       		diff_using_bfs(labels,sampleCenterVtxId,centerFrame);//ÏàÍ¬ÑÕÉ«²»Í¬Á¬Í¬¿é±ê¼Ç²»Í¬ÑÕÉ«
+       
+       		nonrigid.smoothSmapleLabel_KDTree(sample0,sampleCenterVtxId,labels,label_smooth);
+   
+			IndexType nLabels = 1;
+
+			nLabels = orderLabels(label_smooth);
+      
+       		Logger<<"seg size = "<<nLabels; //ÊÇµÄlabel±êºÅ´Ó0¿ªÊ¼¼ÆËã
 
 
 		// 
@@ -188,19 +192,23 @@ void TrajectoryClassifier::run()
   		    char label_labsmooth[1024];
   		   	//sprintf(label_labsmooth,"F:\\EG2015\\rebuttal1127\\hanger\\hanger_labels%.2d_%.2f.txt",centerFrame,perC);
 
-			//sprintf(label_labsmooth,"F:\\EG2015\\rebuttal1127\\15_26\\labels%.2d_%.2f.txt",centerFrame,perC);
+			//sprintf(label_labsmooth,"G:\\Projects\\EG2015\\rebuttal1127\\15_26\\hklabels%.2d_%.2f.txt",centerFrame,perC);
 
-			sprintf(label_labsmooth,"F:\\EG2015\\rebuttal1127\\hanger\\hangerAll\\hangerAll_labels%.2d_%.2f.txt",centerFrame,perC);
+			//sprintf(label_labsmooth,"G:\\Projects\\EG2015\\rebuttal1127\\hanger\\hangerAll\\hangerAll_labels%.2d_%.2f.txt",centerFrame,perC);
+			//horse eva 12-15
+
+			sprintf(label_labsmooth,"G:\\Data\\horse\\quaEva1215\\hklabels%.2d_%.2f.txt",centerFrame,perC);
 
   		   	FILE *in_label_smooth = fopen(label_labsmooth, "w");
+
   		   	IndexType tpd = 0;
   		 		 
   		   	for ( int i=0; i<set[centerFrame].num_vertices(); i++ )
   		   	{
   		   		if (isSelector[i])
   		   		{
-  		   		  //fprintf( in_label_smooth, "%d %d %d\n", centerFrame,label_smooth[tpd], i );//��Ҫ��labels����
-  				  fprintf( in_label_smooth, "%d %d %d\n", centerFrame,0, i );//��Ҫ��labels����_Ϊ�˴����ָ���
+  		   		  fprintf( in_label_smooth, "%d %d %d\n", centerFrame,label_smooth[tpd], i );//ÐèÒª¶ÔlabelsÅÅÐò
+  				  //fprintf( in_label_smooth, "%d %d %d\n", centerFrame,0, i );//ÐèÒª¶ÔlabelsÅÅÐò_ÎªÁË´«²¥·Ö¸î½á¹û
   		   		  tpd++;
   		   		} 
   		   	}
@@ -209,7 +217,7 @@ void TrajectoryClassifier::run()
 		 	 
 		 #endif
 
-		//���ӻ������������  
+		//¿ÉÊÓ»¯²ÉÑùµã¾ÛÀà½á¹û  
 		#ifdef SAVE_CORRESPONDENCE
        			IndexType i = 0;
      				IndexType k = 0;
@@ -220,8 +228,8 @@ void TrajectoryClassifier::run()
      					if (isSelector[i])
      					{
      						(*v_iter)->set_visble(true);
-     						(*v_iter)->set_label( labels[k] );//orignal label
-     						//(*v_iter)->set_label( label_smooth[k] );//smooth label
+     						//(*v_iter)->set_label( labels[k] );//orignal label
+     						(*v_iter)->set_label( label_smooth[k] );//smooth label
      						k++;
      					}else
      					{
@@ -231,8 +239,8 @@ void TrajectoryClassifier::run()
 		#endif 
 
 			//vector<IndexType> result_label(sample0.num_vertices(),0);
-			//nonrigid.propagateLabel2Orignal(sample0,sampleCenterVtxId,label_smooth,result_label);  //������ԭʼ������
-			// ���ӻ�ԭʼ���ƾ�����
+			//nonrigid.propagateLabel2Orignal(sample0,sampleCenterVtxId,label_smooth,result_label);  //´«²¥µ½Ô­Ê¼µãÔÆÉÏ
+			// ¿ÉÊÓ»¯Ô­Ê¼µãÔÆ¾ÛÀà½á¹û
 				//IndexType i = 0;
 				//for (Sample::vtx_iterator v_iter = sample0.begin();
 				//	v_iter != sample0.end();
@@ -246,7 +254,7 @@ void TrajectoryClassifier::run()
 	
 
 //////////////////////////////////////////////////////////////////////////
-// ���ӻ����ȳ��켣2015/07/23(û�б�ǩ�ĵ���ʱͬһ���ĳһ��ɫ);�漰����֡ͳһ��ɫ!
+// ¿ÉÊÓ»¯²»µÈ³¤¹ì¼£2015/07/23(Ã»ÓÐ±êÇ©µÄµãÔÝÊ±Í¬Ò»±ê¼ÇÄ³Ò»ÑÕÉ«);Éæ¼°µ½µÄÖ¡Í³Ò»×ÅÉ«!
     
 	//IndexType frames[] = {1,2,3,4,5,6,7,8,9,10/*,11,12,13,14,15,16,17,18,19,20*/};
     if ( !isEqual)
@@ -259,7 +267,7 @@ void TrajectoryClassifier::run()
 			}
 		}
 
-		//��������֡Ť������ĵ�labelΪ0
+		//ÉèÖÃÖÐÐÄÖ¡Å¤ÇúÁ¿´óµÄµãlabelÎª0
 // 		IndexType i = 0;
 // 		for (Sample::vtx_iterator v_iter = sample0.begin();
 // 			v_iter != sample0.end();
@@ -276,16 +284,16 @@ void TrajectoryClassifier::run()
 // 		}
 
 
-		//��¼����֡�����ǩ���
+		//¼ÇÂ¼ÖÐÐÄÖ¡¶¥µã±êÇ©Çé¿ö
 		map<IndexType, IndexType> inter_labels;
 
-		//���ӻ��켣��label
+		//¿ÉÊÓ»¯¹ì¼£µÄlabel
 		IndexType trajSize = totalTraj.size();
 
-		//for (IndexType tId = 0; tId < trajSize; tId ++) //�켣
+		//for (IndexType tId = 0; tId < trajSize; tId ++) //¹ì¼£
 		//{
 		//	IndexType nodeId = 0;
-		//	for (IndexType stF = totalTraj[tId].trajLifeSpan.start; stF <= totalTraj[tId].trajLifeSpan.end; stF ++, nodeId ++) //֡
+		//	for (IndexType stF = totalTraj[tId].trajLifeSpan.start; stF <= totalTraj[tId].trajLifeSpan.end; stF ++, nodeId ++) //Ö¡
 		//	{
 		//		set[stF][totalTraj[tId].trajNode[nodeId] ].set_visble(true);
 
@@ -296,12 +304,12 @@ void TrajectoryClassifier::run()
 		//}
 
 
-		//ֻ���ӻ�����֡----0816
-		for (IndexType tId = 0; tId < trajSize; tId ++) //�켣
+		//Ö»¿ÉÊÓ»¯ÖÐÐÄÖ¡----0816
+		for (IndexType tId = 0; tId < trajSize; tId ++) //¹ì¼£
 		{
 			IndexType nodeId = 0;
 
-			for (IndexType stF = totalTraj[tId].trajLifeSpan.start; stF <= totalTraj[tId].trajLifeSpan.end; stF ++, nodeId ++) //֡
+			for (IndexType stF = totalTraj[tId].trajLifeSpan.start; stF <= totalTraj[tId].trajLifeSpan.end; stF ++, nodeId ++) //Ö¡
 			{
 				if ( centerFrame == stF)
 				{
@@ -313,7 +321,7 @@ void TrajectoryClassifier::run()
 			}
 		}
 
-		//��ȡ��Բ�����ı�ǩ
+		//»ñÈ¡Õë¶Ô²ÉÑùµãµÄ±êÇ©
 		vector<IndexType> order_labels;
 		order_labels.resize(sampleCenterVtxId.size(),0);
 
@@ -330,13 +338,13 @@ void TrajectoryClassifier::run()
 			
 		}
 
-		bubleSort(sampleCenterVtxId,order_labels,order_labels.size());//Ϊ����϶����������-
+		bubleSort(sampleCenterVtxId,order_labels,order_labels.size());//ÎªÁËÅäºÏ¶¥µãºÅÂëË÷Òý-
 
 		vector<IndexType> label_smooth(order_labels.size(),0);
 
 		//nonrigid.smoothSmapleLabel_KDTree(sample0,sampleCenterVtxId,labels,label_smooth);
 
-		diff_using_bfs(order_labels,sampleCenterVtxId,centerFrame);//��ͬ��ɫ��ͬ��ͬ���ǲ�ͬ��ɫ
+		diff_using_bfs(order_labels,sampleCenterVtxId,centerFrame);//ÏàÍ¬ÑÕÉ«²»Í¬Á¬Í¬¿é±ê¼Ç²»Í¬ÑÕÉ«
 
 		nonrigid.smoothSmapleLabel_KDTree(sample0,sampleCenterVtxId,order_labels,label_smooth);
 
@@ -344,9 +352,9 @@ void TrajectoryClassifier::run()
 
 		nLabels = orderLabels(label_smooth);
 
-		Logger<<"seg size = "<<nLabels; //�ǵ�label��Ŵ�0��ʼ����
+		Logger<<"seg size = "<<nLabels; //ÊÇµÄlabel±êºÅ´Ó0¿ªÊ¼¼ÆËã
 
-		//���ӻ�����֡
+		//¿ÉÊÓ»¯ÖÐÐÄÖ¡
 
 		IndexType i = 0;
 		IndexType k = 0;
@@ -493,10 +501,10 @@ void TrajectoryClassifier::visDistor()
 
 	LOCK( set[centerFrame] );
 
-	//nonrigid.calculateFixedLengthTraj(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes);//�Ȳ�������׼--�����׼
+	//nonrigid.calculateFixedLengthTraj(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes);//ÏÈ²ÉÑùÔÙÅä×¼--¼ä¸ôÅä×¼
 	//nonrigid.produceDreamTraj(totalTraj,sampleCenterVtxId);
-	nonrigid.calculateFixedLengthTrajWithTracingAlong(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes);//������׼
-	///20150122 -���㶥���Ť����
+	nonrigid.calculateFixedLengthTrajWithTracingAlong(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes);//Á¬ÐøÅä×¼
+	///20150122 -¼ÆËã¶¥µãµÄÅ¤ÇúÁ¿
     vector<ScalarType> disVal;
 	nonrigid.calculateVtxDistor(totalTraj,disVal,centerFrame);
 

@@ -85,8 +85,9 @@ void GCop::run()
 	
 		/// single data
 		//char* in_label_file = "F:\\EG2015\\rebuttal1127\\15_26\\totLable(15_24).txt";//j-linkage后每帧的分割结果
-		//char* in_label_file = "F:\\EG2015\\rebuttal1127\\15_26\\totLabelSmooth(15_24).txt";//boundary smoothing results
-		//char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\15_26\\totCorr(15_24).txt";
+		//char* in_label_file = "G:\\Projects\\EG2015\\rebuttal1127\\15_26\\totLabelSmooth(15_24).txt";//boundary smoothing results
+		//char* in_label_file = "G:\\Projects\\EG2015\\rebuttal1127\\15_26\\totLabels(15_24)_3.txt";//smoothing again--12-13
+		//char* in_corr_file  = "G:\\Projects\\EG2015\\rebuttal1127\\15_26\\totCorr(15_24).txt";
 
 		// hanger data
 		//char* in_label_file = "F:\\EG2015\\rebuttal1127\\hanger\\totLabels(13_22).txt";//boundary smoothing results
@@ -94,12 +95,18 @@ void GCop::run()
 
 		//hanger data
 		//char* in_label_file = "F:\\EG2015\\rebuttal1127\\hanger\\totBrySmth(13_22).txt";//boundary smoothing results
-		char* in_label_file = "F:\\EG2015\\compar\\diffusionOrder\\labelAfterCoseg\\totCosegSmth(13_22).txt";//coseg for each single frame  and  smoothing
-		char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\hanger\\totCorr(13_22).txt";
+		//char* in_label_file = "G:\\Projects\\EG2015\\compar\\diffusionOrder\\labelAfterCoseg\\totCosegSmth(13_22).txt";//coseg for each single frame  and  smoothing
+		//char* in_corr_file  = "G:\\Projects\\EG2015\\rebuttal1127\\hanger\\totCorr(13_22).txt";
 
 		//hanger data  propogation to all frames
 		//char* in_label_file = "F:\\EG2015\\rebuttal1127\\hanger\\hangerAll\\labeloutput0_87center51.txt";//boundary smoothing results
 		//char* in_corr_file  = "F:\\EG2015\\rebuttal1127\\hanger\\hangerAll\\corroutput0_87center51.txt";
+
+
+		//horse data
+		char* in_label_file = "G:\\Data\\horse\\totLabelshk(1_9).txt";//smoothing again--12-13
+		char* in_corr_file  = "G:\\Data\\horse\\totCorr(1_9).txt";
+
 
 		DualwayPropagation dp_solver;
 
@@ -113,13 +120,13 @@ void GCop::run()
 
 		Logger<<"End Split Process!\n";
 
-		cosegProcessing(dp_solver);
+		//cosegProcessing(dp_solver);
 
-		Logger<<"End  Coseg Process!\n";
+		//Logger<<"End  Coseg Process!\n";
 
-		mergeProcess(dp_solver);
+		//mergeProcess(dp_solver);
 
-		Logger<<"End Merge Process!\n";
+		//Logger<<"End Merge Process!\n";
 	}
 
 
@@ -3251,14 +3258,14 @@ void GCop::coSegmentation()
 //--------------------------
 void GCop::splitProcess(DualwayPropagation& dp_solver)
 {
- 	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1205splitResultsSmth.txt";
+ 	char* out_label_file = "G:\\Projects\\EG2015\\compar\\diffusionOrder\\1215splitResultsSmth.txt";
 
  	dp_solver.splitAllSquenceGraph(m_centerF);//读取j-linkagelabel文件之后进行前后的分裂操作,参数表示序列分裂的帧数;
  
- 	dp_solver.smoothAfterSplit(); //k =30,分裂之后进行smooth操作
+ 	//dp_solver.smoothAfterSplit(); //k =30,分裂之后进行smooth操作
  
     //平滑处理之后,有些块点个数变为零,或者个数很小,需要进行合并操作!
-	dp_solver.mergeSingleTinyPatches(m_nSwap); //remove empty segments 加入了循环操作,
+	//dp_solver.mergeSingleTinyPatches(m_nSwap); //remove empty segments 加入了循环操作,
     
  	dp_solver.wirteSplitGraphLables(out_label_file);//可视化合并后的结果
     
@@ -3267,7 +3274,7 @@ void GCop::splitProcess(DualwayPropagation& dp_solver)
 //--------------------------
 void GCop::cosegProcessing(DualwayPropagation& dp_solver)
 {
-	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1205cosegResults.txt";
+	char* out_label_file = "G:\\Projects\\EG2015\\compar\\diffusionOrder\\1205cosegResults.txt";
 
 	CoSegmentation coseg_solver(SampleSet::get_instance(),dp_solver.getCompents());
 	
@@ -3290,7 +3297,7 @@ void GCop::cosegProcessing(DualwayPropagation& dp_solver)
 //---------------------------
 void GCop::mergeProcess(DualwayPropagation& dp_solver)
 {
-	char* out_label_file = "F:\\EG2015\\compar\\diffusionOrder\\1205mergeResults.txt";
+	char* out_label_file = "G:\\Projects\\EG2015\\compar\\diffusionOrder\\1205mergeResults.txt";
 
 	dp_solver.mergePatchesAfterCoSeg(); // 读取共分割的label文件之后,建立图结构, 然后进行图的merge操作 0831
 	
@@ -3317,8 +3324,8 @@ void GCop::visualCosegmentation(char *labels_file)
 
 
 	//IndexType frames[] = {115,116,117,118,119,120,121,122,123,124,125};//single girl
-	//IndexType frames[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};//horse
-	IndexType frames[] = {6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22};//hanger data
+	IndexType frames[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};//horse
+	//IndexType frames[] = {6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22};//hanger data
 
 	//IndexType frames[] = {51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,};//hanger data  all
 
