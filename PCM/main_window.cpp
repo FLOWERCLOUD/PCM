@@ -65,11 +65,12 @@ main_window::main_window(QWidget *parent)
 	createAction();
 	createStatusBar();
 
-	if(m_linkageUi || m_graphCutUi || m_planFitUi)
+	if(m_linkageUi || m_graphCutUi || m_planFitUi || m_paint)
 	{
 		m_linkageUi  = NULL;
 		m_graphCutUi = NULL;
 		m_planFitUi = NULL;
+		m_paint = NULL;
 	}
 
 	//srand(time(NULL));
@@ -127,6 +128,7 @@ void main_window::createToolAction()
 {
 	connect( ui.actionSelect_Mode, SIGNAL(triggered()), this, SLOT(setSelectToolMode()) );
 	connect( ui.actionScene_Mode, SIGNAL(triggered()),this, SLOT(setSceneToolMode()));
+	connect( ui.actionPaint_Interface, SIGNAL(triggered() ), this, SLOT(setScenePaintMode() ) );
 }
 
 void main_window::setObjectColorMode()
@@ -170,6 +172,28 @@ void main_window::setSceneToolMode()
 {
 	main_canvas_->single_operate_tool_->set_tool_type(Tool::EMPTY_TOOL);
 	main_canvas_->updateGL();
+}
+
+void main_window::setScenePaintMode()
+{
+	//create a new paint dlg
+
+	m_paint = new PaintUi;
+	m_paint->init(main_canvas_,cur_select_sample_idx_);
+	m_paint->show();
+
+
+// 	if (main_canvas_->single_operate_tool_)
+// 	{
+// 		delete main_canvas_->single_operate_tool_;
+// 	}
+// 	main_canvas_->single_operate_tool_ = new PaintStroke(main_canvas_);
+// 
+// 	main_canvas_->single_operate_tool_->set_tool_type(Tool::SELECT_STROKE);
+// 	main_canvas_->single_operate_tool_->set_cur_smaple_to_operate(cur_select_sample_idx_);
+// 
+// 	main_canvas_->updateGL();
+
 }
 
 void main_window::createFileMenuAction()

@@ -5,8 +5,8 @@
 
 using namespace std;
 
-#define SHOW_SAMPLE
-//#define OUTPUT_LABELS
+//#define SHOW_SAMPLE
+#define OUTPUT_LABELS
 
 
 GCop::GCop()
@@ -66,7 +66,7 @@ GCop::~GCop()
 }
 void GCop::run()
 {
-	bool isrefine = false;
+	bool isrefine = true;
 	if (isrefine)
 	{
 		Logger<<"Start refine single frame.\n";
@@ -353,9 +353,12 @@ void GCop::refineSegm()
 
 	//sprintf(input_label_file,"F:\\EG2015\\compar\\diffusionOrder\\split(17_18)\\OrderLabel%.2d.txt",m_centerF);
 
-	sprintf(input_label_file,"F:\\EG2015\\compar\\diffusionOrder\\labelAfterCoseg\\OrderLabel%.2d.txt",m_centerF); //in order to smoothig after coseg,2015-12-05
-	sprintf(input_cor_file,"F:\\EG2015\\rebuttal1127\\hanger\\hanger_corr%.2d.txt",m_centerF);
+	//sprintf(input_label_file,"F:\\EG2015\\compar\\diffusionOrder\\labelAfterCoseg\\OrderLabel%.2d.txt",m_centerF); //in order to smoothig after coseg,2015-12-05
+	//sprintf(input_cor_file,"F:\\EG2015\\rebuttal1127\\hanger\\hanger_corr%.2d.txt",m_centerF);
 
+	//in order to propogation to origin point cloud
+	sprintf(input_label_file,"G:\\Data\\horse\\quaEva1215\\Reslution test\\64-0.60\\OrderLabel%.2d.txt",m_centerF); //in order to smoothig after coseg,2015-12-05
+	sprintf(input_cor_file,"G:\\Data\\horse\\quaEva1215\\Reslution test\\64-0.60\\hksingle_corr%.2d_0.60.txt",m_centerF);
 
     m_nLabels = gcNode->readnLabelFile(input_label_file);
     gcNode->read_corres_file(input_cor_file); 
@@ -374,23 +377,23 @@ void GCop::refineSegm()
  	    
 #ifdef EXPSWAP
 
-          	MatrixXX totError;
-          	ransacMultiRotTan(gcNode->node_vec,totError); //meanwhile set data items
-              
-        //          	unordered_map<IndexType, set<IndexType>> edgePoints;
-        //          	findEdgePoint(edgePoints);
-        //          
-        //          	//visualEdgePoints(edgePoints);//可视化边界点
-        //          	setDataItem(totError,edgePoints);
-          
-			setSmoothItem();
-			m_gc->setLabelOrder(true);
-                
-			m_gc->expansion(m_nExpansion);
-			//m_gc->alpha_expansion(m_nExpansion);
-           
-			m_gc->swap(m_nSwap);
-			//m_gc->alpha_beta_swap(1,2);
+   //       	MatrixXX totError;
+   //       	ransacMultiRotTan(gcNode->node_vec,totError); //meanwhile set data items
+   //           
+   //     //          	unordered_map<IndexType, set<IndexType>> edgePoints;
+   //     //          	findEdgePoint(edgePoints);
+   //     //          
+   //     //          	//visualEdgePoints(edgePoints);//可视化边界点
+   //     //          	setDataItem(totError,edgePoints);
+   //       
+			//setSmoothItem();
+			//m_gc->setLabelOrder(true);
+   //             
+			//m_gc->expansion(m_nExpansion);
+			////m_gc->alpha_expansion(m_nExpansion);
+   //        
+			//m_gc->swap(m_nSwap);
+			////m_gc->alpha_beta_swap(1,2);
 #else
 	ransacMultiRotTan(gcNode->node_vec);//利用多帧间的平均误差---用来可视化
 #endif // Expansion
@@ -963,7 +966,7 @@ void GCop::visulizationLabels()
 	
 	#ifdef OUTPUT_LABELS
 		char outputLabelName[256];
-		sprintf(outputLabelName,"C:\\Users\\kobe\\Desktop\\论文实验内容2014-12-30\\2015-3-10-算法在设计\\fans\\final_labels%.2d.txt",centFrame);
+		sprintf(outputLabelName,"G:\\Data\\horse\\quaEva1215\\Reslution test\\64-0.60\\final_labels%.2d.txt",centFrame);
 		FILE *in_label = fopen(outputLabelName,"w");
 		fprintf(in_label,"%d\n",finalLabels);
 	#endif // OUTPUT_LABELS
@@ -3459,8 +3462,8 @@ void GCop::orderLabelsOnly()
 
 
 	// hanger data seg after coseg
-	sprintf(input_label_file,"F:\\EG2015\\compar\\diffusionOrder\\labelAfterCoseg\\cosegLabel%.2d.txt",m_centerF);
-	sprintf(output_lab_file,"F:\\EG2015\\compar\\diffusionOrder\\labelAfterCoseg\\OrderLabel%.2d.txt",m_centerF);
+	sprintf(input_label_file,"G:\\Data\\horse\\quaEva1215\\Reslution test\\64-0.60\\hklabels%.2d_0.60.txt",m_centerF);
+	sprintf(output_lab_file,"G:\\Data\\horse\\quaEva1215\\Reslution test\\64-0.60\\OrderLabel%.2d.txt",m_centerF);
 
 	vector<IndexType> tempLabels;
 	vector<IndexType> vtx_id;

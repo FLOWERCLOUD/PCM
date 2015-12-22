@@ -14,7 +14,7 @@ public:
 
 	SelectTool(PaintCanvas* canvas):Tool(canvas),
 							select_buffer_(nullptr),
-							select_buffer_size_(0){}
+			select_buffer_size_(0){}
 	~SelectTool(){}
 
 	virtual void move(QMouseEvent *e);

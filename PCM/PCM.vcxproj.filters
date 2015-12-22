@@ -167,6 +167,15 @@
     <ClCompile Include="main_window.cpp">
       <Filter>Visualize</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dlg_paintInterface.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dlg_paintInterface.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="paint_interface.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="main_window.qrc">
@@ -346,31 +355,43 @@
     <CustomBuild Include="saveSnapshotDialog.h">
       <Filter>Algorithm</Filter>
     </CustomBuild>
+    <CustomBuild Include="snapshotsetting.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="dlg_paintInterface.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_dlg_plan.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_savesnapshotDialog.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="BoostGraph.h">
+      <Filter>Algorithm</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GraphMatching.h">
+      <Filter>Algorithm</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InOutputDefinition.h">
+      <Filter>Algorithm</Filter>
+    </CustomBuild>
+    <CustomBuild Include="multiway_propagation.h">
+      <Filter>Algorithm</Filter>
+    </CustomBuild>
+    <CustomBuild Include="traj2AffineModel_distance.h">
+      <Filter>Algorithm</Filter>
+    </CustomBuild>
+    <CustomBuild Include="dlg_paintInterface.h">
+      <Filter>Visualize</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="traj2AffineModel_distance.h">
-      <Filter>Algorithm</Filter>
-    </ClInclude>
-    <ClInclude Include="multiway_propagation.h">
-      <Filter>Algorithm</Filter>
-    </ClInclude>
-    <ClInclude Include="InOutputDefinition.h">
-      <Filter>Algorithm</Filter>
-    </ClInclude>
-    <ClInclude Include="BoostGraph.h">
-      <Filter>Algorithm</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphMatching.h">
-      <Filter>Algorithm</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_dlg_plan.h">
+    <ClInclude Include="GeneratedFiles\ui_dlg_paintInterface.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="snapshotsetting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_savesnapshotDialog.h">
-      <Filter>Generated Files</Filter>
+    <ClInclude Include="paint_interface.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

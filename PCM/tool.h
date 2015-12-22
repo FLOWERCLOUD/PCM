@@ -11,7 +11,7 @@ class Tool
 {
 public:
 
-	enum ToolType{ EMPTY_TOOL, SELECT_TOOL };
+	enum ToolType{ EMPTY_TOOL, SELECT_TOOL, SELECT_STROKE };
 
 	Tool( PaintCanvas* canvas ):canvas_(canvas),
 								left_mouse_button_(false),

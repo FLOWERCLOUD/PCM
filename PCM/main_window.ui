@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>1086</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFiles">
@@ -49,6 +49,7 @@
     </property>
     <addaction name="actionScene_Mode"/>
     <addaction name="actionSelect_Mode"/>
+    <addaction name="actionPaint_Interface"/>
    </widget>
    <widget class="QMenu" name="menuAlgorithm">
     <property name="title">
@@ -93,13 +94,14 @@
    <addaction name="actionScene_Mode"/>
    <addaction name="separator"/>
    <addaction name="actionClustering"/>
+   <addaction name="actionPaint_Interface"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget">
    <property name="minimumSize">
     <size>
      <width>300</width>
-     <height>38</height>
+     <height>42</height>
     </size>
    </property>
    <attribute name="dockWidgetArea">
@@ -290,6 +292,20 @@
   <action name="actionSaveSnapshot">
    <property name="text">
     <string>SaveSnapshot</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>Paint Interface</string>
+   </property>
+  </action>
+  <action name="actionPaint_Interface">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/paint.png</normaloff>Resources/paint.png</iconset>
+   </property>
+   <property name="text">
+    <string>Paint Interface</string>
    </property>
   </action>
  </widget>

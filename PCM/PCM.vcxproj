@@ -74,7 +74,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\matlab_32\bin\win32;E:\matlab_32\extern\include;D:\opencv\build\include;D:\opencv\build\include\opencv;D:\opencv\build\include\opencv2;.\GeneratedFiles;.;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include;.\GeneratedFiles\$(ConfigurationName);C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml;..;..\eigen-3-1-4;D:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\matlab_32\bin\win32;E:\matlab_32\extern\include;D:\opencv\build\include;D:\opencv\build\include\opencv;D:\opencv\build\include\opencv2;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;..;..\eigen-3-1-4;D:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -83,9 +83,9 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>D:\opencv\build\x64\vc11\lib;E:\matlab_32\extern\lib\win32\microsoft;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib;$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\opencv\build\x64\vc11\lib;E:\matlab_32\extern\lib\win32\microsoft;$(QTDIR)\lib;$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\qtmaind.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Cored.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Guid.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5OpenGLd.lib;opengl32.lib;glu32.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Widgetsd.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Xmld.lib;QGLViewerd2.lib;opencv_calib3d2411d.lib;opencv_contrib2411d.lib;opencv_core2411d.lib;opencv_features2d2411d.lib;opencv_flann2411d.lib;opencv_gpu2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib;opencv_legacy2411d.lib;opencv_ml2411d.lib;opencv_objdetect2411d.lib;opencv_ts2411d.lib;opencv_video2411d.lib;opencv_videostab2411d.lib;opencv_superres2411d.lib;opencv_stitching2411d.lib;opencv_photo2411d.lib;opencv_ocl2411d.lib;opencv_nonfree2411d.lib;libeng.lib;libmat.lib;libmex.lib;libmx.lib;mclmcrrt.lib;mclmcr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;opengl32.lib;glu32.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;QGLViewerd2.lib;opencv_calib3d2411d.lib;opencv_contrib2411d.lib;opencv_core2411d.lib;opencv_features2d2411d.lib;opencv_flann2411d.lib;opencv_gpu2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib;opencv_legacy2411d.lib;opencv_ml2411d.lib;opencv_objdetect2411d.lib;opencv_ts2411d.lib;opencv_video2411d.lib;opencv_videostab2411d.lib;opencv_superres2411d.lib;opencv_stitching2411d.lib;opencv_photo2411d.lib;opencv_ocl2411d.lib;opencv_nonfree2411d.lib;libeng.lib;libmat.lib;libmex.lib;libmx.lib;mclmcrrt.lib;mclmcr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
@@ -107,7 +107,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(MatlabDir)\lib\win64;$(QTDIR_64_12)\lib;$(MatlabDir)\extern\lib\win64\microsoft;$(OPencvLib);$(SolutionDir)\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(QTDIR_64_12)\lib\qtmaind.lib;$(QTDIR_64_12)\lib\Qt5Cored.lib;$(QTDIR_64_12)\lib\Qt5Guid.lib;$(QTDIR_64_12)\lib\Qt5OpenGLd.lib;opengl32.lib;glu32.lib;$(QTDIR_64_12)\lib\Qt5Widgetsd.lib;$(QTDIR_64_12)\lib\Qt5Xmld.lib;QGLViewerd2.lib;libeng.lib;libmx.lib;libmex.lib;libmat.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;opengl32.lib;glu32.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;QGLViewerd2.lib;libeng.lib;libmx.lib;libmex.lib;libmat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <CustomBuildStep>
@@ -123,7 +123,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\matlab_32\extern\include;..\eigen-3-1-4;D:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3;.\GeneratedFiles;.;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include;.\GeneratedFiles\$(ConfigurationName);D:\opencv\build\include;D:\opencv\build\include\opencv2;D:\opencv\build\include\opencv;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\matlab_32\extern\include;..\eigen-3-1-4;D:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);D:\opencv\build\include;D:\opencv\build\include\opencv2;D:\opencv\build\include\opencv;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -131,9 +131,9 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>E:\matlab_32\extern\lib\win32\microsoft;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib;$(SolutionDir)$(Platform)\$(Configuration)\;D:\opencv\build\x64\vc11\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\matlab_32\extern\lib\win32\microsoft;$(QTDIR)\lib;$(SolutionDir)$(Platform)\$(Configuration)\;D:\opencv\build\x64\vc11\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\qtmain.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Core.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Gui.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5OpenGL.lib;opengl32.lib;glu32.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Widgets.lib;C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\lib\Qt5Xml.lib;QGLViewer2.lib;opencv_calib3d2411.lib;opencv_contrib2411.lib;opencv_core2411.lib;opencv_features2d2411.lib;opencv_flann2411.lib;opencv_gpu2411.lib;opencv_highgui2411.lib;opencv_imgproc2411.lib;opencv_legacy2411.lib;opencv_ml2411.lib;opencv_objdetect2411.lib;opencv_ts2411.lib;opencv_video2411.lib;opencv_videostab2411.lib;opencv_superres2411.lib;opencv_stitching2411.lib;opencv_photo2411.lib;opencv_ocl2411.lib;opencv_nonfree2411.lib;libeng.lib;libmat.lib;libmex.lib;libmx.lib;mclmcrrt.lib;mclmcr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;opengl32.lib;glu32.lib;Qt5Widgets.lib;Qt5Xml.lib;QGLViewer2.lib;opencv_calib3d2411.lib;opencv_contrib2411.lib;opencv_core2411.lib;opencv_features2d2411.lib;opencv_flann2411.lib;opencv_gpu2411.lib;opencv_highgui2411.lib;opencv_imgproc2411.lib;opencv_legacy2411.lib;opencv_ml2411.lib;opencv_objdetect2411.lib;opencv_ts2411.lib;opencv_video2411.lib;opencv_videostab2411.lib;opencv_superres2411.lib;opencv_stitching2411.lib;opencv_photo2411.lib;opencv_ocl2411.lib;opencv_nonfree2411.lib;libeng.lib;libmat.lib;libmex.lib;libmx.lib;mclmcrrt.lib;mclmcr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -150,7 +150,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(SolutionDir)\PCM\x64\Release;$(SolutionDir)\x64\Release;$(MatlabDir)\extern\lib\win64\microsoft;$(QTDIR_64_12)\lib;$(OPencvLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;QGLViewer2.lib;$(QTDIR_64_12)\lib\Qt5Core.lib;$(QTDIR_64_12)\lib\Qt5Gui.lib;$(QTDIR_64_12)\lib\Qt5OpenGL.lib;$(QTDIR_64_12)\lib\Qt5Widgets.lib;libeng.lib;libmx.lib;libmex.lib;libmat.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;QGLViewer2.lib;Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;Qt5Widgets.lib;libeng.lib;libmx.lib;libmex.lib;libmat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -174,6 +174,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dlg_paintInterface.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_saveSnapshotDialog.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_trajectory_classifier.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -191,6 +195,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dlg_paintInterface.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_saveSnapshotDialog.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_trajectory_classifier.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -199,6 +207,7 @@
     <ClCompile Include="GraphMatching.cpp" />
     <ClCompile Include="graph_cut_node.cpp" />
     <ClCompile Include="multiway_propagation.cpp" />
+    <ClCompile Include="paint_interface.cpp" />
     <ClCompile Include="plans_fit.cpp" />
     <ClCompile Include="sample.cpp" />
     <ClCompile Include="sample_properity.cpp" />
@@ -242,18 +251,18 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="main_window.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing main_window.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IE:\matlab_32\bin\win32" "-IE:\matlab_32\extern\include" "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IE:\matlab_32\bin\win32" "-IE:\matlab_32\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing main_window.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IC:\Program Files\MATLAB\R2013a\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR_64_12)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I.\.." "-I$(QTDIR_64_12)\include\QtXml" "-I.\..\eigen-3-1-4" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IC:\Program Files\MATLAB\R2013a\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR_64_12)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I.\.." "-I$(QTDIR_64_12)\include\QtXml" "-I.\..\eigen-3-1-4" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing main_window.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IE:\matlab_32\extern\include" "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3" "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml" "-I.\.."</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IE:\matlab_32\extern\include" "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.."</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR_64_12)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing main_window.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
@@ -442,22 +451,22 @@
       </AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="DeformaleRegistration.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing DeformaleRegistration.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-I.\GeneratedFiles" "-I." "-I$(QTDIR3)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR3)\include\QtCore" "-I$(QTDIR3)\include\QtGui" "-I$(QTDIR3)\include\QtOpenGL" "-I$(QTDIR3)\include\QtWidgets" "-I$(QTDIR3)\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-IE:\SDK\opencv\build\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-I.\GeneratedFiles" "-I." "-I$(QTDIR3)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR3)\include\QtCore" "-I$(QTDIR3)\include\QtGui" "-I$(QTDIR3)\include\QtOpenGL" "-I$(QTDIR3)\include\QtWidgets" "-I$(QTDIR3)\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-IE:\SDK\opencv\build\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing DeformaleRegistration.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml" "-I.\.."</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.."</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing DeformaleRegistration.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing DeformaleRegistration.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml"</Command>
     </CustomBuild>
     <CustomBuild Include="dlg_clustering.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -694,18 +703,18 @@
       </AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="paint_canvas.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing paint_canvas.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IE:\matlab_32\bin\win32" "-IE:\matlab_32\extern\include" "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IE:\matlab_32\bin\win32" "-IE:\matlab_32\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR_64_12)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing paint_canvas.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR_64_12)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-I$(MatlabDir)\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR_64_12)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I.\.." "-I$(QTDIR_64_12)\include\QtXml" "-I.\..\eigen-3-1-4" "-I$(OpenCVcv)" "-I$(OpenCVc2)" "-I$(OpenCVDir)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing paint_canvas.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IE:\matlab_32\extern\include" "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3" "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml" "-I.\.."</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IE:\matlab_32\extern\include" "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.."</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR_64_12)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing %(Filename).h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
@@ -832,22 +841,22 @@
       </AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="trajectory_classifier.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing trajectory_classifier.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IE:\matlab_32\bin\win32" "-IE:\matlab_32\extern\include" "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IE:\matlab_32\bin\win32" "-IE:\matlab_32\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing trajectory_classifier.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IC:\Program Files\MATLAB\R2013a\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR_64_12)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I.\.." "-I$(QTDIR_64_12)\include\QtXml" "-I.\..\eigen-3-1-4" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IC:\Program Files\MATLAB\R2013a\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR_64_12)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I.\.." "-I$(QTDIR_64_12)\include\QtXml" "-I.\..\eigen-3-1-4" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing trajectory_classifier.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IE:\matlab_32\extern\include" "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3" "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml" "-I.\.."</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IE:\matlab_32\extern\include" "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.."</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing trajectory_classifier.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IC:\Program Files\MATLAB\R2013a\extern\include" "-I.\.." "-I.\..\eigen-3-1-4" "-I.\GeneratedFiles" "-I." "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I$(QTDIR_64_12)\include\QtXml" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IC:\Program Files\MATLAB\R2013a\extern\include" "-I.\.." "-I.\..\eigen-3-1-4" "-I.\GeneratedFiles" "-I." "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I$(QTDIR_64_12)\include\QtXml" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include"</Command>
     </CustomBuild>
     <CustomBuild Include="tracer.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -915,19 +924,19 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath);%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Rcc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(FullPath);%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Rcc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath);%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Rcc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(FullPath);%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Rcc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -1052,18 +1061,18 @@
       </AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="dlg_Jlinkage.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-IE:\matlab_32\bin\win32" "-IE:\matlab_32\extern\include" "-IC:\opencv\build\include" "-IC:\opencv\build\include\opencv" "-IC:\opencv\build\include\opencv2" "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-IE:\matlab_32\bin\win32" "-IE:\matlab_32\extern\include" "-IC:\opencv\build\include" "-IC:\opencv\build\include\opencv" "-IC:\opencv\build\include\opencv2" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing dlg_Jlinkage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR_64_12)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-I$(MatlabDir)\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR_64_12)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I.\.." "-I$(QTDIR_64_12)\include\QtXml" "-I.\..\eigen-3-1-4" "-I$(OpenCVcv)" "-I$(OpenCVc2)" "-I$(OpenCVDir)"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing dlg_Jlinkage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-IE:\matlab_32\extern\include" "-IC:\opencv\build\include" "-IC:\opencv\build\include\opencv2" "-I.\..\eigen-3-1-4" "-IC:\opencv\build\include\opencv" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3" "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml" "-I.\.."</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-IE:\matlab_32\extern\include" "-IC:\opencv\build\include" "-IC:\opencv\build\include\opencv2" "-I.\..\eigen-3-1-4" "-IC:\opencv\build\include\opencv" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.."</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing dlg_Jlinkage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR_64_12)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-I$(MatlabDir)\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR_64_12)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I.\.." "-I$(QTDIR_64_12)\include\QtXml" "-I.\..\eigen-3-1-4" "-I$(OpenCVcv)" "-I$(OpenCVc2)" "-I$(OpenCVDir)"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing %(Filename).h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
@@ -1494,18 +1503,18 @@
       </AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="dlg_graphcuts.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing dlg_graphcuts.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-IE:\matlab_32\bin\win32" "-IE:\matlab_32\extern\include" "-IC:\opencv\build\include" "-IC:\opencv\build\include\opencv" "-IC:\opencv\build\include\opencv2" "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-IE:\matlab_32\bin\win32" "-IE:\matlab_32\extern\include" "-IC:\opencv\build\include" "-IC:\opencv\build\include\opencv" "-IC:\opencv\build\include\opencv2" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR_64_12)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing %(Filename).h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR_64_12)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-I$(MatlabDir)\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR_64_12)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I.\.." "-I$(QTDIR_64_12)\include\QtXml" "-I.\..\eigen-3-1-4" "-I$(OpenCVcv)" "-I$(OpenCVc2)" "-I$(OpenCVDir)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing dlg_graphcuts.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-IE:\matlab_32\extern\include" "-IC:\opencv\build\include" "-IC:\opencv\build\include\opencv2" "-I.\..\eigen-3-1-4" "-IC:\opencv\build\include\opencv" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3" "-I.\GeneratedFiles" "-I." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtCore" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtGui" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtOpenGL" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtWidgets" "-IC:\Qt\qt-5.3.2-x64-msvc2012-opengl\qt-5.3.2-x64-msvc2012-opengl\include\QtXml" "-I.\.."</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-IE:\matlab_32\extern\include" "-IC:\opencv\build\include" "-IC:\opencv\build\include\opencv2" "-I.\..\eigen-3-1-4" "-IC:\opencv\build\include\opencv" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.."</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR_64_12)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing %(Filename).h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
@@ -1837,12 +1846,186 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoostGraph.h" />
-    <ClInclude Include="GeneratedFiles\ui_dlg_plan.h" />
-    <ClInclude Include="GeneratedFiles\ui_savesnapshotDialog.h" />
-    <ClInclude Include="GraphMatching.h" />
-    <ClInclude Include="InOutputDefinition.h" />
-    <ClInclude Include="multiway_propagation.h" />
+    <CustomBuild Include="BoostGraph.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_dlg_plan.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_savesnapshotDialog.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="GraphMatching.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="InOutputDefinition.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="multiway_propagation.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
     <CustomBuild Include="saveSnapshotDialog.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR_64_12)\bin\moc.exe;%(FullPath);%(AdditionalInputs)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR_64_12)\bin\moc.exe;%(FullPath);%(AdditionalInputs)</AdditionalInputs>
@@ -1850,9 +2033,83 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR_64_12)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IC:\Program Files\MATLAB\R2013a\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR_64_12)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I.\.." "-I$(QTDIR_64_12)\include\QtXml" "-I.\..\eigen-3-1-4" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include"</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR_64_12)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB  "-IC:\Program Files\MATLAB\R2013a\extern\include" "-I.\GeneratedFiles" "-I." "-I$(QTDIR_64_12)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I.\.." "-I$(QTDIR_64_12)\include\QtXml" "-I.\..\eigen-3-1-4" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
     </CustomBuild>
-    <ClInclude Include="snapshotsetting.h" />
-    <ClInclude Include="traj2AffineModel_distance.h" />
+    <CustomBuild Include="snapshotsetting.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="traj2AffineModel_distance.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="savesnapshotDialog.ui">
@@ -1863,14 +2120,81 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR_64_12)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR_64_12)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR_64_12)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="dlg_paintInterface.ui">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR_64_12)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR_64_12)\bin\uic.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="paint_interface.h" />
+    <CustomBuild Include="dlg_paintInterface.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing dlg_paintInterface.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-IE:\matlab_32\bin\win32" "-IE:\matlab_32\extern\include" "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.." "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing dlg_paintInterface.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-I$(BoostDir)\." "-I$(OpenCVDir)\opencv" "-I$(OpenCVDir)\." "-I$(OpenCVDir)\opencv2" "-I.\GeneratedFiles" "-I." "-I$(QTDIR_64_12)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(MatlabDir)\extern\include" "-I$(QTDIR_64_12)\include\QtCore\5.3.2" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I$(QTDIR_64_12)\include\QtXml" "-I$(SolutionDir)\x64\Debug" "-I$(SolutionDir)\PCM" "-I$(SolutionDir)\eigen-3-1-4" "-I$(SolutionDir)\."</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing dlg_paintInterface.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-IE:\matlab_32\extern\include" "-I.\..\eigen-3-1-4" "-ID:\yuanqing\GeometryProcessing\src\eigen-eigen-3.0.3" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv2" "-ID:\opencv\build\include\opencv" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtXml" "-I.\.."</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing dlg_paintInterface.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB "-I$(MatlabDir)\extern\include" "-I.\.." "-I$(SolutionDir)\." "-I.\..\eigen-3-1-4" "-I.\GeneratedFiles" "-I." "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR_64_12)\include\QtCore" "-I$(QTDIR_64_12)\include" "-I$(QTDIR_64_12)\include\QtGui" "-I$(QTDIR_64_12)\include\QtOpenGL" "-I$(QTDIR_64_12)\include\QtWidgets" "-I$(QTDIR_64_12)\include\QtXml" "-I$(OpenCVDir)\." "-I$(OpenCVDir)\opencv" "-I$(BoostDir)\." "-I$(OpenCVDir)\opencv2"</Command>
+    </CustomBuild>
+    <ClInclude Include="GeneratedFiles\ui_dlg_paintInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties UicDir=".\GeneratedFiles" MocDir=".\GeneratedFiles\$(ConfigurationName)" MocOptions="" RccDir=".\GeneratedFiles" lupdateOnBuild="0" lupdateOptions="" lreleaseOptions="" />
+      <UserProperties UicDir=".\GeneratedFiles" MocDir=".\GeneratedFiles\$(ConfigurationName)" MocOptions="" RccDir=".\GeneratedFiles" lupdateOnBuild="0" lupdateOptions="" lreleaseOptions="" Qt5Version_x0020_x64="qt-5.3.2-x64-msvc2012-opengl" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -41,7 +41,15 @@ void PaintCanvas::draw()
 	if(!takeSnapTile) drawCornerAxis();
 
 	//tool mode
-	if (single_operate_tool_!=nullptr && single_operate_tool_->tool_type()!=Tool::EMPTY_TOOL)
+	if (single_operate_tool_!=nullptr && single_operate_tool_->tool_type() == Tool::SELECT_TOOL)
+	{
+		single_operate_tool_->draw();
+		return;
+	}
+
+
+	// paint mode draw  stroke
+	if (single_operate_tool_!=nullptr && single_operate_tool_->tool_type() == Tool::SELECT_STROKE)
 	{
 		single_operate_tool_->draw();
 		return;
@@ -195,6 +203,11 @@ void PaintCanvas::mousePressEvent(QMouseEvent *e)
 		single_operate_tool_->tool_type()==Tool::SELECT_TOOL)
 	{
 		single_operate_tool_->press(e);
+
+	}else if (single_operate_tool_!=nullptr && 
+		single_operate_tool_->tool_type()==Tool::SELECT_STROKE)
+	{
+		single_operate_tool_->press(e);
 	}
 	//else
 		QGLViewer::mousePressEvent(e);
@@ -211,8 +224,16 @@ void PaintCanvas::mouseMoveEvent(QMouseEvent *e)
 	{
 		single_operate_tool_->move(e);
 	}
+	else if (single_operate_tool_!=nullptr && 
+		single_operate_tool_->tool_type()==Tool::SELECT_STROKE)
+	{
+		single_operate_tool_->move(e);
+	}
 	else
-		QGLViewer::mouseMoveEvent(e);
+	{
+        QGLViewer::mouseMoveEvent(e);
+	}
+		//
 
 
 }
@@ -225,7 +246,11 @@ void PaintCanvas::mouseReleaseEvent(QMouseEvent *e)
 	{
 		single_operate_tool_->release(e);
 	}
-	else
+	else if (single_operate_tool_!=nullptr && 
+		single_operate_tool_->tool_type()==Tool::SELECT_STROKE)
+	{
+		single_operate_tool_->release(e);
+	}
 		QGLViewer::mouseReleaseEvent(e);
 
 

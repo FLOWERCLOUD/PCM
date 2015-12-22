@@ -9,6 +9,8 @@
 #include <map>
 #include <QLabel>
 #include "select_tool.h"
+#include "paint_interface.h"
+
 #include "graph_cut_node.h"
 
 #include "plans_fit.h"
@@ -18,6 +20,7 @@
 #include"dlg_Jlinkage.h"
 #include "dlg_graphcuts.h"
 #include "dlg_fitPlan.h"
+#include "dlg_paintInterface.h"
 
 #include "saveSnapshotDialog.h"
 
@@ -64,6 +67,8 @@ public:
 
 		void setSelectToolMode();
 		void setSceneToolMode();
+
+		void setScenePaintMode();
 
 		void showTracer();
 		void clearTracer();
@@ -126,6 +131,7 @@ private:
 	JLinkageUI * m_linkageUi;
 	GraphCutUI * m_graphCutUi;
 	PlanFitUI* m_planFitUi;
+	PaintUi* m_paint;
 
 };
 
