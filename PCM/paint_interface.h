@@ -19,14 +19,19 @@ public:
 	virtual void release(QMouseEvent *e);
 	virtual void press(QMouseEvent* e);
 	virtual void draw();
+	//virtual void paintEvent(QPaintEvent* e);
 
 private:
 	void draw_stroke();
+	void draw_rectangle();
 
 private:
 	QPoint mouse_pressed_pos;
 	QPoint mouse_move_pos;
 	QRect  rectangle_;
+
+private:
+	std::vector<QPoint> crtSketch;
 
 };
 

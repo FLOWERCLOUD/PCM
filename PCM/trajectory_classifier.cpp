@@ -150,7 +150,7 @@ void TrajectoryClassifier::run()
 
 			//horse eva 12-15
 
-			sprintf(corr_file_name,"G:\\Data\\horse\\quaEva1215\\hksingle_corr%.2d_%.2f.txt",centerFrame,perC);
+			sprintf(corr_file_name,"G:\\Data\\horse\\quaEva1215\\J-linkage threshold test\\hksingle_corr%.2d_%.2f.txt",centerFrame,perC);
 
   			FILE *in_correspond = fopen(corr_file_name,"w");
   
@@ -184,7 +184,8 @@ void TrajectoryClassifier::run()
 			nLabels = orderLabels(label_smooth);
       
        		Logger<<"seg size = "<<nLabels; //ÊÇµÄlabel±êºÅ´Ó0¿ªÊ¼¼ÆËã
-
+			vector<IndexType> result_label(sample0.num_vertices(),0);
+			nonrigid.propagateLabel2Orignal(sample0,sampleCenterVtxId,label_smooth,result_label); 
 
 		// 
 		 #ifdef SAVE_LABELS
@@ -197,7 +198,7 @@ void TrajectoryClassifier::run()
 			//sprintf(label_labsmooth,"G:\\Projects\\EG2015\\rebuttal1127\\hanger\\hangerAll\\hangerAll_labels%.2d_%.2f.txt",centerFrame,perC);
 			//horse eva 12-15
 
-			sprintf(label_labsmooth,"G:\\Data\\horse\\quaEva1215\\hklabels%.2d_%.2f.txt",centerFrame,perC);
+			sprintf(label_labsmooth,"G:\\Data\\horse\\quaEva1215\\J-linkage threshold test\\orilabels%.2d_%.2f.txt",centerFrame,perC);
 
   		   	FILE *in_label_smooth = fopen(label_labsmooth, "w");
 
@@ -205,12 +206,14 @@ void TrajectoryClassifier::run()
   		 		 
   		   	for ( int i=0; i<set[centerFrame].num_vertices(); i++ )
   		   	{
-  		   		if (isSelector[i])
-  		   		{
-  		   		  fprintf( in_label_smooth, "%d %d %d\n", centerFrame,label_smooth[tpd], i );//ÐèÒª¶ÔlabelsÅÅÐò
-  				  //fprintf( in_label_smooth, "%d %d %d\n", centerFrame,0, i );//ÐèÒª¶ÔlabelsÅÅÐò_ÎªÁË´«²¥·Ö¸î½á¹û
-  		   		  tpd++;
-  		   		} 
+//   		   		if (isSelector[i])
+//   		   		{
+//   		   		  fprintf( in_label_smooth, "%d %d %d\n", centerFrame,label_smooth[tpd], i );//ÐèÒª¶ÔlabelsÅÅÐò
+//   				  //fprintf( in_label_smooth, "%d %d %d\n", centerFrame,0, i );//ÐèÒª¶ÔlabelsÅÅÐò_ÎªÁË´«²¥·Ö¸î½á¹û
+//   		   		  tpd++;
+//   		   		} 
+
+				fprintf( in_label_smooth, "%d %d %d\n", centerFrame, result_label[i], i );
   		   	}
   		   
   		   	fclose(in_label_smooth);

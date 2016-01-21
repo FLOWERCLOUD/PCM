@@ -20,6 +20,10 @@ void PaintStroke::drag(QMouseEvent *e)
 {
 
 	rectangle_.setBottomRight( e->pos() );
+
+	//
+	crtSketch.push_back(e->pos() );
+
 	canvas_->updateGL();
 
 }
@@ -30,7 +34,7 @@ void PaintStroke::release(QMouseEvent *e)
 	{
 		// Possibly swap left/right and top/bottom to make rectangle_ valid.
 		rectangle_ = rectangle_.normalized();
-		rectangle_ = QRect(e->pos(), e->pos());
+		//rectangle_ = QRect(e->pos(), e->pos());//delete current rect and propre to draw next rect;
 		canvas_->updateGL();
 		left_mouse_button_ = false;
 	}
@@ -43,12 +47,37 @@ void PaintStroke::press(QMouseEvent* e)
 	{
 		left_mouse_button_ = true;
 		rectangle_ = QRect(e->pos(), e->pos());
+
+		//
+		crtSketch.push_back(e->pos() );
+
 		canvas_->updateGL();
 	}
 
 }
 
 void PaintStroke::draw_stroke()
+{
+	QPainter painter;
+	if (crtSketch.size() == 0) return;
+	QBrush thisBrush(QColor(255, 0, 0, 100));
+	double strokeWidth;
+	strokeWidth = 2;
+	QPen thisPen(thisBrush, strokeWidth, Qt::SolidLine, Qt::RoundCap);
+	thisPen.setJoinStyle(Qt::RoundJoin);
+	painter.save();
+	painter.setPen(thisPen);
+	QPainterPath thisPath;
+	thisPath.moveTo(crtSketch[0].x(), crtSketch[0].y());
+	for (int i = 1; i < crtSketch.size(); ++i)
+	{
+		thisPath.lineTo(crtSketch[i].x(), crtSketch[i].y() );
+	}
+	painter.drawPath(thisPath);
+	painter.restore();
+}
+
+void PaintStroke::draw_rectangle()
 {
 	canvas_->startScreenCoordinatesSystem();
 
@@ -63,33 +92,38 @@ void PaintStroke::draw_stroke()
 	glVertex2i(rectangle_.left(),  rectangle_.bottom());
 	glEnd();	
 
-// 	glEnable(GL_BLEND);
-// 	glDepthMask(GL_FALSE);
-// 	glColor4f(0.0, 0.0, 0.4f, 0.3f);
-// 	glBegin(GL_QUADS);
-// 	glVertex2i(rectangle_.left(),  rectangle_.top());
-// 	glVertex2i(rectangle_.right(), rectangle_.top());
-// 	glVertex2i(rectangle_.right(), rectangle_.bottom());
-// 	glVertex2i(rectangle_.left(),  rectangle_.bottom());
-// 	glEnd();
-// 	glDisable(GL_BLEND);
-// 	glDepthMask(GL_TRUE);
+	//draw a mask
 
-	glLineWidth(2.0);
-	glColor4f(0.0f, 1.0f, 1.0f, 0.5f);
- 	glBegin(GL_LINES);
- 	glVertex2i(rectangle_.left(),  rectangle_.top());
-    glVertex2i(rectangle_.right(), rectangle_.bottom());
-    glEnd();
+	// 	glEnable(GL_BLEND);
+	// 	glDepthMask(GL_FALSE);
+	// 	glColor4f(0.0, 0.0, 0.4f, 0.3f);
+	// 	glBegin(GL_QUADS);
+	// 	glVertex2i(rectangle_.left(),  rectangle_.top());
+	// 	glVertex2i(rectangle_.right(), rectangle_.top());
+	// 	glVertex2i(rectangle_.right(), rectangle_.bottom());
+	// 	glVertex2i(rectangle_.left(),  rectangle_.bottom());
+	// 	glEnd();
+	// 	glDisable(GL_BLEND);
+	// 	glDepthMask(GL_TRUE);
+
+
+	// draw a line
+
+	// 	glLineWidth(2.0);
+	// 	glColor4f(0.0f, 1.0f, 1.0f, 0.5f);
+	//  	glBegin(GL_LINES);
+	//  	glVertex2i(rectangle_.left(),  rectangle_.top());
+	//     glVertex2i(rectangle_.right(), rectangle_.bottom());
+	//     glEnd();
 
 	glEnable(GL_LIGHTING);
 
 
 	canvas_->stopScreenCoordinatesSystem();
 }
-
 void PaintStroke::draw()
 {
+	draw_rectangle();
 	draw_stroke();
 
 	//draw hightlight vertex
@@ -114,3 +148,11 @@ void PaintStroke::draw()
 	glEnd();
 	UNLOCK(sample);
 }
+// void PaintStroke::paintEvent(QPaintEvent* e)
+//{
+// 	Q_UNUSED(e);
+// 	QPainter painter;
+// 	painter.begin(this);
+// 	painter.setRenderHint(QPainter::Antialiasing);
+
+//}
