@@ -66,8 +66,6 @@
     <addaction name="actionPlanFit"/>
     <addaction name="actionOrderLabels"/>
     <addaction name="actionRefineSigFrame"/>
-    <addaction name="actionMultiObjectSeg"/>
-    <addaction name="actionScanning_Kinect"/>
    </widget>
    <addaction name="menuFiles"/>
    <addaction name="menuPaint"/>
@@ -308,16 +306,6 @@
    </property>
    <property name="text">
     <string>Paint Interface</string>
-   </property>
-  </action>
-  <action name="actionMultiObjectSeg">
-   <property name="text">
-    <string>MultiObjectSeg</string>
-   </property>
-  </action>
-  <action name="actionScanning_Kinect">
-   <property name="text">
-    <string>Scanning-Kinect</string>
    </property>
   </action>
  </widget>

@@ -1911,7 +1911,7 @@ GCoptimization::EnergyTermType GCoptimizationGeneralGraph::dataCostFn::compute(S
 
 	Matrix33 sigma = Q.transpose() * Q;
 
-	Eigen::EigenSolver<Matrix33> eigen_solver(sigma, Eigen::ComputeFullU | Eigen::ComputeFullV);
+	Eigen::EigenSolver<Matrix33> eigen_solver(sigma, (bool)(Eigen::ComputeFullU | Eigen::ComputeFullV));
 
 	auto ev = eigen_solver.eigenvectors();
 	auto eval = eigen_solver.eigenvalues();
@@ -2339,7 +2339,7 @@ ScalarType GCoptimizationGeneralGraph::smoothCostFn::curvatureNode(IndexType fra
 
 	Matrix33 sigma = Q.transpose() * Q;
 
-	Eigen::EigenSolver<Matrix33> eigen_solver(sigma, Eigen::ComputeFullU | Eigen::ComputeFullV);
+	Eigen::EigenSolver<Matrix33> eigen_solver(sigma, (bool)(Eigen::ComputeFullU | Eigen::ComputeFullV));
 
 	auto ev = eigen_solver.eigenvectors();
 	auto eval = eigen_solver.eigenvalues();
@@ -2403,7 +2403,7 @@ ScalarType GCoptimizationGeneralGraph::smoothCostFn::rationCurNode(IndexType fra
 
 	Matrix33 sigma = Q.transpose() * Q;
 
-	Eigen::EigenSolver<Matrix33> eigen_solver(sigma, Eigen::ComputeFullU | Eigen::ComputeFullV);
+	Eigen::EigenSolver<Matrix33> eigen_solver(sigma, (bool)(Eigen::ComputeFullU | Eigen::ComputeFullV));
 
 	auto ev = eigen_solver.eigenvectors();
 	auto eval = eigen_solver.eigenvalues();
@@ -2471,7 +2471,7 @@ ScalarType GCoptimizationGeneralGraph::smoothCostFn::curPairSmooth(IndexType fra
 
 	Matrix33 sigma = Q.transpose() * Q;
 
-	Eigen::EigenSolver<Matrix33> eigen_solver(sigma, Eigen::ComputeFullU | Eigen::ComputeFullV);
+	Eigen::EigenSolver<Matrix33> eigen_solver(sigma, (bool)(Eigen::ComputeFullU | Eigen::ComputeFullV));
 
 	auto ev = eigen_solver.eigenvectors();
 	auto eval = eigen_solver.eigenvalues();

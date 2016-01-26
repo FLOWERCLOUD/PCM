@@ -1,7 +1,7 @@
 #include"multiway_propagation.h"
 
 
-#define  INF 1000000
+#define  INF_LOCAL 1000000
 #define  COUT_DEBUG 0
 
 #define frame_index_to_key(f,i) ((f<<16)|i)

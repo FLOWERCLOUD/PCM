@@ -306,15 +306,15 @@ namespace SICP {
     /// Shrinkage operator (Automatic loop unrolling using template)
     template<unsigned int I>
     inline float shrinkage(float mu, float n, float p, float s) {
-        return shrinkage<I-1>(mu, n, p, 1.0 - (p/mu)*std::pow(n, p-2.0)*std::pow(s, p-1.0));
+		return shrinkage<I-1>(mu, n, p, (float)( 1.0 - (p/mu)*std::pow( (float)n, (float)(p-2.0) )*std::pow( (float)s, (float)(p-1.0) ) ));
     }
     template<>
     inline float shrinkage<0>(float, float, float, float s) {return s;}
     /// 3D Shrinkage for point-to-point
     template<unsigned int I>
     inline void shrink(Eigen::Matrix3Xf& Q, float mu, float p) {
-        float Ba = std::pow((2.0/mu)*(1.0-p), 1.0/(2.0-p));
-        float ha = Ba + (p/mu)*std::pow(Ba, p-1.0);
+        float Ba = std::pow((float)(2.0/mu)*(1.0-p), 1.0/(2.0-p));
+        float ha = Ba + (p/mu)*(double)std::pow((double)Ba, (double)(p-1.0) );
         #pragma omp parallel for
         for(int i=0; i<Q.cols(); ++i) {
             float n = Q.col(i).norm();

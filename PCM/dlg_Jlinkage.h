@@ -1,7 +1,7 @@
 #ifndef _DLG_JLINKAGE_H
 #define _DLG_JLINKAGE_H
 
-#include <QtWidgets/QDialog>
+#include <QtGui/QDialog>
 #include "basic_types.h"
 #include"trajectory_classifier.h"
 //#include "traj_clustering.h"

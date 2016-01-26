@@ -268,8 +268,4 @@
       <Filter>Form Files</Filter>
     </CustomBuild>
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="C:\Users\Danis Dong\Documents\GitHub\PointCloudMotion\QGLViewer\QGLViewer_resource.rc" />
-    <ResourceCompile Include="C:\Users\Danis Dong\Documents\GitHub\PointCloudMotion\QGLViewer\QGLViewerd_resource.rc" />
-  </ItemGroup>
 </Project>

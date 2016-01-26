@@ -3,7 +3,7 @@
  #ifndef _DLG_FITPLAN_H
  #define _DLG_FITPLAN_H
 
- #include <QtWidgets/QDialog>
+ #include <QtGui/QDialog>
  #include "ui_dlg_plan.h"
  #include "basic_types.h"
 

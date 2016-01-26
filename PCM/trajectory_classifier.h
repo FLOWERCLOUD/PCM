@@ -5,9 +5,6 @@
 #include "sample_set.h"
 #include "DeformaleRegistration.h"
 
-#include"pcl/octree/octree.h"
-#include "pcl/point_cloud.h"
-
 #define SAVE_CORRESPONDENCE
 #define SAVE_LABELS
 
@@ -29,7 +26,7 @@ public:
 		isRigid = false;
 	}
 
-	void run() Q_DECL_OVERRIDE;
+	void run() ;
 
 	signals:
 		void finish_compute();

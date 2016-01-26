@@ -5,10 +5,12 @@
 
 using namespace  std;
 
+#ifndef Q_MOC_RUN
 #include "boost/graph/adjacency_list.hpp"
 #include "boost/graph/named_graph.hpp"
 #include "boost/graph/dijkstra_shortest_paths.hpp"
 #include "boost/property_map/property_map.hpp"
+#endif
 
 #include <queue>
 #include <vector>

@@ -1,7 +1,7 @@
 #ifndef _DLG_GRAPH_CUTS_H
 #define _DLG_GRAPH_CUTS_H
 
-#include <QtWidgets/QDialog>
+#include <QtGui/QDialog>
 #include "basic_types.h"
 //#include "ui_GraphCutsDlg.h" //dialog form error
 #include "GCop.h"

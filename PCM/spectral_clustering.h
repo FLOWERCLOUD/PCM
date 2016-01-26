@@ -9,7 +9,7 @@ class SpectralClusteringThread : public QThread
 	Q_OBJECT
 
 public:
-	void run() Q_DECL_OVERRIDE;
+	void run();
 	SpectralClusteringThread(){}
 	~SpectralClusteringThread(){}
 signals:

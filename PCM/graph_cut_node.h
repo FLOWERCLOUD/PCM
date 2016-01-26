@@ -65,7 +65,7 @@ class GraphNodeCtr : public QThread
 typedef ScalarType (GraphNodeCtr::*pDistFunc)(GraphCutNode*,GraphCutNode*);
 
 public:
-	void run() Q_DECL_OVERRIDE;
+	void run();
 
 public:
 signals:

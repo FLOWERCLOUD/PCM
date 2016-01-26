@@ -37,17 +37,11 @@ void TrajectoryClassifier::run()
 		return;
 	}
 
-	//convert to our PointType format,
-	//pcl::octree::OctreePointCloudChangeDetector() 
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>); 
 
 	//Step 1: compute rotate feature
 
 
-	// calculate feature
  	DeformableRegistration nonrigid;
-
-	//nonrigid.setNeigNum(neigborNum);
 
 	//Logger<<"Neighbor Number = "<<neigborNum<<endl;
  	//MatrixXX featureMat;
@@ -55,33 +49,37 @@ void TrajectoryClassifier::run()
 
 	// test life spans traj
   	vector<PCloudTraj> totalTraj;
+
 	vector<IndexType> sampleCenterVtxId;
+
 	totalTraj.clear();
+
 	sampleCenterVtxId.clear();
 
+	//calculate trajectories with either equal or unequal.
 
 	if (isEqual)
 	{
-		//ÇóµÈ³¤¹ì¼£×î³£ÓÃµÄ¼ÆËã·½·¨
+		
 		Logger<<"Using Equal Length Traj"<<endl;
-		nonrigid.calculateFixedLengthTrajWithTracingAlong(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes);//Á¬ÐøÅä×¼
+
+		nonrigid.calculateFixedLengthTrajWithTracingAlong(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes);
+
 		//nonrigid.calculateFixedLengthTraj(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes);//ÏÈ²ÉÑùÔÙÅä×¼--¼ä¸ôÅä×¼--always
 
 	}else
 	{
-		//ÔÙ´Î²âÊÔ²»µÈ³¤¹ì¼£¼ÆËã7-22  ///²»µÈ³¤¹ì¼£
 		Logger<<"Using Unequal Length Traj"<<endl;
 		//nonrigid.calculateDownSmpLifeSpanTraj(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes,threshold,lifeT);
 		nonrigid.calculateDownSmpLifeSpanTrajCenter(totalTraj,centerFrame,sampleCenterVtxId,trajLen,octreeRes,threshold,lifeT); 
 	}
 
 
-	//ÔË¶¯Ä£ÐÍ¸öÊý
-	IndexType modeNum = modelT * sampleCenterVtxId.size();
-	vector<IndexType> labels;//12-25
-	labels.resize(totalTraj.size(),0);
+	//calculate motion models
 
-	//assert(totalTraj.size() > 50);
+	IndexType modeNum = modelT * sampleCenterVtxId.size();
+	vector<IndexType> labels;
+	labels.resize(totalTraj.size(),0);
     
 	if (totalTraj.size() < 50)
 	{
@@ -91,14 +89,17 @@ void TrajectoryClassifier::run()
 		return;
 	}
 
+	//rigid or affine motion model
+
 	if (isRigid)
 	{
-		//²ÉÑùÄ£ÐÍ
 		Logger<<"Using Rigid motion  model"<<endl;
 
 		vector<PCloudModel> totalModel;
+
 		totalModel.clear();
-		nonrigid.sampleModel(totalTraj,totalModel,modeNum);//¶¨³¤¹ì¼£/²»¶¨³¤¹ì¼£
+
+		nonrigid.sampleModel(totalTraj,totalModel,modeNum);
 
 		J_LinkageAdapter_Matlab<PCloudTraj, PCloudModel, Traj2ModDistanceFunc>	algo_adaptor(totalTraj, totalModel, labels, Traj2ModDistanceFunc(threshold),perC);
 
@@ -109,7 +110,9 @@ void TrajectoryClassifier::run()
 		Logger<<"Using Affine motion  model"<<endl;
 
 		vector<PCloudAffModel> totalModel;
+
 		totalModel.clear();
+
 		nonrigid.sampleAffineModel(totalTraj,totalModel,modeNum);
 
 		J_LinkageAdapter_Matlab<PCloudTraj, PCloudAffModel, Traj2AffModelDistFunc>	algo_adaptor(totalTraj, totalModel, labels, Traj2AffModelDistFunc(threshold),perC);
@@ -128,7 +131,8 @@ void TrajectoryClassifier::run()
 
 	vector<bool> isSelector(sample0.num_vertices(),false);
 
-	// 	///////////////////////////////////// in order to visual sample vertex
+	//in order to visual sample vertexes 
+
 	for (int i = 0; i < sampleCenterVtxId.size(); i++)
 	{
 		isSelector[sampleCenterVtxId[i]] = true;
@@ -175,22 +179,28 @@ void TrajectoryClassifier::run()
 
 		#endif
 
-          	bubleSort(sampleCenterVtxId,labels,labels.size());//ÎªÁËÅäºÏ¶¥µãºÅÂëË÷Òý-
+          	bubleSort(sampleCenterVtxId,labels,labels.size());
+
        		vector<IndexType> label_smooth(labels.size(),0);
        
-       		diff_using_bfs(labels,sampleCenterVtxId,centerFrame);//ÏàÍ¬ÑÕÉ«²»Í¬Á¬Í¬¿é±ê¼Ç²»Í¬ÑÕÉ«
+			//separate the same motion at nonadjacent region.
+       		diff_using_bfs(labels,sampleCenterVtxId,centerFrame);
        
+			//smooth the segmentation results.
        		nonrigid.smoothSmapleLabel_KDTree(sample0,sampleCenterVtxId,labels,label_smooth);
    
 			IndexType nLabels = 1;
 
+			// in order to set the label system continuous and the 0 as the first label
 			nLabels = orderLabels(label_smooth);
       
-       		Logger<<"seg size = "<<nLabels; //ÊÇµÄlabel±êºÅ´Ó0¿ªÊ¼¼ÆËã
+       		Logger<<"seg size = "<<nLabels; 
+
 			vector<IndexType> result_label(sample0.num_vertices(),0);
+
+			// propagate the sample vertexes to original point cloud.
 			nonrigid.propagateLabel2Orignal(sample0,sampleCenterVtxId,label_smooth,result_label); 
 
-		// 
 		 #ifdef SAVE_LABELS
 
   		    char label_labsmooth[1024];
@@ -209,13 +219,6 @@ void TrajectoryClassifier::run()
   		 		 
   		   	for ( int i=0; i<set[centerFrame].num_vertices(); i++ )
   		   	{
-//   		   		if (isSelector[i])
-//   		   		{
-//   		   		  fprintf( in_label_smooth, "%d %d %d\n", centerFrame,label_smooth[tpd], i );//ÐèÒª¶ÔlabelsÅÅÐò
-//   				  //fprintf( in_label_smooth, "%d %d %d\n", centerFrame,0, i );//ÐèÒª¶ÔlabelsÅÅÐò_ÎªÁË´«²¥·Ö¸î½á¹û
-//   		   		  tpd++;
-//   		   		} 
-
 				fprintf( in_label_smooth, "%d %d %d\n", centerFrame, result_label[i], i );
   		   	}
   		   
@@ -223,8 +226,9 @@ void TrajectoryClassifier::run()
 		 	 
 		 #endif
 
-		//¿ÉÊÓ»¯²ÉÑùµã¾ÛÀà½á¹û  
 		#ifdef SAVE_CORRESPONDENCE
+
+			//visualize the segmentation results in point cloud.
        			IndexType i = 0;
      				IndexType k = 0;
        			for (Sample::vtx_iterator v_iter = sample0.begin();
@@ -244,17 +248,6 @@ void TrajectoryClassifier::run()
        			}
 		#endif 
 
-			//vector<IndexType> result_label(sample0.num_vertices(),0);
-			//nonrigid.propagateLabel2Orignal(sample0,sampleCenterVtxId,label_smooth,result_label);  //´«²¥µ½Ô­Ê¼µãÔÆÉÏ
-			// ¿ÉÊÓ»¯Ô­Ê¼µãÔÆ¾ÛÀà½á¹û
-				//IndexType i = 0;
-				//for (Sample::vtx_iterator v_iter = sample0.begin();
-				//	v_iter != sample0.end();
-				//	v_iter++,i++ )
-				//{
-				//	(*v_iter)->set_label(result_label[i] );
-				//}
-				//Logger<<"ori data vertex size = "<<sample0.num_vertices()<<endl;
 	}
 
 	

@@ -1,7 +1,7 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
-#include <QtWidgets/QMainWindow>
+#include <QtGui/QMainWindow>
 #include "ui_main_window.h"
 #include "paint_canvas.h"
 #include "globals.h"
@@ -21,9 +21,6 @@
 #include "dlg_graphcuts.h"
 #include "dlg_fitPlan.h"
 #include "dlg_paintInterface.h"
-
-#include"multiObjectSeg.h"
-#include "scanner.h"
 
 #include "saveSnapshotDialog.h"
 
@@ -89,10 +86,6 @@ public:
 		void doOrder();
 		void doRefineSigFrame();
 		bool saveSnapshot();
-
-		//multi-objects-segment
-		void doMultiObjectSeg();
-		void doScanning();
 
 public:
 

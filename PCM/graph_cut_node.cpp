@@ -686,6 +686,7 @@ ScalarType GraphNodeCtr::dist_inside_frame(GraphCutNode* s_node,GraphCutNode* e_
 
 
 	}
+	return 0.0;
 }
 void GraphNodeCtr::pca_box_ctr()
 {
@@ -712,7 +713,7 @@ void GraphNodeCtr::pca_box_ctr()
 
 		Matrix33 sigma = Q.transpose() * Q;
 
-		Eigen::EigenSolver<Matrix33> eigen_solver(sigma, Eigen::ComputeFullU | Eigen::ComputeFullV);
+		Eigen::EigenSolver<Matrix33> eigen_solver(sigma, (bool)(Eigen::ComputeFullU | Eigen::ComputeFullV));
 		auto evec = eigen_solver.eigenvectors();
 		auto eval = eigen_solver.eigenvalues();
 
@@ -877,7 +878,7 @@ ScalarType GraphNodeCtr::weight2nodes_dis(GraphCutNode* s_node,GraphCutNode* e_n
 		corDis *= (1 + fai * lamda_cor);
 		return exp(-corDis*corDis);
 	}
-
+	return 0.0;
 }
 ScalarType GraphNodeCtr::dist_between_frame_paper(GraphCutNode* s_node,GraphCutNode* e_node,ScalarType& jDis)
 {
@@ -982,7 +983,7 @@ ScalarType GraphNodeCtr::dist_between_frame(GraphCutNode* s_node,GraphCutNode* e
 	{
 		ScalarType corDis = minCorrespondenceDis(s_node,e_node);//using min deformable of  the edge
 
-
+		return corDis; //add by huayun,not sure
 		//ScalarType boxRation = minVoxelRation(s_node,e_node); 
 		
 		//if (corDis > 0.6)
@@ -1321,6 +1322,7 @@ ScalarType GraphNodeCtr::weight2nodes_smooth_Sy(GraphCutNode* s_node,GraphCutNod
 	{
 		return 0.0;
 	}
+	return 0.0;
 
 }
 

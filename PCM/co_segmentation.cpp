@@ -1,6 +1,6 @@
 #include "co_segmentation.h"
 #include <assert.h>
-#define  INF 1000000
+#define  INF_LOCAL 1000000
 
 #define frame_index_to_key(f,i) ((f<<16)|i)
 #define frame_label_to_key(f,l) ((f<<16)|l)
@@ -144,7 +144,7 @@ void CoSegmentation::calc_similarity()
 
 				ScalarType d = similarity_between_component_back(i,j);
 
-				if(d!=INF)
+				if(d!=INF_LOCAL)
 				{
 					cq_.push( compo_dist_node(i,j,d) );
 				}
@@ -217,7 +217,7 @@ ScalarType CoSegmentation::similarity_between_component_back(IndexType i, IndexT
 
 	if (com_num==0 && com_back_num == 0) // should bigger than ..vertexes 
 	{
-		return INF;
+		return INF_LOCAL;
 	}
 
 	const IndexType k = 300;
@@ -339,7 +339,7 @@ ScalarType CoSegmentation::similarity_between_component(IndexType i, IndexType j
 	
 	if (com_num==0 ) // should bigger than ..vertexes 
 	{
-		return INF;
+		return INF_LOCAL;
 	}
 
 	const IndexType k = 300;

@@ -44,7 +44,7 @@ class GCop : public QThread
 	//Q_OBJECT
 
 public:
-	void run() Q_DECL_OVERRIDE;
+	void run();
 
 public:
 signals:

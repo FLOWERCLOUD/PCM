@@ -46,7 +46,7 @@ class DeformableRegistration :public QThread
 	Q_OBJECT
 
 public:
-	void run() Q_DECL_OVERRIDE;
+	void run() ;
 public:
 	DeformableRegistration();
 	~DeformableRegistration(){};

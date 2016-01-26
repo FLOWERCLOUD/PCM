@@ -38,7 +38,7 @@ PCM/boost_1_59_0/
 eigen-3-1-4/
 libQGLViewer-2.5.2/
 PCM/GeneratedFiles/
-
+boost_1_59_0/
 
 # Build results edit by huayun
 #before
@@ -277,3 +277,21 @@ x64/Release!/glut.lib
 !x64/Release/glut64.dll
 !x64/Release/QGLViewer2.dll
 !x64/Release/QGLViewer2.lib
+QGLViewer.rar。old
+x64/Debug/glut.dll
+x64/Debug/glut32.dll
+x64/Debug/glut64.dll
+x64/Debug/QGLViewerd2.dll.manifest
+x64/Release/glut.lib
+x64/Release/glut32.lib
+x64/Release/QGLViewer2.dll
+x64/Release/QGLViewer2.exp
+x64/Release/QGLViewer2.lib
+x64/Release/glut64.lib
+x64/Release/glut64.dll
+x64/Release/glut32.dll
+x64/Debug/QGLViewerd2.dll
+x64/Release/glut.dll
+x64/Debug/glut64.lib
+x64/Debug/glut32.lib
+x64/Debug/glut.lib

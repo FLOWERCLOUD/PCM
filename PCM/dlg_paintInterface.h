@@ -1,7 +1,7 @@
 #ifndef _DLG_PAINT_INTERFACE_H
 #define _DLG_PAINT_INTERFACE_H
 
-#include <QtWidgets/QDialog>
+#include <QtGui/QDialog>
 #include "basic_types.h"
 
 #include "ui_dlg_paintInterface.h"

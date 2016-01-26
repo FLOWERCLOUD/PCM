@@ -36,7 +36,7 @@ void compute_normal( IndexType selected_smp,  NormalType& baseline )
 
 		Matrix33 sigma = Q.transpose() * Q;
 
-		Eigen::EigenSolver<Matrix33> eigen_solver(sigma, Eigen::ComputeFullU | Eigen::ComputeFullV);
+		Eigen::EigenSolver<Matrix33> eigen_solver(sigma, (bool)(Eigen::ComputeFullU | Eigen::ComputeFullV));
 
 		auto ev = eigen_solver.eigenvectors();
 		auto eval = eigen_solver.eigenvalues();
@@ -113,7 +113,7 @@ void compute_normal( IndexType selected_smp,  NormalType& baseline )
  
  		Matrix33 sigma = Q.transpose() * Q;
  
- 		Eigen::EigenSolver<Matrix33> eigen_solver(sigma, Eigen::ComputeFullU | Eigen::ComputeFullV);
+ 		Eigen::EigenSolver<Matrix33> eigen_solver(sigma, (bool)(Eigen::ComputeFullU | Eigen::ComputeFullV));
  
  		auto ev = eigen_solver.eigenvectors();
  		auto eval = eigen_solver.eigenvalues();

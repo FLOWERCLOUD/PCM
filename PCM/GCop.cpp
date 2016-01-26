@@ -639,7 +639,7 @@ ScalarType GCop::rationCurNode(IndexType frame,IndexType index)
 
 	Matrix33 sigma = Q.transpose() * Q;
 
-	Eigen::EigenSolver<Matrix33> eigen_solver(sigma, Eigen::ComputeFullU | Eigen::ComputeFullV);
+	Eigen::EigenSolver<Matrix33> eigen_solver(sigma, (bool)(Eigen::ComputeFullU | Eigen::ComputeFullV));
 
 	auto ev = eigen_solver.eigenvectors();
 	auto eval = eigen_solver.eigenvalues();
@@ -3086,7 +3086,7 @@ void GCop::calculateCenterNorm(Matrix3X& smpCoor,PointType& center,NormalType & 
 
 	Matrix33 sigma = smpCoor * smpCoor.transpose();
 
-	Eigen::EigenSolver<Matrix33> eigen_solver(sigma, Eigen::ComputeFullU | Eigen::ComputeFullV);
+	Eigen::EigenSolver<Matrix33> eigen_solver(sigma, (bool)(Eigen::ComputeFullU | Eigen::ComputeFullV));
 
 	auto ev = eigen_solver.eigenvectors();
 	auto eval = eigen_solver.eigenvalues();
