@@ -113,6 +113,7 @@ void main_window::createAlgorithmAction()
 	connect(ui.actionRefineSigFrame, SIGNAL(triggered() ), this, SLOT( doRefineSigFrame() ));
 
 	connect(ui.actionMultiObjectSeg, SIGNAL(triggered() ), this, SLOT(doMultiObjectSeg() ) );
+    connect( ui.actionScanning_Kinect, SIGNAL(triggered() ),this, SLOT( doScanning() ));
 }
 
 void main_window::createPaintSettingAction()
@@ -489,6 +490,15 @@ void main_window::doMultiObjectSeg()
 	connect(mSeg,SIGNAL(finished()), mSeg ,SLOT(deleteLater()) );
 	mSeg->start();
 
+}
+
+void main_window::doScanning()
+{
+	Scanner* scanner = new Scanner();
+
+	connect(scanner,SIGNAL(finish_compute()),this,SLOT(finishRegister()) );
+	connect(scanner,SIGNAL(finished()), scanner ,SLOT(deleteLater()) );
+	scanner->start();
 }
 // void main_window::doSpectralCluster()
 // {

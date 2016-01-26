@@ -67,6 +67,7 @@
     <addaction name="actionOrderLabels"/>
     <addaction name="actionRefineSigFrame"/>
     <addaction name="actionMultiObjectSeg"/>
+    <addaction name="actionScanning_Kinect"/>
    </widget>
    <addaction name="menuFiles"/>
    <addaction name="menuPaint"/>
@@ -312,6 +313,11 @@
   <action name="actionMultiObjectSeg">
    <property name="text">
     <string>MultiObjectSeg</string>
+   </property>
+  </action>
+  <action name="actionScanning_Kinect">
+   <property name="text">
+    <string>Scanning-Kinect</string>
    </property>
   </action>
  </widget>

@@ -6,7 +6,8 @@
 
 class Sample;
 
-class Scanner: public QThread{
+class Scanner: public QThread
+{
 		Q_OBJECT
 public:
 

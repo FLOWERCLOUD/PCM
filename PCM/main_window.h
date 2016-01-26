@@ -23,6 +23,7 @@
 #include "dlg_paintInterface.h"
 
 #include"multiObjectSeg.h"
+#include "scanner.h"
 
 #include "saveSnapshotDialog.h"
 
@@ -91,6 +92,7 @@ public:
 
 		//multi-objects-segment
 		void doMultiObjectSeg();
+		void doScanning();
 
 public:
 
