@@ -1,7 +1,7 @@
 ﻿#ifndef  _DEFORMABLEREGISTRATION_H
 #define  _DEFORMABLEREGISTRATION_H
 
-#include <QThread>]
+#include <QThread>
 #include <set>
 #include "tracer.h"
 #include "sample_set.h"

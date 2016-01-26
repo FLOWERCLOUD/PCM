@@ -9,6 +9,8 @@
 #include <Eigen/Cholesky>
 #include <Eigen/SVD>
 
+// add pcl lib   point format
+#include "pcl/point_types.h"
 
 #define EIGEN_DONT_VECTORIZE
 #define EIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT

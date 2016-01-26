@@ -37,6 +37,9 @@ void TrajectoryClassifier::run()
 		return;
 	}
 
+	//convert to our PointType format,
+	//pcl::octree::OctreePointCloudChangeDetector() 
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>); 
 
 	//Step 1: compute rotate feature
 

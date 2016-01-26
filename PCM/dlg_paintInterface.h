@@ -15,7 +15,7 @@ public:
 	PaintUi()
 	{
 		ui.setupUi(this);
-		canvas == NULL;
+		canvas = NULL;
 		cur_sample = -1;
 	}
 

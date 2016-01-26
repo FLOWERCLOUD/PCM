@@ -5,6 +5,9 @@
 #include "sample_set.h"
 #include "DeformaleRegistration.h"
 
+#include"pcl/octree/octree.h"
+#include "pcl/point_cloud.h"
+
 #define SAVE_CORRESPONDENCE
 #define SAVE_LABELS
 

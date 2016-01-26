@@ -188,7 +188,7 @@ struct PCVertexProperty
 	PCVertexProperty()
 	{
 		index = 0;
-		vtxSite == NULL;
+		vtxSite = NULL;
 	}
 
 	PCVertexProperty(IndexType _id)

@@ -22,6 +22,8 @@
 #include "dlg_fitPlan.h"
 #include "dlg_paintInterface.h"
 
+#include"multiObjectSeg.h"
+
 #include "saveSnapshotDialog.h"
 
 using namespace std;
@@ -86,6 +88,9 @@ public:
 		void doOrder();
 		void doRefineSigFrame();
 		bool saveSnapshot();
+
+		//multi-objects-segment
+		void doMultiObjectSeg();
 
 public:
 

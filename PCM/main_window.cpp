@@ -111,6 +111,8 @@ void main_window::createAlgorithmAction()
 
 	connect(ui.actionOrderLabels,SIGNAL(triggered() ),this,SLOT(doOrder()) );
 	connect(ui.actionRefineSigFrame, SIGNAL(triggered() ), this, SLOT( doRefineSigFrame() ));
+
+	connect(ui.actionMultiObjectSeg, SIGNAL(triggered() ), this, SLOT(doMultiObjectSeg() ) );
 }
 
 void main_window::createPaintSettingAction()
@@ -479,6 +481,15 @@ void main_window::doRefineSigFrame()
 			gc->refineSegm();
 }
 
+void main_window::doMultiObjectSeg()
+{
+	MultiObjectSeg* mSeg = new MultiObjectSeg();
+
+	connect(mSeg,SIGNAL(finish_compute()),this,SLOT(finishRegister()) );
+	connect(mSeg,SIGNAL(finished()), mSeg ,SLOT(deleteLater()) );
+	mSeg->start();
+
+}
 // void main_window::doSpectralCluster()
 // {
 // 	SpectralClusteringThread* specCla = new SpectralClusteringThread();

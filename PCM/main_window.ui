@@ -66,6 +66,7 @@
     <addaction name="actionPlanFit"/>
     <addaction name="actionOrderLabels"/>
     <addaction name="actionRefineSigFrame"/>
+    <addaction name="actionMultiObjectSeg"/>
    </widget>
    <addaction name="menuFiles"/>
    <addaction name="menuPaint"/>
@@ -306,6 +307,11 @@
    </property>
    <property name="text">
     <string>Paint Interface</string>
+   </property>
+  </action>
+  <action name="actionMultiObjectSeg">
+   <property name="text">
+    <string>MultiObjectSeg</string>
    </property>
   </action>
  </widget>
